@@ -7,7 +7,7 @@ import com.theteam.snodes.*;
 
 import java.io.File;
 
-import javax.xml.bind.JAXBContext;  
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
 public class App {
@@ -22,7 +22,7 @@ public class App {
         JAXBContext jaxbContext = JAXBContext.newInstance(SNodeList.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
      
-        SNodeList nodes = (SNodeList) jaxbUnmarshaller.unmarshal( new File("../xml/nodeXML") );
+        SNodeList nodes = (SNodeList) jaxbUnmarshaller.unmarshal( new File("../xml/nodeXML.xml") );
      
         System.out.println("Nodes in the design:\n");
 

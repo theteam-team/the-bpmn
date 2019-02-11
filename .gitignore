@@ -13,6 +13,9 @@
 *.tar.gz
 *.rar
 
+# XML files
+*.xml
+
 # Ignore Gradle project-specific cache directory
 .gradle
 

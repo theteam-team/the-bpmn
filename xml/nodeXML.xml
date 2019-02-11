@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<nodes>
+    <startNode nId="42992dbb-30a4-43f1-9090-a8d3fafa4665" type="START">
+        <nextNode>aa8436bc-61e2-4166-921a-44978a2d660a</nextNode>
+    </startNode>
+    <taskNode nId="aa8436bc-61e2-4166-921a-44978a2d660a" type="TASK">
+        <previousNode>42992dbb-30a4-43f1-9090-a8d3fafa4665</previousNode>
+        <nextNode>b9b57981-ad6e-4e9c-9876-3181ace46eca</nextNode>
+    </taskNode>
+    <endNode nId="b9b57981-ad6e-4e9c-9876-3181ace46eca" type="END">
+        <previousNode>aa8436bc-61e2-4166-921a-44978a2d660a</previousNode>
+    </endNode>
+</nodes>

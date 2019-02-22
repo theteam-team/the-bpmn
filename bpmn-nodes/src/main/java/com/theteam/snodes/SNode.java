@@ -20,10 +20,16 @@ public abstract class SNode
     abstract String getPreviousNode();
 
     abstract void setPreviousNode(String previousNode);
+    
+    // needs implementation
+    // abstract void setPreviousNode(SNode previousNode);
 
     abstract String getNextNode();
 
     abstract void setNextNode(String nextNode);
+    
+    // needs implementation
+    // abstract void setNextNode(SNode nextNode);
 
     abstract void run();
 }

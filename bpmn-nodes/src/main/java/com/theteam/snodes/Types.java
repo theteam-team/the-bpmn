@@ -2,16 +2,13 @@ package com.theteam.snodes;
 
 public final class Types
 {
-
-    public static enum NodeTypes 
-    {
+    public static enum NodeTypes {
         START,
         END,
         TASK
     }
 
-    public static enum ConnectionTypes 
-    {
+    public static enum ConnectionTypes {
         NORMAL
     }
 
@@ -24,10 +21,9 @@ public final class Types
                         };
     
     
-    public static String NodeType(Types.NodeTypes type)
-    {
-        switch (type)
-        {
+    public static String NodeType(Types.NodeTypes type) {
+        
+        switch (type) {
 
             case START:
                 return Nodes[0];

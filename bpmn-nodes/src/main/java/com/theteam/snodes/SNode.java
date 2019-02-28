@@ -4,6 +4,8 @@ import java.util.UUID;
 
 public abstract class SNode
 {
+	//changed all 'Get' functions to public
+	
     protected String nId;
     protected UUID uuid;
     String type;
@@ -11,19 +13,21 @@ public abstract class SNode
     public abstract String getNId();
     abstract void setNId(String id);
 
-    abstract UUID getUUId();
+    public abstract UUID getUUId();
 
     public abstract String getType(); 
 
-    abstract void setType(String type);
+    public abstract void setType(String type);
 
-    abstract String getPreviousNode();
+    public abstract String getPreviousNode();
 
     abstract void setPreviousNode(String previousNode);
 
-    abstract String getNextNode();
+    public abstract String getNextNode();
 
     abstract void setNextNode(String nextNode);
 
-    abstract void run();
+    //public abstract void run();
+    
+    public abstract int run();
 }

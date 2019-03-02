@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -12,11 +13,14 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
@@ -24,7 +28,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
+
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
 
 public class MainStageController {
@@ -36,23 +43,22 @@ public class MainStageController {
     private MenuBar mainMenuBar;
 
     @FXML
-    private Canvas drawCanvas;
+    private JFXTextField logText;
 
-    private ImageView selectedNode = null;
-    private String selectedId = null;
+    @FXML
+    private TabPane tabPane;
+
+    @FXML
+    private Tab tab;
+
+    private double dragAnchorX;
+    private double dragAnchorY;
 
     private Stage stage;
     private StringProperty title = new SimpleStringProperty();
 
-    private GraphicsContext gc;
-
     public void setStage(Stage stage) {
         this.stage = stage;
-    }
-
-    public void prepareGraphicContext()
-    {
-        gc = drawCanvas.getGraphicsContext2D();
     }
 
     public void setupBinding(StageStyle stageStyle) {
@@ -66,45 +72,41 @@ public class MainStageController {
     }
 
     @FXML
-    private void drawCanvasClicked(MouseEvent me)
+    public void createBPMNDiagram(ActionEvent ae) throws IOException
     {
-        double x = me.getX() - 40;
-        double y = me.getY() - 40;
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass()
+            .getResource("/fxml/bpmnStage.fxml"));
+        AnchorPane bpmnDrawArea = fxmlLoader.load();
 
-        if(selectedNode == null)
-        {
-            System.out.println("Choose a node");
-            return;
-        }
+        final BPMNStageController bpmnStagecontroller = fxmlLoader.getController();
 
-        Image i = new Image(getClass().getResource("/images/"+ selectedId + ".png").toString());
-
-        gc.drawImage(i, x, y, 80, 80);
-
+        tab.setContent(bpmnDrawArea);
     }
-
 
     @FXML
-    private void nodeClicked(MouseEvent me)
+    public void windowPressed(MouseEvent me)
     {
-        Image im;
-       
-
-        if(selectedNode != null)
-        {
-            im = new Image(getClass().getResource("/images/"+ selectedId + ".png").toString());
-            selectedNode.setImage(im);
-        }
-
-        ImageView imView = ((ImageView) me.getSource());
-        String id = imView.getId();
-
-        selectedNode = imView;
-        selectedId = id;
-
-        im = new Image(getClass().getResource("/images/"+ selectedId + "_chosen.png").toString());
-            selectedNode.setImage(im);
-
+        dragAnchorX = me.getScreenX() - stage.getX();
+        dragAnchorY = me.getScreenY() - stage.getY();
     }
+
+    @FXML
+    private void windowDragged(MouseEvent me)
+    {
+        stage.setX(me.getScreenX() - dragAnchorX);
+        stage.setY(me.getScreenY() - dragAnchorY);
+    }
+
+    @FXML
+    public void toTrayClicked(MouseEvent me) { stage.setIconified(true); }
+
+    @FXML
+    public void minMaxClicked(MouseEvent me) { stage.setMaximized(!stage.isMaximized()); }
+
+    @FXML
+    public void exitClicked(MouseEvent me) { closeApplication(); }
+
+
+    public void closeApplication() { stage.close(); }
 
 }

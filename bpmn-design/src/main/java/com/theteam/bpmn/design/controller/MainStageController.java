@@ -33,6 +33,7 @@ import java.io.IOException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
+import com.theteam.bpmn.design.dnode.NodeImages;
 
 public class MainStageController {
 
@@ -57,11 +58,13 @@ public class MainStageController {
     private Stage stage;
     private StringProperty title = new SimpleStringProperty();
 
-    public void setStage(Stage stage) {
+    public void setStage(Stage stage)
+    {
         this.stage = stage;
     }
 
-    public void setupBinding(StageStyle stageStyle) {
+    public void setupBinding(StageStyle stageStyle)
+    {
 
         stage.setResizable(false);
 
@@ -74,11 +77,16 @@ public class MainStageController {
     @FXML
     public void createBPMNDiagram(ActionEvent ae) throws IOException
     {
+        NodeImages.initializeImages();
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass()
             .getResource("/fxml/bpmnStage.fxml"));
         AnchorPane bpmnDrawArea = fxmlLoader.load();
 
         final BPMNStageController bpmnStagecontroller = fxmlLoader.getController();
+
+        bpmnStagecontroller.loadNodes();
+        bpmnStagecontroller.setLogText(logText);
 
         tab.setContent(bpmnDrawArea);
     }

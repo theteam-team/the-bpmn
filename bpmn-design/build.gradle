@@ -31,25 +31,27 @@ repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
-    mavenCentral()
+    //mavenCentral()
 }
 
 javafx {
+    version = "11.0.1"
     modules = ['javafx.base' ,'javafx.controls', 'javafx.fxml', 'javafx.graphics']
+   
 }
 
 run{
     standardInput = System.in
 }
 
-
+/* 
 compileJava {
 
     
     // options.encoding = "UTF-8"
     // options.incremental = true
 
-    /*
+    
     options.compilerArgs += [
             "--module-path C:/work/javafx-sdk/lib/",
             "--add-modules=javafx.controls,javafx.fxml,javafx.graphics,javafx.controls,javafx.base,javafx.media",
@@ -67,7 +69,7 @@ compileJava {
             
             "--add-exports=javafx.base/com.sun.javafx.event=com.jfoenix"
     ]
-    */
+    
 
     
     doLast {
@@ -96,6 +98,8 @@ compileJava {
     }
  
 }
+
+*/
 
 
 dependencies {

@@ -3,22 +3,12 @@
     Author     : afsal villan
 */
 
-
-/*
-    -fx-primary : #2A2E37;
-    -fx-secondary : #FFFF8D;
-    -fx-primarytext : #B2B2B2;
-    -fx-blue: #1976D2;
-    -fx-red: #FF0000;
-    -fx-color-1:#1976D2;
-*/
-
 *
 {
-    -fx-primary : #121212;
-    -fx-secondary : #FFFF8D;
-    -fx-drawarea : #282828;
-    -fx-primarytext : #B2B2B2;
+    -fx-primary : #F1F3F4;
+    -fx-secondary : #121212;
+    -fx-drawarea : #F1F1F1;
+    -fx-primarytext : #121212;
     -fx-blue: #1976D2;
     -fx-red: #FF0000;
     -fx-color-1:#1976D2;
@@ -249,7 +239,7 @@
 
 .titled-pane:focused > .title 
 {
-    -fx-color: white;
+    -fx-color: black;
 }
 
 .titled-pane > .title > .arrow-button 
@@ -283,7 +273,7 @@
 
 .titled-pane:focused > .title > .arrow-button .arrow 
 {
-    -fx-background-color: white;
+    -fx-background-color: black;
 }
 
 /*Text styling*/
@@ -301,7 +291,7 @@
 /*Dialog styling*/
 .dialog-button{
     -fx-border-color: -fx-color-1;
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-border-radius: 1px;
     -fx-background-radius: 3px;
 }
@@ -309,7 +299,7 @@
 .dialog-button:hover{
     -fx-background-color: -fx-color-1;
     -fx-border-color: derive(-fx-color-1, -20%);
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 .jfx-layout-actions

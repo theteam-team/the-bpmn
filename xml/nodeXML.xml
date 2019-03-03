@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <nodes>
-    <startNode nId="42992dbb-30a4-43f1-9090-a8d3fafa4665" type="START">
-        <nextNode>aa8436bc-61e2-4166-921a-44978a2d660a</nextNode>
+    <startNode nId="e35e4a38-5940-42fc-ac72-18df1d8c224c" type="START">
+        <NId>e35e4a38-5940-42fc-ac72-18df1d8c224c</NId>
+        <type>START</type>
+        <nextNode>acf5c5d9-29c7-407a-8043-a1f8baf75a1a</nextNode>
     </startNode>
-    <taskNode nId="aa8436bc-61e2-4166-921a-44978a2d660a" type="TASK">
-        <previousNode>42992dbb-30a4-43f1-9090-a8d3fafa4665</previousNode>
-        <nextNode>b9b57981-ad6e-4e9c-9876-3181ace46eca</nextNode>
-    </taskNode>
-    <endNode nId="b9b57981-ad6e-4e9c-9876-3181ace46eca" type="END">
-        <previousNode>aa8436bc-61e2-4166-921a-44978a2d660a</previousNode>
+    <endNode nId="82b671b5-e72c-45df-9e87-1d238dd37c69" type="END">
+        <NId>82b671b5-e72c-45df-9e87-1d238dd37c69</NId>
+        <type>END</type>
+        <previousNode>acf5c5d9-29c7-407a-8043-a1f8baf75a1a</previousNode>
     </endNode>
 </nodes>

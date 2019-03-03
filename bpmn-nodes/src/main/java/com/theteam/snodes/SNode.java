@@ -9,24 +9,24 @@ public abstract class SNode
     String type;
 
     public abstract String getNId();
-    abstract void setNId(String id);
+    public abstract void setNId(String id);
 
-    abstract UUID getUUId();
+    public abstract UUID getUUId();
 
     public abstract String getType(); 
 
-    abstract void setType(String type);
+    public abstract void setType(String type);
 
-    abstract String getPreviousNode();
+    public abstract String getPreviousNode();
 
-    abstract void setPreviousNode(String previousNode);
+    public abstract void setPreviousNode(String previousNode);
     
     // needs implementation
     // abstract void setPreviousNode(SNode previousNode);
 
-    abstract String getNextNode();
+    public abstract String getNextNode();
 
-    abstract void setNextNode(String nextNode);
+    public abstract void setNextNode(String nextNode);
     
     // needs implementation
     // abstract void setNextNode(SNode nextNode);

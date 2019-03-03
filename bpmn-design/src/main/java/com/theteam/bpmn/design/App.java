@@ -1,5 +1,6 @@
 package com.theteam.bpmn.design;
 
+import com.theteam.bpmn.design.controller.BPMNStageController;
 import com.theteam.bpmn.design.controller.MainStageController;
 
 import java.io.IOException;

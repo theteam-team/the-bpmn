@@ -72,5 +72,27 @@ public class SNodeList
         
         endNode = node;
     }
+
+    public void removeNode(SNode node)
+    {
+        if (node.getType() == Types.NodeType(Types.NodeTypes.START))
+            startNode = null;
+
+        else if (node.getType() == Types.NodeType(Types.NodeTypes.END))
+            endNode = null;
+
+        else
+            taskNodes.remove(node);
+        
+    }
+
+    /*public void removeAllNodes()
+    {
+        System.out.println("remove all nodes");
+
+        startNode = null;
+        endNode = null;
+        taskNodes.clear();
+    }*/
 }
 

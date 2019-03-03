@@ -21,7 +21,7 @@ task copyJarToDesign(type: Copy) {
     outputs.upToDateWhen {
         println "Copying jar to Design"
         false
-   }
+    }
     from 'build/libs/bpmn-nodes.jar'
     into '../bpmn-design/libs/'
 }
@@ -30,7 +30,7 @@ task copyJarToEngine(type: Copy) {
     outputs.upToDateWhen {
         println "Copying jar to Engine"
         false
-   }
+    }
     from 'build/libs/bpmn-nodes.jar'
     into '../bpmn-engine/libs/'
 }

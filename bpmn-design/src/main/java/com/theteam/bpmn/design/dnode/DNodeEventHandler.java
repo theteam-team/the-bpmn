@@ -50,11 +50,8 @@ public final class DNodeEventHandler
                     else
                     {
                         dbpmnController.secondNode = node;
-
-                        if(Math.abs(dbpmnController.secondNode.getY() - dbpmnController.firstNode.getY()) > 10)
-                            dbpmnController.createCubicLine(dbpmnController.firstNode, dbpmnController.secondNode);
-                        else
-                            dbpmnController.createLine(dbpmnController.firstNode, dbpmnController.secondNode);
+                        
+                        dbpmnController.createLine(dbpmnController.firstNode, dbpmnController.secondNode);
 
                         dbpmnController.firstNode.setClicked(false);
                         dbpmnController.firstNode = null;

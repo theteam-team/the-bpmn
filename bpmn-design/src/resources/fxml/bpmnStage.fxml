@@ -6,12 +6,13 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="512.0" prefWidth="815.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theteam.bpmn.design.controller.BPMNStageController">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="-11.0" layoutY="-8.0" prefHeight="462.0" prefWidth="687.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="-5.0">
          <content>
-            <AnchorPane fx:id="drawArea" onMouseClicked="#drawAreaClicked" prefHeight="461.0" prefWidth="1016.0" />
+            <AnchorPane fx:id="drawArea" onMouseClicked="#drawAreaClicked" prefHeight="521.0" prefWidth="820.0" />
          </content></ScrollPane>
       <TitledPane prefHeight="190.0" prefWidth="90.0" text="Nodes" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="100.0">
          <content>
@@ -26,6 +27,15 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
+         </content>
+      </TitledPane>
+      <TitledPane layoutX="40.0" layoutY="7.0" prefHeight="499.0" prefWidth="190.0" text="Properties" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
+         <content>
+            <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="NEVER">
+               <content>
+                  <VBox fx:id="propertiesView" prefHeight="471.0" prefWidth="184.0" />
+               </content>
+            </ScrollPane>
          </content>
       </TitledPane>
    </children>

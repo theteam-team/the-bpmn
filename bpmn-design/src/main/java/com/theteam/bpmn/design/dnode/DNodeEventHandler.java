@@ -34,6 +34,10 @@ public final class DNodeEventHandler
 
             if(node.isDrawNode())
             {
+
+                dbpmnController.propertiesView.getChildren().clear();
+                dbpmnController.propertiesView.getChildren().addAll(node.getIDPropertNode());
+
                 if(dbpmnController.firstNode == null)
                 {
                     dbpmnController.firstNode = node;
@@ -50,7 +54,7 @@ public final class DNodeEventHandler
                     else
                     {
                         dbpmnController.secondNode = node;
-                        
+
                         dbpmnController.createLine(dbpmnController.firstNode, dbpmnController.secondNode);
 
                         dbpmnController.firstNode.setClicked(false);

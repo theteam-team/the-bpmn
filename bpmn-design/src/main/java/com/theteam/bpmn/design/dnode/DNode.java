@@ -1,5 +1,8 @@
 package com.theteam.bpmn.design.dnode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -15,6 +18,8 @@ public class DNode extends ImageView
     private DNode nextDNode;
     private DNode prevDNode;
 
+    private List<DProperty> allDProperties;
+
     private BooleanProperty clicked = new SimpleBooleanProperty(this, "clicked", false);
 
     private boolean drawNode = false;
@@ -23,22 +28,26 @@ public class DNode extends ImageView
     {
         setPickOnBounds(true);
 
-        clicked.addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-                //System.out.println("Property str changed: old value = " + oldValue + ", new value = " + newValue);
+        allDProperties = new ArrayList<DProperty>();
 
+        DProperty dIdProperty = new DProperty("ID", idProperty());
+
+        allDProperties.add(dIdProperty);
+
+        clicked.addListener(new ChangeListener<Boolean>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue)
+            {
                 if(newValue)
                     setImage(NodeImages.nodeImages.get(getDType() + "_chosen"));
                 else
                     setImage(NodeImages.nodeImages.get(getDType()));
-
             }
         });
 
         nextDNode = null;
         prevDNode = null;
-
 
         setOnMouseClicked(DNodeEventHandler.mouseClickedHandler);
         setOnMousePressed(DNodeEventHandler.mousePressedHandler);
@@ -54,17 +63,20 @@ public class DNode extends ImageView
         setImage(im);
     }
 
-    public final boolean isDrawNode() { return drawNode; }
-    public final void setDrawNode(boolean i) { drawNode = i; }
+    public List<DProperty> getIDPropertNode() { return allDProperties; }
 
-    public final boolean getClicked() { return clicked.get(); }
-    public final void setClicked(boolean i) { this.clicked.set(i); }
+    public boolean isDrawNode() { return drawNode; }
+    public void setDrawNode(boolean i) { drawNode = i; }
 
-    public void setNextDNode(DNode node){ this.nextDNode = node; }
-    public void setPrevDNode(DNode node){ this.prevDNode = node; }
+    public boolean getClicked() { return clicked.get(); }
+    public void setClicked(boolean i) { this.clicked.set(i); }
 
-    public String getDType(){ return this.type; }
-    public DNode getNextDNode(){ return this.nextDNode; }
-    public DNode getPrevDNode(){ return this.prevDNode; }
-    
+    public DNode getNextDNode() { return this.nextDNode; }
+    public void setNextDNode(DNode node) { this.nextDNode = node; }
+
+    public DNode getPrevDNode() { return this.prevDNode; }
+    public void setPrevDNode(DNode node) { this.prevDNode = node; }
+
+    public String getDType() { return this.type; }
+
 }

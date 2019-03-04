@@ -2,6 +2,7 @@ package com.theteam.bpmn.design.dnode;
 
 
 import javafx.geometry.Point2D;
+import javafx.scene.effect.Bloom;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.CubicCurveTo;
@@ -31,9 +32,11 @@ public class DLine extends Path
         super();
         //strokeProperty().bind(fillProperty());
 
-        setStroke(Color.BLACK);
+        setStroke(Color.DARKCYAN);
         setStrokeWidth(1.5);
         setFill(null);
+
+        setEffect(new Bloom());
         
         moveTo = new MoveTo(startX, startY);
         cubicCurveTo = new CubicCurveTo(controlX1, controlY1, controlX2, controlY2, endX, endY);
@@ -42,11 +45,10 @@ public class DLine extends Path
         getElements().add(moveTo);
 
 
-        if(Math.abs(endY - startY) > 10) 
+        if(Math.abs(endY - startY) > 20) 
         {
             // CubicCurve
             getElements().add(cubicCurveTo);
-            
             
             // point1
             double x1 = endX - 4;
@@ -58,7 +60,6 @@ public class DLine extends Path
             getElements().add(new LineTo(x1, y1));
             getElements().add(new MoveTo(endX, endY));
             getElements().add(new LineTo(x2, y2));
-            
 
         }
 
@@ -190,10 +191,6 @@ public class DLine extends Path
 
         //drawArea.getChildren().addAll(curve, ar);
     }
-
-
-
-
 
     /**
      * Evaluate the cubic curve at a parameter 0<=t<=1, returns a Point2D

@@ -13,7 +13,7 @@ import javafx.scene.control.SingleSelectionModel;
 /**
  * The model class that the AudioConfigMain class uses
  */
-public class StartNodeModel {
+public class DStartNodeModel {
   /**
    * The minimum audio volume in decibels
    */

@@ -2,47 +2,19 @@ package com.theteam.bpmn.design.controller;
 
 import com.theteam.bpmn.design.dnode.*;
 
+import java.util.UUID;
+
+import com.jfoenix.controls.JFXTextField;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.PickResult;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.CubicCurve;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
-import java.util.UUID;
-
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
 
 public class BPMNStageController {
 
@@ -51,6 +23,9 @@ public class BPMNStageController {
 
     @FXML
     private GridPane gridNodes;
+
+    @FXML
+    public VBox propertiesView;
 
     private StringProperty logText = new SimpleStringProperty();
 
@@ -94,7 +69,6 @@ public class BPMNStageController {
         }
 
         PickResult pe = me.getPickResult();
-
         Node n = pe.getIntersectedNode();
 
         if(n.getId().equals("drawArea"))

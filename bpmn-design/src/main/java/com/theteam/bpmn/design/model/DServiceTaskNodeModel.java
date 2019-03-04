@@ -13,7 +13,7 @@ import javafx.scene.control.SingleSelectionModel;
 /**
  * The model class that the AudioConfigMain class uses
  */
-public class EndNodeModel {
+public class DServiceTaskNodeModel {
   /**
    * The minimum audio volume in decibels
    */
@@ -72,6 +72,6 @@ public class EndNodeModel {
             case 5: selectedDBs.setValue(130);
         }
     });
-            
+
   }
 }

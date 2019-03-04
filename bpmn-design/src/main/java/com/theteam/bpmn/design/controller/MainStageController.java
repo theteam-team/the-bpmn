@@ -6,6 +6,7 @@ import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -13,6 +14,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -33,6 +35,7 @@ import java.io.IOException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
+import com.theteam.bpmn.design.dnode.DNodeEventHandler;
 import com.theteam.bpmn.design.dnode.NodeImages;
 
 public class MainStageController {
@@ -55,12 +58,18 @@ public class MainStageController {
     private double dragAnchorX;
     private double dragAnchorY;
 
+    private Scene scene;
     private Stage stage;
     private StringProperty title = new SimpleStringProperty();
 
     public void setStage(Stage stage)
     {
         this.stage = stage;
+    }
+
+    public void setScene(Scene scene)
+    {
+        this.scene = scene;
     }
 
     public void setupBinding(StageStyle stageStyle)
@@ -88,6 +97,8 @@ public class MainStageController {
         bpmnStagecontroller.loadNodes();
         bpmnStagecontroller.setLogText(logText);
 
+        DNodeEventHandler.setBPMNController(bpmnStagecontroller);
+
         tab.setContent(bpmnDrawArea);
     }
 
@@ -103,6 +114,25 @@ public class MainStageController {
     {
         stage.setX(me.getScreenX() - dragAnchorX);
         stage.setY(me.getScreenY() - dragAnchorY);
+    }
+
+    @FXML
+    private void changeTheme(ActionEvent ae)
+    {
+       MenuItem me = (MenuItem) ae.getSource();
+
+       scene.getStylesheets().clear();
+
+       if(me.getText().equals("Dark"))
+       {
+            scene.getStylesheets().addAll(getClass()
+                .getResource("/css/dark-theme.css").toString());
+       }
+       else
+       {
+            scene.getStylesheets().addAll(getClass()
+                .getResource("/css/light-theme.css").toString());
+       }
     }
 
     @FXML

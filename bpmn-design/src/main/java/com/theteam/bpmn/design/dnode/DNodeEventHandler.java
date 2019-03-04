@@ -1,53 +1,108 @@
 package com.theteam.bpmn.design.dnode;
 
+import com.theteam.bpmn.design.controller.BPMNStageController;
+
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 public final class DNodeEventHandler
 {
 
-    public static EventHandler<MouseEvent> mouseClickedHandler =  new EventHandler<MouseEvent>() {
+    private static  BPMNStageController dbpmnController;
+
+    public static void setBPMNController(BPMNStageController bpmnController)
+    {
+        dbpmnController = bpmnController;
+    }
+
+    public static EventHandler<MouseEvent> mouseClickedHandler =  new EventHandler<MouseEvent>()
+    {
+
         @Override
-        public void handle(MouseEvent me) {
+        public void handle(MouseEvent me)
+        {
 
             DNode node = (DNode) me.getSource();
-            node.setCursor(Cursor.MOVE);
+
+            if(me.getButton() == MouseButton.SECONDARY)
+            {
+                dbpmnController.drawArea.getChildren().remove(node);
+                return;
+            }
 
             if(node.isDrawNode())
             {
-                node.setClicked(!node.getClicked());
+                if(dbpmnController.firstNode == null)
+                {
+                    dbpmnController.firstNode = node;
+                    dbpmnController.firstNode.setClicked(true);
+                }
+
+                else
+                {
+                    if(node == dbpmnController.firstNode)
+                    {
+                        dbpmnController.firstNode.setClicked(false);
+                        dbpmnController.firstNode = null;
+                    }
+                    else
+                    {
+                        dbpmnController.secondNode = node;
+
+                        if(Math.abs(dbpmnController.secondNode.getY() - dbpmnController.firstNode.getY()) > 10)
+                            dbpmnController.createCubicLine(dbpmnController.firstNode, dbpmnController.secondNode);
+                        else
+                            dbpmnController.createLine(dbpmnController.firstNode, dbpmnController.secondNode);
+
+                        dbpmnController.firstNode.setClicked(false);
+                        dbpmnController.firstNode = null;
+                        dbpmnController.secondNode = null;
+                    }
+                }
+            }
+
+            else
+            {
+                if(dbpmnController.selectedNode != null)
+                    dbpmnController.selectedNode.setClicked(false);
+
+                dbpmnController.selectedNode = node;
+                node.setClicked(true);
+                
             }
 
         }
     };
 
-    public static EventHandler<MouseEvent> mousePressedHandler =  new EventHandler<MouseEvent>() {
+    public static EventHandler<MouseEvent> mousePressedHandler =  new EventHandler<MouseEvent>()
+    {
         @Override
-        public void handle(MouseEvent me) {
-
+        public void handle(MouseEvent me)
+        {
             DNode node = (DNode) me.getSource();
             node.setCursor(Cursor.MOVE);
 
-            if(node.isDrawNode())
-            {
-                node.setClicked(!node.getClicked());
-            }
         }
     };
 
-    public static EventHandler<MouseEvent> mouseReleasedHandler =  new EventHandler<MouseEvent>() {
+    public static EventHandler<MouseEvent> mouseReleasedHandler =  new EventHandler<MouseEvent>()
+    {
         @Override 
-        public void handle(MouseEvent me) {
+        public void handle(MouseEvent me)
+        {
 
             DNode node = (DNode) me.getSource();
             node.setCursor(Cursor.HAND);
         }
     };
 
-    public static EventHandler<MouseEvent> mouseDraggedHandler =  new EventHandler<MouseEvent>() {
+    public static EventHandler<MouseEvent> mouseDraggedHandler =  new EventHandler<MouseEvent>()
+    {
         @Override
-        public void handle(MouseEvent me) {
+        public void handle(MouseEvent me)
+        {
 
             DNode node = (DNode) me.getSource();
 
@@ -61,16 +116,20 @@ public final class DNodeEventHandler
         }
     };
 
-    public static EventHandler<MouseEvent> mouseEnteredHandler =  new EventHandler<MouseEvent>() {
-        @Override public void handle(MouseEvent me) {
+    public static EventHandler<MouseEvent> mouseEnteredHandler =  new EventHandler<MouseEvent>()
+    {
+        @Override public void handle(MouseEvent me)
+        {
             DNode node = (DNode) me.getSource();
 
             node.setCursor(Cursor.HAND);
         }
     };
 
-    public static EventHandler<MouseEvent> mouseExitedHandler =  new EventHandler<MouseEvent>() {
-        @Override public void handle(MouseEvent me) {
+    public static EventHandler<MouseEvent> mouseExitedHandler =  new EventHandler<MouseEvent>()
+    {
+        @Override public void handle(MouseEvent me)
+        {
             DNode node = (DNode) me.getSource();
 
             node.setCursor(Cursor.DEFAULT);

@@ -12,6 +12,7 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -48,13 +49,15 @@ public class App extends Application
         final MainStageController mainStagecontroller = fxmlLoader.getController();
         mainStagecontroller.setStage(stage);
         mainStagecontroller.setupBinding(stageStyle);
-
+        
         Scene scene = new Scene(rootGroup, 830, 610);
+        mainStagecontroller.setScene(scene);
         scene.setFill(Color.TRANSPARENT);
         scene.getStylesheets().addAll(App.class
             .getResource("/css/dark-theme.css").toString());
 
         stage.setScene(scene);
+        //scene.anti
         stage.setOnCloseRequest(we -> System.out.println("Stage is closing"));
         stage.show();
 

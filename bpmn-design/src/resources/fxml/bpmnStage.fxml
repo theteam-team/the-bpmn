@@ -13,7 +13,7 @@
          <content>
             <AnchorPane fx:id="drawArea" onMouseClicked="#drawAreaClicked" prefHeight="461.0" prefWidth="1016.0" />
          </content></ScrollPane>
-      <TitledPane prefHeight="189.0" prefWidth="91.0" text="Nodes" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="100.0">
+      <TitledPane prefHeight="190.0" prefWidth="90.0" text="Nodes" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="100.0">
          <content>
             <GridPane fx:id="gridNodes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="168.0" prefWidth="118.0">
                <columnConstraints>

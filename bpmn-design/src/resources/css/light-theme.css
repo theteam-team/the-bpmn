@@ -227,11 +227,11 @@
 }
 .titled-pane:focused 
 {
-    -fx-text-fill: -fx-primarytext;
+    -fx-text-fill: white;
 }
 .titled-pane > .title 
 {
-    -fx-background-color: -fx-primary;
+    -fx-background-color:black;
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 5 5 0 0, 4 4 0 0, 3 3 0 0;
     -fx-padding: 0.166667em 0.833333em 0.25em 0.833333em; /* 2 10 3 10 */
@@ -239,7 +239,7 @@
 
 .titled-pane:focused > .title 
 {
-    -fx-color: black;
+    -fx-color: white;
 }
 
 .titled-pane > .title > .arrow-button 
@@ -273,7 +273,7 @@
 
 .titled-pane:focused > .title > .arrow-button .arrow 
 {
-    -fx-background-color: black;
+    -fx-background-color: white;
 }
 
 /*Text styling*/

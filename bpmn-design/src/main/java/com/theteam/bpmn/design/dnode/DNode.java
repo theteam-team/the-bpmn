@@ -26,6 +26,9 @@ public class DNode extends ImageView
 
     public DNode()
     {
+
+        super();
+        
         setPickOnBounds(true);
 
         allDProperties = new ArrayList<DProperty>();

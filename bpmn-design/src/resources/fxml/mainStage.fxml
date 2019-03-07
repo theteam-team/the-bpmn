@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToggleNode?>
 <?import de.jensd.fx.glyphs.materialicons.MaterialIconView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -61,11 +62,14 @@
                   </Menu>
                </menus>
             </MenuBar>
-            <HBox prefHeight="26.0" prefWidth="60.0">
+            <HBox prefHeight="26.0" prefWidth="135.0">
                <children>
-                  <MaterialIconView glyphName="REMOVE" onMouseClicked="#toTrayClicked" size="20" />
-                  <MaterialIconView glyphName="CROP_SQUARE" layoutX="10.0" layoutY="30.0" onMouseClicked="#minMaxClicked" size="20" />
-                  <MaterialIconView glyphName="CLOSE" layoutX="30.0" layoutY="30.0" onMouseClicked="#exitClicked" size="20" />
+                  <MaterialIconView glyphName="REMOVE" onMouseClicked="#toTrayClicked" size="21" textAlignment="CENTER" wrappingWidth="45.0" />
+                  <MaterialIconView glyphName="CROP_SQUARE" layoutX="10.0" layoutY="30.0" onMouseClicked="#minMaxClicked" size="17" textAlignment="CENTER" wrappingWidth="45.0">
+                     <HBox.margin>
+                        <Insets top="2.0" />
+                     </HBox.margin></MaterialIconView>
+                  <MaterialIconView id="close" glyphName="CLOSE" layoutX="30.0" layoutY="30.0" onMouseClicked="#exitClicked" size="21" textAlignment="CENTER" wrappingWidth="45.0" />
                </children>
             </HBox>
          </children>

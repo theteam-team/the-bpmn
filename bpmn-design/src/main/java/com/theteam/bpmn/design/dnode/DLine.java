@@ -4,6 +4,9 @@ package com.theteam.bpmn.design.dnode;
 import javafx.geometry.Point2D;
 import javafx.scene.effect.Bloom;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.Line;
@@ -30,9 +33,11 @@ public class DLine extends Path
      double controlX1, double controlY1 ,  double controlX2, double controlY2, double arrowHeadSize){
 
         super();
-        //strokeProperty().bind(fillProperty());
+        
+        Stop[] stops = new Stop[] { new Stop(0, Color.VIOLET), new Stop(1, Color.DARKCYAN)};
+        LinearGradient lg = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
-        setStroke(Color.DARKCYAN);
+        setStroke(lg);
         setStrokeWidth(1.5);
         setFill(null);
 

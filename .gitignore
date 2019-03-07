@@ -22,6 +22,9 @@
 # Ignore Gradle build output directory
 /build/
 
+# Ignore Gradle build output directory
+/bin/
+
 # Ignore Gradle GUI config
 gradle-app.setting
 

@@ -74,7 +74,7 @@
             </HBox>
          </children>
       </HBox>
-      <ToolBar focusTraversable="false" prefHeight="50.0" prefWidth="839.0">
+      <ToolBar fx:id="toolBar" focusTraversable="false" prefHeight="50.0" prefWidth="839.0">
          <items>
             <MaterialIconView glyphName="CREATE_NEW_FOLDER" size="25" />
             <MaterialIconView glyphName="FOLDER_OPEN" layoutX="10.0" layoutY="30.0" size="25" />

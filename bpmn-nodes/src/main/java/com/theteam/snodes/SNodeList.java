@@ -17,11 +17,14 @@ public class SNodeList
 
     @XmlElement(name = "taskNode")
     private List<STaskNode> taskNodes;
+
+    HashMap<String, SNode> mapNodes;
     
 
     public SNodeList ()
     {
         taskNodes = new ArrayList<STaskNode>();
+        mapNodes = new HashMap<>();
         
     }
 
@@ -53,12 +56,16 @@ public class SNodeList
     
     public void addTaskNode(STaskNode node)
     {
+        
+        mapNodes.put(node.getNId(), node);
         taskNodes.add(node);
     }
 
 
     public void addStartNode(SStartNode node)
     {
+
+        mapNodes.put(node.getNId(), node);
         startNode = node;
     }
 
@@ -69,8 +76,19 @@ public class SNodeList
     
     public void addEndNode(SEndNode node)
     {
-        
+
+        mapNodes.put(node.getNId(), node);
         endNode = node;
+    }
+
+    public SNode getEndNode()
+    {
+        return endNode;
+    }
+
+    public SNode getListNode(String id)
+    {
+        return endNode;
     }
 
     public void removeNode(SNode node)
@@ -84,6 +102,11 @@ public class SNodeList
         else
             taskNodes.remove(node);
         
+    }
+
+    public SNode getNodeById(String iid)
+    {
+        return mapNodes.get(iid);
     }
 
     /*public void removeAllNodes()

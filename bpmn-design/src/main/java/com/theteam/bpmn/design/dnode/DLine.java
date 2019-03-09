@@ -114,6 +114,9 @@ public class DLine extends Path
 
         from = nodeFrom;
         to = nodeTo;
+
+        nodeFrom.setNextDNode(nodeTo);
+        nodeTo.setPrevDNode(nodeFrom);
     }
 
     public DNode getNodeFrom() { return from; }

@@ -1,6 +1,9 @@
 package com.theteam.bpmn.design.controller;
 
 import com.theteam.bpmn.design.dnode.*;
+import com.theteam.snodes.SXML;
+
+import de.jensd.fx.glyphs.materialicons.MaterialIconView;
 
 import java.util.UUID;
 
@@ -8,8 +11,10 @@ import com.jfoenix.controls.JFXTextField;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.ToolBar;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.PickResult;
 import javafx.scene.layout.AnchorPane;
@@ -27,34 +32,68 @@ public class BPMNStageController {
     @FXML
     public VBox propertiesView;
 
+    private ToolBar toolBar;
+
     private StringProperty logText = new SimpleStringProperty();
 
     public DNode selectedNode = null;
     public DNode firstNode = null;
     public DNode secondNode = null;
 
+    SXML xmlWriter;
+
     public void loadNodes()
     {
-        DStartNode start = new DStartNode();
+        xmlWriter = new SXML();
+
+        DStartNode start = new DStartNode(xmlWriter, UUID.randomUUID(), false);
         start.setFitHeight(50);
         start.setFitWidth(50);
         
-        DEndNode end = new DEndNode();
+        DEndNode end = new DEndNode(xmlWriter, UUID.randomUUID(), false);
         end.setFitHeight(50);
         end.setFitWidth(50);
         
-        DServiceTaskNode serviceTask = new DServiceTaskNode();
+        DServiceTaskNode serviceTask = new DServiceTaskNode(xmlWriter, UUID.randomUUID(), false);
         serviceTask.setFitHeight(50);
         serviceTask.setFitWidth(50);
 
         gridNodes.add(start, 0, 0);
         gridNodes.add(end, 1, 0);
         gridNodes.add(serviceTask, 0, 1);
+
+        MaterialIconView saveIcon = new MaterialIconView();
+        saveIcon.setGlyphName("SAVE");
+        saveIcon.setSize("25");
+
+        saveIcon.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t)
+            {
+                try
+                {
+                    xmlWriter.saveToXML("../xml/nodeXML.xml");
+                } catch(Exception e)
+                {
+                    System.out.println(e);
+                }
+                
+            }
+        });
+
+        toolBar.getItems().add(saveIcon);
+
     }
 
     public void setLogText(JFXTextField logText)
     {
         logText.textProperty().bind(this.logText);
+    }
+
+    public void setToolBar(ToolBar toolBar)
+    {
+        this.toolBar = toolBar;
     }
 
 
@@ -76,15 +115,15 @@ public class BPMNStageController {
             switch (selectedNode.getDType()) {
 
                 case "start":
-                    createDrawNode(new DStartNode(), me);
+                    createDrawNode(new DStartNode(xmlWriter, UUID.randomUUID(), true), me);
                     break;
     
                 case "end":
-                    createDrawNode(new DEndNode(), me);
+                    createDrawNode(new DEndNode(xmlWriter, UUID.randomUUID(), true), me);
                     break;
     
                 case "service_task":
-                    createDrawNode(new DServiceTaskNode(), me);
+                    createDrawNode(new DServiceTaskNode(xmlWriter, UUID.randomUUID(), true), me);
                     break;
             
                 default:
@@ -100,8 +139,7 @@ public class BPMNStageController {
         node.setFitHeight(50);
         node.setFitWidth(50);
 
-        node.setId(UUID.randomUUID().toString());
-        node.setDrawNode(true);
+        //node.setId(UUID.randomUUID().toString());
 
         drawArea.getChildren().add(node);
 

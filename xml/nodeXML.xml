@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <nodes>
-    <startNode nId="e35e4a38-5940-42fc-ac72-18df1d8c224c" type="START">
-        <NId>e35e4a38-5940-42fc-ac72-18df1d8c224c</NId>
+    <startNode nId="c266757b-869a-4710-a376-939c0ee406c4" type="START">
+        <NId>c266757b-869a-4710-a376-939c0ee406c4</NId>
         <type>START</type>
-        <nextNode>acf5c5d9-29c7-407a-8043-a1f8baf75a1a</nextNode>
+        <nextNode>28dc2221-c20b-4cea-aba4-398bdadedf6b</nextNode>
     </startNode>
-    <endNode nId="82b671b5-e72c-45df-9e87-1d238dd37c69" type="END">
-        <NId>82b671b5-e72c-45df-9e87-1d238dd37c69</NId>
+    <taskNode nId="28dc2221-c20b-4cea-aba4-398bdadedf6b" type="TASK">
+        <NId>28dc2221-c20b-4cea-aba4-398bdadedf6b</NId>
+        <type>TASK</type>
+        <previousNode>c266757b-869a-4710-a376-939c0ee406c4</previousNode>
+        <nextNode>1eee1d83-4ad6-43bc-92fc-12d6e99a7415</nextNode>
+        <restLink>http://localhost:8080/RESTfulExample/json/product/get</restLink>
+    </taskNode>
+    <endNode nId="1eee1d83-4ad6-43bc-92fc-12d6e99a7415" type="END">
+        <NId>1eee1d83-4ad6-43bc-92fc-12d6e99a7415</NId>
         <type>END</type>
-        <previousNode>acf5c5d9-29c7-407a-8043-a1f8baf75a1a</previousNode>
+        <previousNode>28dc2221-c20b-4cea-aba4-398bdadedf6b</previousNode>
     </endNode>
 </nodes>

@@ -117,7 +117,8 @@ dependencies {
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
     compile 'de.jensd:fontawesomefx-materialicons:2.2.0-9.1.2'
     
-    compile files('libs/bpmn-nodes.jar')
+    // compile files('libs/bpmn-nodes.jar')
+    compile fileTree(dir: 'libs', include: '*.jar')
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'

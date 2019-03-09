@@ -18,6 +18,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -54,6 +55,9 @@ public class MainStageController {
 
     @FXML
     private Tab tab;
+
+    @FXML
+    private ToolBar toolBar;
 
     private double dragAnchorX;
     private double dragAnchorY;
@@ -94,8 +98,10 @@ public class MainStageController {
 
         final BPMNStageController bpmnStagecontroller = fxmlLoader.getController();
 
-        bpmnStagecontroller.loadNodes();
         bpmnStagecontroller.setLogText(logText);
+        bpmnStagecontroller.setToolBar(toolBar);
+        
+        bpmnStagecontroller.loadNodes();
 
         DNodeEventHandler.setBPMNController(bpmnStagecontroller);
 

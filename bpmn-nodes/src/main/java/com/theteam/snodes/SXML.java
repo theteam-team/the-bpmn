@@ -16,31 +16,49 @@ public class SXML
         nodeList = new SNodeList();
     }
 
-    public void addStartNode()
+    public void addStartNode(String id)
     {
-        SStartNode s = new SStartNode(Types.NodeType(Types.NodeTypes.START), UUID.randomUUID());
+        // System.out.println("Hello " + id);
+        SStartNode s = new SStartNode(Types.NodeType(Types.NodeTypes.START), id);
         nodeList.addStartNode(s);
     }
 
-    public void addEndNode()
+    public void addEndNode(String id)
     {
-        SEndNode e = new SEndNode(Types.NodeType(Types.NodeTypes.END), UUID.randomUUID());
+        
+        SEndNode e = new SEndNode(Types.NodeType(Types.NodeTypes.END), id);
         nodeList.addEndNode(e);
     }
-    public void addTaskNode()
+    public void addTaskNode(String id)
     {
-        STaskNode t = new STaskNode(Types.NodeType(Types.NodeTypes.TASK), UUID.randomUUID());
+        // out.println(id);
+        STaskNode t = new STaskNode(Types.NodeType(Types.NodeTypes.TASK), id);
         nodeList.addTaskNode(t);
     }
 
-    public void setNextNode(SNode currNode, SNode nextNode)
+    public void setNextNode(String currNode, String nextNode)
     {
-        currNode.setNextNode(nextNode.getNId());
+        SNode node = nodeList.getNodeById(currNode);
+        node.setNextNode(nextNode);
     }
 
-    public void setPrevNode(SNode currNode, SNode prevNode)
+    public void setPrevNode(String currNode, String prevNode)
     {
-        currNode.setPreviousNode(prevNode.getNId());
+        SNode node = nodeList.getNodeById(currNode);
+        node.setPreviousNode(prevNode);
+    }
+
+    public void setRestProperty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        STaskNode taskNode = (STaskNode) node;
+
+        taskNode.setRestLink(value);
+
     }
 
 

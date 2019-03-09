@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import javafx.scene.image.Image;
 
-public final class NodeImages extends DNode
+public final class NodeImages
 {
 
     public static HashMap<String, Image> nodeImages = new HashMap<>();

@@ -32,10 +32,17 @@ public class SEndNode extends SNode
         this.uuid = id;
     }
 
+    public SEndNode(String type, String id)
+    {
+        this.type = type;
+        this.nId = id;
+        this.uuid = UUID.fromString(id);
+    }
+
     @XmlAttribute
     public String getNId()
     {
-        return nId.toString();  
+        return nId;  
     }
 
     public void setNId(String id)
@@ -100,7 +107,7 @@ public class SEndNode extends SNode
     }
 
     @Override
-    void run()
+    public void run()
     {
 
     }

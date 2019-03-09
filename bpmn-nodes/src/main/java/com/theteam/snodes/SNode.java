@@ -31,5 +31,5 @@ public abstract class SNode
     // needs implementation
     // abstract void setNextNode(SNode nextNode);
 
-    abstract void run();
+    public abstract void run();
 }

@@ -29,6 +29,7 @@ public class App {
         for(SNode node : nodes.getAllNodes())
         {
             System.out.println(node.getNId() + " " + node.getType());
+            node.run();
         }
         
         

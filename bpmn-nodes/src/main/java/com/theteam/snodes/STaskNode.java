@@ -1,7 +1,7 @@
 package com.theteam.snodes;
 
 import java.util.UUID;
-
+import java.util.concurrent.Executor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,18 +14,24 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+//import java.net.URL;  
+import javax.xml.namespace.QName;  
+import javax.xml.ws.Service;
+
+import com.theteam.bpmn.engine.ws.WS;  
+
 
 @XmlRootElement
-@XmlType(propOrder = { "previousNode", "nextNode", "webServiceType", "restLink", "restType"})
+@XmlType(propOrder = { "previousNode", "nextNode", "serviceType", "restLink", "soapFunc"})
 public class STaskNode extends SNode
 {
 
     private String previousNode = null;
     private String nextNode = null;
 
-    private String webServiceType = null;
+    private String serviceType = null;
     private String restLink = null;
-    private String restType = null;
+    private String soapFunc = null;
 
     public STaskNode()
     {
@@ -79,7 +85,7 @@ public class STaskNode extends SNode
     {
 
         if(previousNode != null)
-            return previousNode.toString();
+            return previousNode;
         return null;
         
     }
@@ -94,7 +100,7 @@ public class STaskNode extends SNode
     {
 
         if(nextNode != null)
-            return nextNode.toString();
+            return nextNode;
         return null;
     }
 
@@ -108,56 +114,99 @@ public class STaskNode extends SNode
     public void run()
     {
 
-        try {
+        System.out.println("Service_task Node Running");
 
-            // http://localhost:8080/RESTfulExample/json/product/get
 
-			URL url = new URL(restLink);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Accept", "application/json");
+        if(serviceType.equals("soap"))
+        {
+            System.out.println("Execute soap service to link http://localhost:8080/soap_server/ws?wsdl");
+            try
+            {
+            URL url = new URL("http://localhost:8080/soap_server/ws?wsdl");
 
-			if (conn.getResponseCode() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-			}
+            //1st argument service URI, refer to wsdl document above  
+            //2nd argument is service name, refer to wsdl document above
 
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					(conn.getInputStream())));
+            QName qname = new QName("http://ws.engine.bpmn.theteam.com/", "WSImplService");  
+            Service service = Service.create(url, qname);
 
-			String output;
-			// System.out.println("Output from Server .... \n");
-			while ((output = br.readLine()) != null) {
+            WS hello = service.getPort(WS.class);
 
-				System.out.println(output);
-			}
-			
-			conn.disconnect();
+            if(soapFunc.equals("getHello"))
+            {
+                System.out.println("Execute function getHello");
+                System.out.println(hello.getHello("the-team"));  
+            }
+            
+            else if(soapFunc.equals("getResponseWithName"))
+            {
+                System.out.println("Execute function getHellogetResponseWithName");
+                System.out.println(hello.getResponseWithName("the-team"));
+            }
 
-		} catch (MalformedURLException e) {
+            } catch(Exception e)
+            {
 
-			e.printStackTrace();
-		} catch (IOException e) {
+            }
 
-			e.printStackTrace();
-			
-		}
+        }
+
+        else if(serviceType.equals("rest"))
+        {
+            System.out.println("Execute rest service to link " + restLink);
+            try {
+
+                // http://localhost:8080/RESTfulExample/json/product/get
+            
+                URL url = new URL(restLink);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Accept", "application/json");
+    
+                if (conn.getResponseCode() != 200) {
+                    throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+                }
+    
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        (conn.getInputStream())));
+    
+                String output;
+                // System.out.println("Output from Server .... \n");
+                while ((output = br.readLine()) != null) {
+    
+                    System.out.println(output);
+                }
+                
+                conn.disconnect();
+    
+            } catch (MalformedURLException e) {
+    
+                e.printStackTrace();
+            } catch (IOException e) {
+    
+                e.printStackTrace();
+                
+            }
+
+        }
+
 
     }
 
 
-    @XmlElement(name = "webServiceType")
-    public String getWebServiceType()
+    @XmlElement(name = "ServiceType")
+    public String getServiceType()
     {
 
-        if(webServiceType != null)
-            return webServiceType;
+        if(serviceType != null)
+            return serviceType;
         return null;
         
     }
 
-    public void setWebServiceType(String webServiceType)
+    public void setServiceType(String serviceType)
     {
-        this.webServiceType = webServiceType;
+        this.serviceType = serviceType;
     }
 
 
@@ -177,19 +226,19 @@ public class STaskNode extends SNode
     }
 
 
-    @XmlElement(name = "restType")
-    public String getRestType()
+    @XmlElement(name = "soapFunc")
+    public String getSoapFunc()
     {
 
-        if(restType != null)
-            return restType;
+        if(soapFunc != null)
+            return soapFunc;
         return null;
         
     }
 
-    public void setrestType(String restType)
+    public void setSoapFunc(String soapFunc)
     {
-        this.restType = restType;
+        this.soapFunc = soapFunc;
     }
 
 }

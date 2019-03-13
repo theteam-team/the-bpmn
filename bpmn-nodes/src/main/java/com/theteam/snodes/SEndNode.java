@@ -84,7 +84,7 @@ public class SEndNode extends SNode
     {
 
         if(previousNode != null)
-            return previousNode.toString();
+            return previousNode;
         return null;
         
     }
@@ -98,18 +98,18 @@ public class SEndNode extends SNode
     {
 
         if(nextNode != null)
-            return nextNode.toString();
+            return nextNode;
         return null;
     }
 
     public void setNextNode(String nextNode) {
-       
+
     }
 
     @Override
     public void run()
     {
-
+        System.out.println("End Node Running");
     }
 
 }

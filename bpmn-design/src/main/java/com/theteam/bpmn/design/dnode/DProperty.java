@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 
-public class DProperty extends HBox
+public class DProperty extends Dprop
 {
     JFXToggleNode toggleNode = null;
     JFXTextField textField = null;

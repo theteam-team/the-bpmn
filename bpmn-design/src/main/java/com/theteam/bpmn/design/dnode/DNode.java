@@ -11,6 +11,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 public class DNode extends ImageView
 {
@@ -21,7 +22,7 @@ public class DNode extends ImageView
     private DNode nextDNode;
     private DNode prevDNode;
 
-    protected List<DProperty> allDProperties;
+    protected List<Dprop> allDProperties;
 
     private BooleanProperty clicked = new SimpleBooleanProperty(this, "clicked", false);
 
@@ -34,7 +35,7 @@ public class DNode extends ImageView
         
         setPickOnBounds(true);
 
-        allDProperties = new ArrayList<DProperty>();
+        allDProperties = new ArrayList<Dprop>();
 
         DProperty dIdProperty = new DProperty("ID", idProperty());
 
@@ -71,7 +72,7 @@ public class DNode extends ImageView
         setImage(im);
     }
 
-    public List<DProperty> getIDPropertNode() { return allDProperties; }
+    public List<Dprop> getIDPropertNode() { return allDProperties; }
 
     public boolean isDrawNode() { return drawNode; }
     public void setDrawNode(boolean i) { drawNode = i; }

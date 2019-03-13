@@ -462,6 +462,32 @@
     -fx-cursor: hand;
 }
 
+/* Combo Box */
+
+/* Selected item text color on the control itself */
+.combo-box .list-cell 
+{
+    -fx-background: -fx-primary;
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-primarytext;
+    -fx-padding: 3 0 2 7;
+}
+
+
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover 
+{
+    
+    -fx-text-fill: -fx-primarytext;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover 
+{
+    
+    -fx-text-fill: -fx-primarytext;
+}
+
+
 /*Checkbox*/
 
 .checkbox-main{

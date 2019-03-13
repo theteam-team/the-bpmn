@@ -84,7 +84,7 @@ public class SStartNode extends SNode
     {
 
         if(previousNode != null)
-            return previousNode.toString();
+            return previousNode;
         return null;
         
     }
@@ -98,7 +98,7 @@ public class SStartNode extends SNode
     {
 
         if(nextNode != null)
-            return nextNode.toString();
+            return nextNode;
         return null;
     }
 
@@ -109,7 +109,7 @@ public class SStartNode extends SNode
     @Override
     public void run()
     {
-
+        System.out.println("Start Node Running");
     }
 
 }

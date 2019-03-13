@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <nodes>
-    <startNode nId="c266757b-869a-4710-a376-939c0ee406c4" type="START">
-        <NId>c266757b-869a-4710-a376-939c0ee406c4</NId>
+    <startNode nId="7814a7b6-3522-4fef-8897-fad460ab2e1b" type="START">
+        <NId>7814a7b6-3522-4fef-8897-fad460ab2e1b</NId>
         <type>START</type>
-        <nextNode>28dc2221-c20b-4cea-aba4-398bdadedf6b</nextNode>
+        <nextNode>a338fd11-c4f1-430c-893b-ddb20b02b468</nextNode>
     </startNode>
-    <taskNode nId="28dc2221-c20b-4cea-aba4-398bdadedf6b" type="TASK">
-        <NId>28dc2221-c20b-4cea-aba4-398bdadedf6b</NId>
+    <taskNode nId="a338fd11-c4f1-430c-893b-ddb20b02b468" type="TASK">
+        <NId>a338fd11-c4f1-430c-893b-ddb20b02b468</NId>
         <type>TASK</type>
-        <previousNode>c266757b-869a-4710-a376-939c0ee406c4</previousNode>
-        <nextNode>1eee1d83-4ad6-43bc-92fc-12d6e99a7415</nextNode>
-        <restLink>http://localhost:8080/RESTfulExample/json/product/get</restLink>
+        <previousNode>7814a7b6-3522-4fef-8897-fad460ab2e1b</previousNode>
+        <nextNode>048b12da-a75d-4c77-ae99-e1aac61bcf17</nextNode>
+        <ServiceType>soap</ServiceType>
+        <soapFunc>getHello</soapFunc>
     </taskNode>
-    <endNode nId="1eee1d83-4ad6-43bc-92fc-12d6e99a7415" type="END">
-        <NId>1eee1d83-4ad6-43bc-92fc-12d6e99a7415</NId>
+    <endNode nId="048b12da-a75d-4c77-ae99-e1aac61bcf17" type="END">
+        <NId>048b12da-a75d-4c77-ae99-e1aac61bcf17</NId>
         <type>END</type>
-        <previousNode>28dc2221-c20b-4cea-aba4-398bdadedf6b</previousNode>
+        <previousNode>a338fd11-c4f1-430c-893b-ddb20b02b468</previousNode>
     </endNode>
 </nodes>

@@ -48,7 +48,7 @@ public class SXML
         node.setPreviousNode(prevNode);
     }
 
-    public void setRestProperty(String iid, String value)
+    public void setRestLinkProperty(String iid, String value)
     {
 
         // System.out.println(iid);
@@ -58,6 +58,32 @@ public class SXML
         STaskNode taskNode = (STaskNode) node;
 
         taskNode.setRestLink(value);
+
+    }
+
+    public void setServiceTypeProperty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        STaskNode taskNode = (STaskNode) node;
+
+        taskNode.setServiceType(value);
+
+    }
+
+    public void setSoapFuncProperty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        STaskNode taskNode = (STaskNode) node;
+
+        taskNode.setSoapFunc(value);
 
     }
 

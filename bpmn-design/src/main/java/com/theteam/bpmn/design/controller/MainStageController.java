@@ -38,6 +38,7 @@ import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
 import com.theteam.bpmn.design.dnode.DNodeEventHandler;
 import com.theteam.bpmn.design.dnode.NodeImages;
+import com.theteam.bpmn.design.loader.WSDLLoader;
 
 public class MainStageController {
 
@@ -90,6 +91,9 @@ public class MainStageController {
     @FXML
     public void createBPMNDiagram(ActionEvent ae) throws IOException
     {
+
+        WSDLLoader.loadWSDL();
+        
         NodeImages.initializeImages();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass()

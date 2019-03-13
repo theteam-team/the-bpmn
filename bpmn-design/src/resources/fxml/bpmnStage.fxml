@@ -29,11 +29,11 @@
             </GridPane>
          </content>
       </TitledPane>
-      <TitledPane layoutX="40.0" layoutY="7.0" prefHeight="499.0" prefWidth="190.0" text="Properties" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
+      <TitledPane layoutX="40.0" layoutY="7.0" prefHeight="502.0" prefWidth="252.0" text="Properties" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
          <content>
-            <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="NEVER">
+            <ScrollPane hbarPolicy="NEVER" prefHeight="475.0" prefWidth="270.0" vbarPolicy="NEVER">
                <content>
-                  <VBox fx:id="propertiesView" prefHeight="471.0" prefWidth="184.0" />
+                  <VBox fx:id="propertiesView" prefHeight="471.0" prefWidth="246.0" />
                </content>
             </ScrollPane>
          </content>

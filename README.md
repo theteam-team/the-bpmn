@@ -1,11 +1,10 @@
 # the-bpmn
-Business Process Model and Notation Application 
 
-# Runnig App
+Business Process Model and Notation Application
 
-## Runnign bpmn-nodes library
+## Runnig App
 
-Run the next command twice if it is the first time to run it to copy library
+### bpmn-nodes library
 
 ```sh
 cd bpmn-nodes
@@ -13,18 +12,18 @@ cd bpmn-nodes
 cd ..
 ```
 
-## Runnign bpmn-design
+### designer
 
 ```sh
-cd bpmn-design
+cd designer
 ./gradlew run
 cd ..
 ```
 
-## Runnign bpmn-engine
+### engine
 
 ```sh
-cd bpmn-engine
+cd engine
 ./gradlew run
 cd ..
 ```

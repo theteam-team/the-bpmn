@@ -1,0 +1,126 @@
+plugins
+{
+    // Apply the java plugin to add support for Java
+    id 'java'
+
+    // Apply the application plugin to add support for building an application
+    id 'application'
+
+    id 'org.openjfx.javafxplugin' version '0.0.7'
+}
+
+sourceSets
+{
+    main
+    {
+        java
+        {
+            srcDirs = ['src/main/java']
+        }
+        resources
+        {
+            srcDirs = ['src/resources']
+        }
+    }
+}
+
+repositories
+{
+    
+    jcenter()
+    mavenCentral()
+}
+
+javafx
+{
+    version = "11.0.1"
+    modules = ['javafx.base' ,'javafx.controls', 'javafx.fxml', 'javafx.graphics']
+   
+}
+
+run
+{
+    standardInput = System.in
+}
+
+dependencies
+{
+    // This dependency is found on compile classpath of this component and consumers.
+    implementation 'com.google.guava:guava:27.0.1-jre'
+    
+    compile 'javax.xml.bind:jaxb-api:2.3.1'
+    compile 'javax.activation:activation:1.1'
+    
+    compile 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+
+    compile 'com.jfoenix:jfoenix:9.0.8'
+
+    compile 'de.jensd:fontawesomefx-commons:9.1.2'
+    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
+    compile 'de.jensd:fontawesomefx-materialicons:2.2.0-9.1.2'
+    
+    // compile files('libs/bpmn-nodes.jar')
+    compile fileTree(dir: 'libs', include: '*.jar')
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+}
+
+mainClassName = 'com.theteam.bpmn.design.App'
+
+/* 
+compileJava {
+
+    
+    // options.encoding = "UTF-8"
+    // options.incremental = true
+
+    
+    options.compilerArgs += [
+            "--module-path C:/work/javafx-sdk/lib/",
+            "--add-modules=javafx.controls,javafx.fxml,javafx.graphics,javafx.controls,javafx.base,javafx.media",
+            // For various usages of TraversalEngine
+            "--add-exports=javafx.graphics/com.sun.javafx.scene=com.jfoenix",
+            "--add-exports=javafx.graphics/com.sun.javafx.scene.text=com.jfoenix",
+            "--add-exports=javafx.graphics/com.sun.javafx.geom=com.jfoenix",
+            "--add-exports=javafx.graphics/com.sun.javafx.stage=com.jfoenix",
+            "--add-exports=javafx.graphics/com.sun.javafx.util=com.jfoenix",
+
+            // For various behaviors across controls
+            "--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix",
+            "--add-exports=javafx.controls/com.sun.javafx.scene.control=com.jfoenix",
+            "--add-exports=javafx.base/com.sun.javafx.binding=com.jfoenix",
+            
+            "--add-exports=javafx.base/com.sun.javafx.event=com.jfoenix"
+    ]
+    
+
+    
+    doLast {
+
+        options.compilerArgs.addAll([
+            "--add-exports",
+            "javafx.controls/com.sun.javafx.scene.control.behavior=ALL-UNNAMED"
+        ])  
+        options.compilerArgs.addAll([
+            "--add-exports",
+            "javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED"
+        ])  
+        options.compilerArgs.addAll([
+            "--add-exports",
+            "javafx.base/com.sun.javafx.binding=ALL-UNNAMED"
+        ])   
+        options.compilerArgs.addAll([
+            "--add-exports",
+            "javafx.graphics/com.sun.javafx.stage=ALL-UNNAMED"
+        ])  
+        options.compilerArgs.addAll([
+            "--add-exports",
+            "javafx.base/com.sun.javafx.event=ALL-UNNAMED"
+        ])
+
+    }
+ 
+}
+
+*/

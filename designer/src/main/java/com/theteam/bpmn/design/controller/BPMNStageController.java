@@ -81,6 +81,7 @@ public class BPMNStageController {
                 try
                 {
                     xmlWriter.saveToXML("../xml/nodeXML.xml");
+                    logText.set("Saved To ../xml/nodeXML.xml");
                 } catch(Exception e)
                 {
                     System.out.println(e);
@@ -124,14 +125,17 @@ public class BPMNStageController {
 
                 case "start":
                     createDrawNode(new DStartNode(xmlWriter, UUID.randomUUID(), true), me);
+                    logText.set("Start Node Created");
                     break;
     
                 case "end":
                     createDrawNode(new DEndNode(xmlWriter, UUID.randomUUID(), true), me);
+                    logText.set("End Node Created");
                     break;
     
                 case "service_task":
                     createDrawNode(new DServiceTaskNode(xmlWriter, UUID.randomUUID(), true), me);
+                    logText.set("Service Task Node Created");
                     break;
             
                 default:
@@ -160,6 +164,7 @@ public class BPMNStageController {
     {
         DLine line = new DLine(nodeFrom, nodeTo);
 
+        logText.set("Line Created");
         drawArea.getChildren().add(line);
     }
 

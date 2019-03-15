@@ -26,24 +26,27 @@ task copyJarToDesign(type: Copy) {
     outputs.upToDateWhen
     {
         println "Copying jar to Design"
+        println "Copied to ../designer/libs/"
         false
     }
     from 'build/libs/bpmn-nodes.jar'
-    into '../bpmn-design/libs/'
+    into '../designer/libs/'
 }
 
 task copyJarToEngine(type: Copy) {
     
     dependsOn 'makeJar'
-
+    
     outputs.upToDateWhen
     {
         println "Copying jar to Engine"
+        println "Copied to ../engine/libs/"
+
         false
     }
 
     from 'build/libs/bpmn-nodes.jar'
-    into '../bpmn-engine/libs/'
+    into '../engine/libs/'
 }
 
 task makeJar {
@@ -65,6 +68,7 @@ task release {
     doLast {
 
         println 'File Copying finished'
+        println 'Task Ended'
         
     }
 }

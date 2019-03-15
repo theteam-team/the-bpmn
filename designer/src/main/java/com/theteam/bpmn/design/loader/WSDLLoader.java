@@ -21,8 +21,8 @@ public final class WSDLLoader
     {
         try
         {
-
-            File inputFile = new File(App.class.getResource("/wsdl/ws.xml").toString());
+            
+            File inputFile = new File(App.class.getResource("/wsdl/ws.xml").getFile());
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();

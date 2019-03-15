@@ -24,6 +24,6 @@ cd ..
 
 ```sh
 cd engine
-./gradlew run
+./gradlew tomcatrun
 cd ..
 ```

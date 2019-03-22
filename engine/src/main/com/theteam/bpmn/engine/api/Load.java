@@ -57,7 +57,7 @@ public class Load {
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
         //Elist.nodes = (SNodeList) jaxbUnmarshaller.unmarshal( new File("../xml/nodeXML.xml") );
-        Elist.nodes = (SNodeList) jaxbUnmarshaller.unmarshal( new File("C:/work/the-bpmn/xml/nodeXML.xml") );
+        Elist.nodes = (SNodeList) jaxbUnmarshaller.unmarshal( new File("../xml/nodeXML.xml") );
 
         System.out.println("Nodes in the design:\n");
 

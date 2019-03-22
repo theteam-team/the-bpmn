@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <nodes>
-    <startNode nId="c465c9be-56f0-4eb9-84b2-40aab2ad0edc" type="START">
-        <NId>c465c9be-56f0-4eb9-84b2-40aab2ad0edc</NId>
+    <startNode nId="801133d6-e31d-4364-b2b9-23e5d980d322" type="START">
+        <NId>801133d6-e31d-4364-b2b9-23e5d980d322</NId>
         <type>START</type>
-        <nextNode>955699ff-6527-4cff-9304-91f2982cfa3e</nextNode>
+        <nextNode>5b4f21a8-d817-4308-94e2-a9c11539731a</nextNode>
     </startNode>
-    <taskNode nId="955699ff-6527-4cff-9304-91f2982cfa3e" type="TASK">
-        <NId>955699ff-6527-4cff-9304-91f2982cfa3e</NId>
+    <taskNode nId="5b4f21a8-d817-4308-94e2-a9c11539731a" type="TASK">
+        <NId>5b4f21a8-d817-4308-94e2-a9c11539731a</NId>
         <type>TASK</type>
-        <previousNode>c465c9be-56f0-4eb9-84b2-40aab2ad0edc</previousNode>
-        <nextNode>c2ccd410-af75-4035-be82-2a97385a8f5e</nextNode>
-        <ServiceType>rest</ServiceType>
+        <previousNode>801133d6-e31d-4364-b2b9-23e5d980d322</previousNode>
+        <nextNode>e171f4af-bec5-4506-b0f1-2889c8d7a841</nextNode>
+        <ServiceType>soap</ServiceType>
         <soapFunc>getHello</soapFunc>
     </taskNode>
-    <endNode nId="c2ccd410-af75-4035-be82-2a97385a8f5e" type="END">
-        <NId>c2ccd410-af75-4035-be82-2a97385a8f5e</NId>
+    <endNode nId="e171f4af-bec5-4506-b0f1-2889c8d7a841" type="END">
+        <NId>e171f4af-bec5-4506-b0f1-2889c8d7a841</NId>
         <type>END</type>
-        <previousNode>955699ff-6527-4cff-9304-91f2982cfa3e</previousNode>
+        <previousNode>5b4f21a8-d817-4308-94e2-a9c11539731a</previousNode>
     </endNode>
 </nodes>

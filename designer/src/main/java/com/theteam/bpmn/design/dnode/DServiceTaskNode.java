@@ -26,7 +26,11 @@ import javafx.scene.control.SingleSelectionModel;
 public class DServiceTaskNode extends DNode
 {
 
+    StringProperty inputProperty = new SimpleStringProperty();
+    StringProperty outputProperty = new SimpleStringProperty();
+
     StringProperty restLinkProperty = new SimpleStringProperty();
+    
 
     public SingleSelectionModel<String> serviceType;
     public SingleSelectionModel<String> soapFunc;
@@ -57,9 +61,15 @@ public class DServiceTaskNode extends DNode
         
             xmlWriter.addTaskNode(id.toString());
 
+            DTextProperty dInputProperty = new DTextProperty("Input", inputProperty);
+            DTextProperty dOutputProperty = new DTextProperty("Output", outputProperty);
+
             DTextProperty dRestLinkProperty = new DTextProperty("Rest Link", restLinkProperty);
             DComboBoxProperty dServiceTypeProperty = new DComboBoxProperty("Service Type", serviceType, serviceTypeList);
             DComboBoxProperty dSoapFuncProperty = new DComboBoxProperty("Soap Func", soapFunc, soapFuncList);
+
+            allDProperties.add(dInputProperty);
+            allDProperties.add(dOutputProperty);
 
             allDProperties.add(dRestLinkProperty);
             allDProperties.add(dServiceTypeProperty);
@@ -70,6 +80,24 @@ public class DServiceTaskNode extends DNode
 
             a = (String) dSoapFuncProperty.getComboSelectionModel().getSelectedItem();
             xmlWriter.setSoapFuncProperty(id.toString(), a);
+
+            inputProperty.addListener(new ChangeListener<String>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
+                {
+                    xmlWriter.setInput(id.toString(), newValue);
+                }
+            });
+
+            outputProperty.addListener(new ChangeListener<String>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
+                {
+                    xmlWriter.setOutput(id.toString(), newValue);
+                }
+            });
 
             restLinkProperty.addListener(new ChangeListener<String>()
             {
@@ -97,5 +125,24 @@ public class DServiceTaskNode extends DNode
         }
         
 
+    }
+
+    public void removeNode()
+    {
+        if(getNextDNode() != null)
+        {
+            xmlWriter.setPrevNode(getNextDNode().getId(), null);
+            //setNextDNode(null);
+            getNextDNode().setPPrevDNode(null);
+        }
+
+        if(getPrevDNode() != null)
+        {
+            xmlWriter.setNextNode(getPrevDNode().getId(), null);
+            //setPrevDNode(null);
+            getPrevDNode().setNNextDNode(null);
+        }
+
+        xmlWriter.removeNode(getId());
     }
 }

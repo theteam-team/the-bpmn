@@ -86,6 +86,14 @@ dependencies
     compile group: 'com.sun.xml.ws', name: 'jaxws-rt', version: '2.3.2'
     compile group: 'com.sun.org.apache.xml.internal', name: 'resolver', version: '20050927'
 
+    compile 'javax.xml.bind:jaxb-api:2.3.1'
+    compile 'javax.activation:activation:1.1'
+    compile 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+
+
+    compile group: 'javax.xml.ws', name: 'jaxws-api', version: '2.3.1'
+    
+
     compile files('libs/bpmn-nodes.jar')
 
     

@@ -40,15 +40,11 @@ public class SStartNode extends SNode
     }
 
     @XmlAttribute
-    public String getNId()
-    {
-        return nId;  
-    }
-
+    public String getNId() { return this.nId; }
     public void setNId(String id)
     {
         this.nId = id;
-    }
+    };
 
     public UUID getUUId()
     {
@@ -106,10 +102,16 @@ public class SStartNode extends SNode
         this.nextNode = nextNode;
     }
 
-    @Override
-    public void run()
+
+    public void setOutput(String output)
     {
-        System.out.println("Start Node Running");
+        
     }
+
+    public void setInput(String input)
+    {
+        
+    }
+
 
 }

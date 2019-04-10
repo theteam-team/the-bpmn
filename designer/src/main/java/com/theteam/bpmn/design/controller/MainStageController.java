@@ -89,7 +89,7 @@ public class MainStageController {
     public void createBPMNDiagram(ActionEvent ae) throws IOException
     {
 
-        WSDLLoader.loadWSDL();
+        // WSDLLoader.loadWSDL();
         
         ImagesLoader.initializeImages();
 

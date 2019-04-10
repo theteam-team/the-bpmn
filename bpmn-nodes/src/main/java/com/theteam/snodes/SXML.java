@@ -1,19 +1,29 @@
 package com.theteam.snodes;
 
 import java.io.FileOutputStream;
-import java.util.UUID;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
+import com.theteam.ElementsList;
+import com.theteam.io.SVariablesList;
+import com.theteam.io.SVariable;
+import com.theteam.snodes.event.*;
+
 public class SXML
 {
 
+    ElementsList elementsList;
+
     SNodeList nodeList;
+    SVariablesList variableList;
 
     public SXML()
     {
+        elementsList = new ElementsList();
+
         nodeList = new SNodeList();
+        variableList = new SVariablesList();
     }
 
     public void addStartNode(String id)
@@ -31,9 +41,43 @@ public class SXML
     }
     public void addTaskNode(String id)
     {
-        // out.println(id);
+        
         STaskNode t = new STaskNode(Types.NodeType(Types.NodeTypes.TASK), id);
         nodeList.addTaskNode(t);
+    }
+
+    public void addDBNode(String id)
+    {
+        
+        SDBNode t = new SDBNode(Types.NodeType(Types.NodeTypes.DB), id);
+        nodeList.addDBNode(t);
+    }
+
+    public void addExternalEventNode(String id)
+    {
+        
+        SExternalEvent t = new SExternalEvent(Types.NodeType(Types.NodeTypes.EXTERNAL_EVENT), id);
+        nodeList.addExternalEventNode(t);
+    }
+
+    public void addTimerEventNode(String id)
+    {
+        
+        STimerEvent t = new STimerEvent(Types.NodeType(Types.NodeTypes.TIMER_EVENT), id);
+        nodeList.addTimerEventNode(t);
+    }
+
+    public void addScriptNode(String id)
+    {
+        
+        SScriptNode t = new SScriptNode(Types.NodeType(Types.NodeTypes.SCRIPT), id);
+        nodeList.addScriptNode(t);
+    }
+    public void addTestNode(String id)
+    {
+        
+        STestNode t = new STestNode(Types.NodeType(Types.NodeTypes.TEST), id);
+        nodeList.addTestNode(t);
     }
 
     public void setNextNode(String currNode, String nextNode)
@@ -46,6 +90,12 @@ public class SXML
     {
         SNode node = nodeList.getNodeById(currNode);
         node.setPreviousNode(prevNode);
+    }
+
+    public void removeNode(String node)
+    {
+        SNode n = nodeList.getNodeById(node);
+        nodeList.removeNode(n);
     }
 
     public void setRestLinkProperty(String iid, String value)
@@ -87,6 +137,60 @@ public class SXML
 
     }
 
+    public void setInput(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        //STaskNode taskNode = (STaskNode) node;
+
+        node.setInput(value);
+
+    }
+
+    public void setOutput(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        //STaskNode taskNode = (STaskNode) node;
+
+        node.setOutput(value);
+
+    }
+
+    public void addVariable(String id, String name, String type, String value)
+    {
+
+        SVariable variable = new SVariable(id, name, type, value);
+        variableList.addVariable(variable);
+
+    }
+
+    public void setVariableName(String id, String newName)
+    {
+        System.out.println("Name Changed");
+        SVariable var = variableList.getVariableById(id);
+        var.setName(newName);
+    }
+
+    public void setVariableType(String id, String type)
+    {
+        SVariable var = variableList.getVariableById(id);
+        var.setType(type);
+    }
+
+    public void setVariableValue(String id, String value)
+    {
+        SVariable var = variableList.getVariableById(id);
+        var.setValue(value);
+
+    }
+
 
     public void saveToXML(String path) throws Exception
     {
@@ -94,17 +198,20 @@ public class SXML
         System.out.println("Start Making Nodes ...");
 		System.out.println("Finished Making Nodes ...");
 		
-		System.out.println("Start Making XML ...");
+        System.out.println("Start Making XML ...");
+        
+        elementsList.setNodeList(nodeList);
+        elementsList.setVariableList(variableList);
         
         // path example
 		// String path = "../xml/nodeXML.xml";
         
-        JAXBContext contextObj = JAXBContext.newInstance(SNodeList.class);
+        JAXBContext contextObj = JAXBContext.newInstance(ElementsList.class);
         Marshaller marshallerObj = contextObj.createMarshaller();
         marshallerObj.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         
         
-        marshallerObj.marshal(nodeList, new FileOutputStream(path));
+        marshallerObj.marshal(elementsList, new FileOutputStream(path));
 
 		System.out.println("Finished Making XML ...");
         System.out.println("Path to XML " + path);

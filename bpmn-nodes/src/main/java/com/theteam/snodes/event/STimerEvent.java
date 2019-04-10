@@ -1,0 +1,117 @@
+package com.theteam.snodes.event;
+
+
+import java.util.UUID;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+import com.theteam.snodes.SNode;
+
+
+@XmlRootElement
+@XmlType(propOrder = { "previousNode", "nextNode", "time"})
+public class STimerEvent extends SNode
+{
+
+    
+    private String previousNode = null;
+    private String nextNode = null;
+
+    private String time = null;
+
+
+    public STimerEvent()
+    {
+
+    }
+
+    public STimerEvent(String type, UUID id)
+    {
+        this.type = type;
+        this.nId = id.toString();
+        this.uuid = id;
+    }
+
+    public STimerEvent(String type, String id)
+    {
+        this.type = type;
+        this.nId = id;
+        uuid = UUID.fromString(id);
+    }
+
+    @XmlAttribute
+    public String getNId() { return this.nId; }
+    public void setNId(String id)
+    {
+        this.nId = id;
+    };
+
+    public UUID getUUId()
+    {
+        return uuid;  
+    }
+
+    @XmlAttribute
+    public String getType()
+    {
+        return type;  
+    }  
+
+    public void setType(String type)
+    {  
+        this.type = type;  
+    }
+
+    @XmlElement(name = "time")
+    public String getTime()
+    {
+
+        if(time != null)
+            return time;
+        return null;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    @XmlElement(name = "previousNode")
+    public String getPreviousNode()
+    {
+
+        if(previousNode != null)
+            return previousNode;
+        return null;
+    }
+
+    public void setPreviousNode(String previousNode) {
+        this.previousNode = previousNode;
+    }
+
+    @XmlElement(name = "nextNode")
+    public String getNextNode()
+    {
+
+        if(nextNode != null)
+            return nextNode;
+        return null;
+    }
+
+    public void setNextNode(String nextNode) {
+        this.nextNode = nextNode;
+    }
+
+
+    public void setOutput(String output)
+    {
+        
+    }
+
+    public void setInput(String input)
+    {
+        
+    }
+}

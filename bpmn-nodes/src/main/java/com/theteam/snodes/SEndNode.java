@@ -106,10 +106,14 @@ public class SEndNode extends SNode
 
     }
 
-    @Override
-    public void run()
+    public void setOutput(String output)
     {
-        System.out.println("End Node Running");
+        
+    }
+
+    public void setInput(String input)
+    {
+        
     }
 
 }

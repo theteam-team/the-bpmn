@@ -29,4 +29,23 @@ public class DStartNode extends DNode
         }
 
     }
+
+    public void removeNode()
+    {
+        if(getNextDNode() != null)
+        {
+            xmlWriter.setPrevNode(getNextDNode().getId(), null);
+            //setNextDNode(null);
+            getNextDNode().setPPrevDNode(null);
+        }
+
+        if(getPrevDNode() != null)
+        {
+            xmlWriter.setNextNode(getPrevDNode().getId(), null);
+            //setPrevDNode(null);
+            getPrevDNode().setNNextDNode(null);
+        }
+
+        xmlWriter.removeNode(getId());
+    }
 }

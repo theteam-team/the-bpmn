@@ -1,28 +1,15 @@
 package com.theteam.snodes;
 
 import java.util.UUID;
-import java.util.concurrent.Executor;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-//import java.net.URL;  
-import javax.xml.namespace.QName;  
-import javax.xml.ws.Service;
-
-import com.theteam.bpmn.engine.ws.WS;  
-
 
 @XmlRootElement
-@XmlType(propOrder = { "previousNode", "nextNode", "serviceType", "restLink", "soapFunc"})
+@XmlType(propOrder = { "previousNode", "nextNode", "input", "output", "serviceType", "restLink", "soapFunc"})
 public class STaskNode extends SNode
 {
 
@@ -32,6 +19,9 @@ public class STaskNode extends SNode
     private String serviceType = null;
     private String restLink = null;
     private String soapFunc = null;
+
+    private String input = null;
+    private String output = null;
 
     public STaskNode()
     {
@@ -110,90 +100,6 @@ public class STaskNode extends SNode
     }
 
 
-    @Override
-    public void run()
-    {
-
-        System.out.println("Service_task Node Running");
-
-
-        if(serviceType.equals("soap"))
-        {
-            System.out.println("Execute soap service to link http://localhost:8080/soap_server/ws?wsdl");
-            try
-            {
-            URL url = new URL("http://localhost:8080/soap_server/ws?wsdl");
-
-            //1st argument service URI, refer to wsdl document above  
-            //2nd argument is service name, refer to wsdl document above
-
-            QName qname = new QName("http://ws.engine.bpmn.theteam.com/", "WSImplService");  
-            Service service = Service.create(url, qname);
-
-            WS hello = service.getPort(WS.class);
-
-            if(soapFunc.equals("getHello"))
-            {
-                System.out.println("Execute function getHello");
-                System.out.println(hello.getHello("the-team"));  
-            }
-            
-            else if(soapFunc.equals("getResponseWithName"))
-            {
-                System.out.println("Execute function getHellogetResponseWithName");
-                System.out.println(hello.getResponseWithName("the-team"));
-            }
-
-            } catch(Exception e)
-            {
-
-            }
-
-        }
-
-        else if(serviceType.equals("rest"))
-        {
-            System.out.println("Execute rest service to link " + restLink);
-            try {
-
-                // http://localhost:8080/RESTfulExample/json/product/get
-            
-                URL url = new URL(restLink);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Accept", "application/json");
-    
-                if (conn.getResponseCode() != 200) {
-                    throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-                }
-    
-                BufferedReader br = new BufferedReader(new InputStreamReader(
-                        (conn.getInputStream())));
-    
-                String output;
-                // System.out.println("Output from Server .... \n");
-                while ((output = br.readLine()) != null) {
-    
-                    System.out.println(output);
-                }
-                
-                conn.disconnect();
-    
-            } catch (MalformedURLException e) {
-    
-                e.printStackTrace();
-            } catch (IOException e) {
-    
-                e.printStackTrace();
-                
-            }
-
-        }
-
-
-    }
-
-
     @XmlElement(name = "ServiceType")
     public String getServiceType()
     {
@@ -239,6 +145,36 @@ public class STaskNode extends SNode
     public void setSoapFunc(String soapFunc)
     {
         this.soapFunc = soapFunc;
+    }
+
+    @XmlElement(name = "input")
+    public String getInput()
+    {
+
+        if(input != null)
+            return input;
+        return null;
+        
+    }
+
+    public void setInput(String input)
+    {
+        this.input = input;
+    }
+
+    @XmlElement(name = "output")
+    public String getOutput()
+    {
+
+        if(output != null)
+            return output;
+        return null;
+        
+    }
+
+    public void setOutput(String output)
+    {
+        this.output = output;
     }
 
 }

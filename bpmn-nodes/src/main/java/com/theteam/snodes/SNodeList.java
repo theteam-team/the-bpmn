@@ -2,28 +2,50 @@ package com.theteam.snodes;
 import java.util.*;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "nodes")
-@XmlType(propOrder = { "startNode", "taskNodes", "endNode"})
+import com.theteam.snodes.event.*;
+
+
+@XmlType(propOrder = { "start", "serviceTask", "db", "script", "externalEvent", "timerEvent", "test", "end"})
 public class SNodeList
 {
-    @XmlElement(name = "startNode")
-    private SStartNode startNode;
+    @XmlElement(name = "start")
+    private SStartNode start;
 
-    @XmlElement(name = "endNode")
-    private SEndNode endNode;
+    @XmlElement(name = "end")
+    private SEndNode end;
 
-    @XmlElement(name = "taskNode")
-    private List<STaskNode> taskNodes;
+    @XmlElement(name = "serviceTask")
+    private List<STaskNode> serviceTask;
+
+    @XmlElement(name = "db")
+    private List<SDBNode> db;
+
+    @XmlElement(name = "script")
+    private List<SScriptNode> script;
+
+    @XmlElement(name = "externalEvent")
+    private List<SExternalEvent> externalEvent;
+
+    @XmlElement(name = "timerEvent")
+    private List<STimerEvent> timerEvent;
+
+    @XmlElement(name = "test")
+    private List<STestNode> test;
 
     HashMap<String, SNode> mapNodes;
     
 
     public SNodeList ()
     {
-        taskNodes = new ArrayList<STaskNode>();
+        serviceTask = new ArrayList<STaskNode>();
+        db = new ArrayList<SDBNode>();
+        script = new ArrayList<SScriptNode>();
+        externalEvent = new ArrayList<SExternalEvent>();
+        timerEvent = new ArrayList<STimerEvent>();
+        test = new ArrayList<STestNode>();
+        
         mapNodes = new HashMap<>();
         
     }
@@ -32,33 +54,120 @@ public class SNodeList
     {
         List<SNode> allNodes = new ArrayList<SNode>();
 
-        allNodes.add(startNode);
+        allNodes.add(start);
         
-        for(STaskNode node : taskNodes)
+        for(STaskNode node : serviceTask)
+        {
+            allNodes.add(node);
+            
+        }
+        for(SDBNode node : db)
+        {
+            allNodes.add(node);
+            
+        }
+        for(SScriptNode node : script)
+        {
+            allNodes.add(node);
+            
+        }
+        for(SExternalEvent node : externalEvent)
+        {
+            allNodes.add(node);
+            
+        }
+        for(STimerEvent node : timerEvent)
+        {
+            allNodes.add(node);
+            
+        }
+        for(STestNode node : test)
         {
             allNodes.add(node);
             
         }
 
-        allNodes.add(endNode);
+        allNodes.add(end);
 
         return allNodes;
     }
 
+    /*
     public void setCircleNodes(List<STaskNode> taskNodes) {
-        this.taskNodes = taskNodes;
+        this.serviceTask = taskNodes;
     }
+    */
     
     public List<STaskNode> getTaskList()
     {
-        return taskNodes;
+        return serviceTask;
     }
     
     public void addTaskNode(STaskNode node)
     {
         
         mapNodes.put(node.getNId(), node);
-        taskNodes.add(node);
+        serviceTask.add(node);
+    }
+
+    public List<SDBNode> getDBList()
+    {
+        return db;
+    }
+    
+    public void addDBNode(SDBNode node)
+    {
+        
+        mapNodes.put(node.getNId(), node);
+        db.add(node);
+    }
+
+    public List<SExternalEvent> getExternalEventList()
+    {
+        return externalEvent;
+    }
+    
+    public void addExternalEventNode(SExternalEvent node)
+    {
+        
+        mapNodes.put(node.getNId(), node);
+        externalEvent.add(node);
+    }
+
+    public List<STimerEvent> getTimerList()
+    {
+        return timerEvent;
+    }
+    
+    public void addTimerEventNode(STimerEvent node)
+    {
+        
+        mapNodes.put(node.getNId(), node);
+        timerEvent.add(node);
+    }
+
+    public List<SScriptNode> getScriptList()
+    {
+        return script;
+    }
+    
+    public void addScriptNode(SScriptNode node)
+    {
+        
+        mapNodes.put(node.getNId(), node);
+        script.add(node);
+    }
+
+    public List<STestNode> getTestList()
+    {
+        return test;
+    }
+    
+    public void addTestNode(STestNode node)
+    {
+        
+        mapNodes.put(node.getNId(), node);
+        test.add(node);
     }
 
 
@@ -66,56 +175,76 @@ public class SNodeList
     {
 
         mapNodes.put(node.getNId(), node);
-        startNode = node;
+        start = node;
     }
 
     public SNode getStartNode()
     {
-        return startNode;
+        return start;
     }
     
     public void addEndNode(SEndNode node)
     {
 
         mapNodes.put(node.getNId(), node);
-        endNode = node;
+        end = node;
     }
 
     public SNode getEndNode()
     {
-        return endNode;
+        return end;
     }
 
-    public SNode getListNode(String id)
-    {
-        return endNode;
-    }
 
     public void removeNode(SNode node)
     {
+        mapNodes.remove(node.getNId());
+        
         if (node.getType() == Types.NodeType(Types.NodeTypes.START))
-            startNode = null;
+            start = null;
 
         else if (node.getType() == Types.NodeType(Types.NodeTypes.END))
-            endNode = null;
+            end = null;
+            
+        else if (node.getType() == Types.NodeType(Types.NodeTypes.TASK))
+            serviceTask.remove(node);
 
-        else
-            taskNodes.remove(node);
-        
+        else if (node.getType() == Types.NodeType(Types.NodeTypes.DB))
+            db.remove(node);
+
+        else if (node.getType() == Types.NodeType(Types.NodeTypes.EXTERNAL_EVENT))
+            externalEvent.remove(node);
+
+        else if (node.getType() == Types.NodeType(Types.NodeTypes.TIMER_EVENT))
+            timerEvent.remove(node);
+
+        else if (node.getType() == Types.NodeType(Types.NodeTypes.SCRIPT))
+            script.remove(node);
+
+        else if (node.getType() == Types.NodeType(Types.NodeTypes.TEST))
+            test.remove(node);
+
     }
+
 
     public SNode getNodeById(String iid)
     {
         return mapNodes.get(iid);
     }
 
-    /*public void removeAllNodes()
+    public void removeAllNodes()
     {
         System.out.println("remove all nodes");
 
-        startNode = null;
-        endNode = null;
-        taskNodes.clear();
-    }*/
+        start = null;
+        end = null;
+
+        serviceTask.clear();
+        db.clear();
+        externalEvent.clear();
+        timerEvent.clear();
+        script.clear();
+        test.clear();
+    }
 }
 

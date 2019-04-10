@@ -1,6 +1,7 @@
 package com.theteam.bpmn.engine.api;
 
 import com.theteam.bpmn.engine.Elist;
+import com.theteam.bpmn.engine.enode.*;
 import com.theteam.snodes.SNode;
 
 import javax.ws.rs.GET;
@@ -30,11 +31,11 @@ public class Workflow
     public String runWorkflow(String id)
     {
         
-        if(Elist.nodes.getStartNode().getNId().equals(id))
+        if(Elist.getStartNode().getSNode().getNId().equals(id))
         {
             System.out.println("\nStart WorkFlow \n" );
 
-            SNode node = Elist.nodes.getStartNode();
+            ENode node = Elist.getStartNode();
             Boolean found;
 
             while(node != null)
@@ -45,10 +46,10 @@ public class Workflow
                 found = false;
                 node.run();
 
-                for(SNode n : Elist.nodes.getAllNodes())
+                for(ENode n : Elist.eNodes)
                 {
                     
-                    if(n.getNId().equals(node.getNextNode()))
+                    if(n.getSNode().getNId().equals(node.getSNode().getNextNode()))
                     {
                         found = true;
                         node = n;

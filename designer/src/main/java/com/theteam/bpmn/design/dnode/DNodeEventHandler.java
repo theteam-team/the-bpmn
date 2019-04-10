@@ -32,7 +32,17 @@ public final class DNodeEventHandler
 
             if(me.getButton() == MouseButton.SECONDARY)
             {
+                node.removeNode();
+                for (DLine line : node.getStartLines()) {
+                    dbpmnController.drawArea.getChildren().remove(line);
+                }
+
+                for (DLine line : node.getEndLines()) {
+                    dbpmnController.drawArea.getChildren().remove(line);
+                }
+
                 dbpmnController.drawArea.getChildren().remove(node);
+                
                 return;
             }
 
@@ -115,6 +125,15 @@ public final class DNodeEventHandler
             {
                 node.setX(me.getX()-node.getFitWidth()/2);
                 node.setY(me.getY()-node.getFitHeight()/2);
+
+                for (DLine line : node.getStartLines()) {
+                    line.changeLineStart(node);
+                }
+
+                for (DLine line : node.getEndLines()) {
+                    line.changeLineEnd(node);
+                }
+
             }
 
 

@@ -42,7 +42,7 @@ public class App extends Application
         mainStagecontroller.setStage(stage);
         mainStagecontroller.setupBinding(stageStyle);
         
-        Scene scene = new Scene(rootGroup, 830, 610);
+        Scene scene = new Scene(rootGroup, 1200, 800);
         mainStagecontroller.setScene(scene);
         scene.setFill(Color.TRANSPARENT);
         scene.getStylesheets().addAll(App.class

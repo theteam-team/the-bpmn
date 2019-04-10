@@ -1,6 +1,7 @@
 package com.theteam.bpmn.design.dnode;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.theteam.bpmn.design.dnode.dproperty.DProperty;
@@ -24,7 +25,7 @@ import javafx.scene.image.ImageView;
  */
 public class DNode extends ImageView
 {
-    SXML xmlWriter;
+    protected SXML xmlWriter;
     
     protected String type;
 
@@ -34,6 +35,9 @@ public class DNode extends ImageView
     protected List<DProperty> allDProperties;
 
     private BooleanProperty clicked = new SimpleBooleanProperty(this, "clicked", false);
+
+    private List<DLine> startlinesAttached = new LinkedList<>();
+    private List<DLine> endlinesAttached = new LinkedList<>();
 
     protected boolean drawNode = false;
 
@@ -81,6 +85,11 @@ public class DNode extends ImageView
         setImage(im);
     }
 
+    public void removeNode()
+    {
+
+    }
+
     public List<DProperty> getIDPropertNode() { return allDProperties; }
 
     public boolean isDrawNode() { return drawNode; }
@@ -90,6 +99,11 @@ public class DNode extends ImageView
     public void setClicked(boolean i) { this.clicked.set(i); }
 
     public DNode getNextDNode() { return this.nextDNode; }
+    public void setNNextDNode(DNode node)
+    {
+        this.nextDNode = node;
+        
+    }
     public void setNextDNode(DNode node)
     {
         this.nextDNode = node;
@@ -97,11 +111,18 @@ public class DNode extends ImageView
     }
 
     public DNode getPrevDNode() { return this.prevDNode; }
+    public void setPPrevDNode(DNode node)
+    { 
+        this.prevDNode = node;
+    }
     public void setPrevDNode(DNode node)
     { 
         this.prevDNode = node;
         xmlWriter.setPrevNode(getId(), node.getId());
     }
+
+    public List<DLine> getStartLines(){ return startlinesAttached;}
+    public List<DLine> getEndLines(){ return endlinesAttached;}
 
     public String getDType() { return this.type; }
 

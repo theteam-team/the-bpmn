@@ -1,21 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<nodes>
-    <startNode nId="801133d6-e31d-4364-b2b9-23e5d980d322" type="START">
-        <NId>801133d6-e31d-4364-b2b9-23e5d980d322</NId>
-        <type>START</type>
-        <nextNode>5b4f21a8-d817-4308-94e2-a9c11539731a</nextNode>
-    </startNode>
-    <taskNode nId="5b4f21a8-d817-4308-94e2-a9c11539731a" type="TASK">
-        <NId>5b4f21a8-d817-4308-94e2-a9c11539731a</NId>
-        <type>TASK</type>
-        <previousNode>801133d6-e31d-4364-b2b9-23e5d980d322</previousNode>
-        <nextNode>e171f4af-bec5-4506-b0f1-2889c8d7a841</nextNode>
-        <ServiceType>soap</ServiceType>
-        <soapFunc>getHello</soapFunc>
-    </taskNode>
-    <endNode nId="e171f4af-bec5-4506-b0f1-2889c8d7a841" type="END">
-        <NId>e171f4af-bec5-4506-b0f1-2889c8d7a841</NId>
-        <type>END</type>
-        <previousNode>5b4f21a8-d817-4308-94e2-a9c11539731a</previousNode>
-    </endNode>
-</nodes>
+<bpm>
+    <nodes>
+        <start nId="756c0f14-ae44-4fcd-87f2-e14b246596ba" type="START">
+            <NId>756c0f14-ae44-4fcd-87f2-e14b246596ba</NId>
+            <type>START</type>
+            <nextNode>d7cfdeba-8787-4253-88bc-0e9d1d462b48</nextNode>
+        </start>
+        <test nId="d7cfdeba-8787-4253-88bc-0e9d1d462b48" type="TEST">
+            <NId>d7cfdeba-8787-4253-88bc-0e9d1d462b48</NId>
+            <type>TEST</type>
+            <previousNode>756c0f14-ae44-4fcd-87f2-e14b246596ba</previousNode>
+            <nextNode>40831a7b-2db2-4512-9c6e-559b4121d1f1</nextNode>
+            <input>a</input>
+            <output>b</output>
+        </test>
+        <test nId="40831a7b-2db2-4512-9c6e-559b4121d1f1" type="TEST">
+            <NId>40831a7b-2db2-4512-9c6e-559b4121d1f1</NId>
+            <type>TEST</type>
+            <previousNode>d7cfdeba-8787-4253-88bc-0e9d1d462b48</previousNode>
+            <nextNode>b0b7e30e-0f6b-4085-9e74-ca20256ab27b</nextNode>
+            <input>c</input>
+        </test>
+        <end nId="b0b7e30e-0f6b-4085-9e74-ca20256ab27b" type="END">
+            <NId>b0b7e30e-0f6b-4085-9e74-ca20256ab27b</NId>
+            <type>END</type>
+            <previousNode>40831a7b-2db2-4512-9c6e-559b4121d1f1</previousNode>
+        </end>
+    </nodes>
+    <variables>
+        <variable nId="a9a77d98-c37e-4573-bd5d-7c8941b51d2a">
+            <name>a</name>
+            <type>int</type>
+            <value>2,3</value>
+        </variable>
+        <variable nId="0332e299-8bc6-46f2-9fe1-689dc4b51d50">
+            <name>b</name>
+            <type>int</type>
+            <value></value>
+        </variable>
+        <variable nId="5991ece3-334a-49d2-8452-3bc93d016f12">
+            <name>c</name>
+            <type>int</type>
+            <value>b,6</value>
+        </variable>
+    </variables>
+</bpm>

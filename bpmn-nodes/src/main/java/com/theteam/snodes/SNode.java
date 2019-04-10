@@ -6,7 +6,7 @@ public abstract class SNode
 {
     protected String nId;
     protected UUID uuid;
-    String type;
+    protected String type;
 
     public abstract String getNId();
     public abstract void setNId(String id);
@@ -14,7 +14,6 @@ public abstract class SNode
     public abstract UUID getUUId();
 
     public abstract String getType(); 
-
     public abstract void setType(String type);
 
     public abstract String getPreviousNode();
@@ -26,9 +25,12 @@ public abstract class SNode
 
     public abstract String getNextNode();
     public abstract void setNextNode(String nextNode);
+
+    public abstract void setOutput(String output);
+    public abstract void setInput(String input);
     
     // needs implementation
     // abstract void setNextNode(SNode nextNode);
 
-    public abstract void run();
+    //public abstract void run();
 }

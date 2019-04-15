@@ -68,7 +68,7 @@ public final class DNodeEventHandler
                     else
                     {
                         dbpmnController.secondNode = node;
-
+                        
                         dbpmnController.createLine(dbpmnController.firstNode, dbpmnController.secondNode);
 
                         dbpmnController.firstNode.setClicked(false);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TitledPane?>
@@ -50,5 +51,6 @@
             </ScrollPane>
          </content>
       </TitledPane>
+      <JFXTextField alignment="CENTER" onKeyTyped="#nameChanged" text="Design" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="15.0" />
    </children>
 </AnchorPane>

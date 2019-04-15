@@ -101,6 +101,7 @@ public class MainStageController {
 
         bpmnStagecontroller.setLogText(logText);
         bpmnStagecontroller.setToolBar(toolBar);
+        bpmnStagecontroller.setTab(tab);
         
         bpmnStagecontroller.loadNodes();
 

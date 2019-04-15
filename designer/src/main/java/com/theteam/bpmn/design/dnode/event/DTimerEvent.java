@@ -60,7 +60,7 @@ public class DTimerEvent extends DNode
         {
             this.xmlWriter = xmlWriter;
         
-            xmlWriter.addTaskNode(id.toString());
+            xmlWriter.addTimerEventNode(id.toString());
 
             DTextProperty dInputProperty = new DTextProperty("Input", inputProperty);
             DTextProperty dOutputProperty = new DTextProperty("Output", outputProperty);

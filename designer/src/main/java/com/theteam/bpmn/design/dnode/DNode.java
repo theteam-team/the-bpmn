@@ -32,6 +32,8 @@ public class DNode extends ImageView
     private DNode nextDNode;
     private DNode prevDNode;
 
+    private DNode connectedDNode;
+
     protected List<DProperty> allDProperties;
 
     private BooleanProperty clicked = new SimpleBooleanProperty(this, "clicked", false);
@@ -115,10 +117,23 @@ public class DNode extends ImageView
     { 
         this.prevDNode = node;
     }
+
     public void setPrevDNode(DNode node)
     { 
         this.prevDNode = node;
         xmlWriter.setPrevNode(getId(), node.getId());
+    }
+
+    public void setExternalConnectedDNode(DNode node)
+    { 
+        this.connectedDNode = node;
+        xmlWriter.setExternalConnectedEvent(getId(), node.getId());
+    }
+
+    public void setDBConnectedDNode(DNode node)
+    { 
+        this.connectedDNode = node;
+        xmlWriter.setDBConnectedEvent(getId(), node.getId());
     }
 
     public List<DLine> getStartLines(){ return startlinesAttached;}

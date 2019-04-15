@@ -29,21 +29,11 @@ public class DDBNode extends DNode
     StringProperty inputProperty = new SimpleStringProperty();
     StringProperty outputProperty = new SimpleStringProperty();
 
-    StringProperty restLinkProperty = new SimpleStringProperty();
-    
+    StringProperty connectionStringProperty = new SimpleStringProperty();
+    StringProperty selectStatementProperty = new SimpleStringProperty();
 
-    public SingleSelectionModel<String> serviceType;
-    public SingleSelectionModel<String> soapFunc;
-
-    public ObservableList<String> serviceTypeList = FXCollections.observableArrayList(
-        "rest",
-        "soap"
-    );
-
-    public ObservableList<String> soapFuncList = FXCollections.observableArrayList(
-        "getHello",
-        "getResponseWithName"
-    );
+    StringProperty userNameProperty = new SimpleStringProperty();
+    StringProperty passwordProperty = new SimpleStringProperty();
 
     public DDBNode(SXML xmlWriter, UUID id, Boolean drawNode)
     {
@@ -59,27 +49,26 @@ public class DDBNode extends DNode
         {
             this.xmlWriter = xmlWriter;
         
-            xmlWriter.addTaskNode(id.toString());
+            xmlWriter.addDBNode(id.toString());
 
             DTextProperty dInputProperty = new DTextProperty("Input", inputProperty);
             DTextProperty dOutputProperty = new DTextProperty("Output", outputProperty);
 
-            DTextProperty dRestLinkProperty = new DTextProperty("Rest Link", restLinkProperty);
-            DComboBoxProperty dServiceTypeProperty = new DComboBoxProperty("Service Type", serviceType, serviceTypeList);
-            DComboBoxProperty dSoapFuncProperty = new DComboBoxProperty("Soap Func", soapFunc, soapFuncList);
+            DTextProperty dConnectionStringProperty = new DTextProperty("Connection String", connectionStringProperty);
+            DTextProperty dSelectStatementProperty = new DTextProperty("Select Statment", selectStatementProperty);
+
+            DTextProperty dUserNameProperty = new DTextProperty("user name", userNameProperty);
+            DTextProperty dPasswordProperty = new DTextProperty("password", passwordProperty);
+            
 
             allDProperties.add(dInputProperty);
             allDProperties.add(dOutputProperty);
 
-            allDProperties.add(dRestLinkProperty);
-            allDProperties.add(dServiceTypeProperty);
-            allDProperties.add(dSoapFuncProperty);
+            allDProperties.add(dConnectionStringProperty);
+            allDProperties.add(dSelectStatementProperty);
 
-            String a = (String) dServiceTypeProperty.getComboSelectionModel().getSelectedItem();
-            xmlWriter.setServiceTypeProperty(id.toString(), a);
-
-            a = (String) dSoapFuncProperty.getComboSelectionModel().getSelectedItem();
-            xmlWriter.setSoapFuncProperty(id.toString(), a);
+            allDProperties.add(dUserNameProperty);
+            allDProperties.add(dPasswordProperty);
 
             inputProperty.addListener(new ChangeListener<String>()
             {
@@ -99,28 +88,42 @@ public class DDBNode extends DNode
                 }
             });
 
-            restLinkProperty.addListener(new ChangeListener<String>()
+            connectionStringProperty.addListener(new ChangeListener<String>()
             {
                 @Override
                 public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
                 {
-                    xmlWriter.setRestLinkProperty(id.toString(), newValue);
+                    xmlWriter.setDBConnectionStringProperty(id.toString(), newValue);
+                }
+            });
+            
+            selectStatementProperty.addListener(new ChangeListener<String>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
+                {
+                    xmlWriter.setDBSelectStatmentProperty(id.toString(), newValue);
                 }
             });
 
-            dServiceTypeProperty.getComboSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
-                String selectedItem = (String) dServiceTypeProperty.getComboSelectionModel().getSelectedItem();
-
-                xmlWriter.setServiceTypeProperty(id.toString(), selectedItem);
-                
+            userNameProperty.addListener(new ChangeListener<String>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
+                {
+                    xmlWriter.setDBUserNameProperty(id.toString(), newValue);
+                }
+            });
+            
+            passwordProperty.addListener(new ChangeListener<String>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
+                {
+                    xmlWriter.setDBPasswordProperty(id.toString(), newValue);
+                }
             });
 
-            dSoapFuncProperty.getComboSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
-                String selectedItem = (String) dSoapFuncProperty.getComboSelectionModel().getSelectedItem();
-
-                xmlWriter.setSoapFuncProperty(id.toString(), selectedItem);
-                
-            });
 
         }
         

@@ -141,8 +141,19 @@ public class DLine extends Path
         from = nodeFrom;
         to = nodeTo;
 
-        nodeFrom.setNextDNode(nodeTo);
-        nodeTo.setPrevDNode(nodeFrom);
+        if(nodeFrom.type.equals("external")
+        && nodeTo.type.equals("db"))
+        {
+            nodeFrom.setExternalConnectedDNode(nodeTo);
+            nodeTo.setDBConnectedDNode(nodeFrom);
+        }
+        
+        else
+        {
+            nodeFrom.setNextDNode(nodeTo);
+            nodeTo.setPrevDNode(nodeFrom);
+        }
+
     }
 
     public DNode getNodeFrom() { return from; }

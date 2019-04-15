@@ -28,7 +28,9 @@ import javafx.fxml.FXML;
 
 import javafx.scene.Node;
 import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.Tab;
 import javafx.scene.control.ToolBar;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.PickResult;
 import javafx.scene.layout.AnchorPane;
@@ -61,6 +63,8 @@ public class BPMNStageController {
     public DNode firstNode = null;
     public DNode secondNode = null;
 
+    Tab tab;
+
     SXML xmlWriter;
 
     Integer i = 0;
@@ -68,6 +72,8 @@ public class BPMNStageController {
     public void loadNodes()
     {
         xmlWriter = new SXML();
+
+        xmlWriter.setWorkflowName("design");
 
         // ADD NODE
 
@@ -122,7 +128,11 @@ public class BPMNStageController {
         addIcon.setSize("25");
         addIcon.setOnMouseClicked(addVariableButtonHandler);
 
-        toolBar.getItems().addAll(saveIcon, addIcon);
+        MaterialIconView clearIcon = new MaterialIconView(MaterialIcon.REMOVE_CIRCLE);
+        clearIcon.setSize("25");
+        clearIcon.setOnMouseClicked(clearButtonHandler);
+
+        toolBar.getItems().addAll(saveIcon, addIcon, clearIcon);
 
     }
 
@@ -134,6 +144,11 @@ public class BPMNStageController {
     public void setToolBar(ToolBar toolBar)
     {
         this.toolBar = toolBar;
+    }
+
+    public void setTab(Tab tab)
+    {
+        this.tab = tab;
     }
 
 
@@ -221,6 +236,32 @@ public class BPMNStageController {
 
     public void createLine(DNode nodeFrom, DNode nodeTo)
     {
+
+        if(nodeFrom.getNextDNode() != null)
+        {
+            xmlWriter.setPrevNode(nodeFrom.getNextDNode().getId(), null);
+            //setNextDNode(null);
+            nodeFrom.getNextDNode().setPPrevDNode(null);
+        }
+
+        if(nodeTo.getPrevDNode() != null)
+        {
+            xmlWriter.setNextNode(nodeTo.getPrevDNode().getId(), null);
+            //setPrevDNode(null);
+            nodeTo.getPrevDNode().setNNextDNode(null);
+        }
+
+        for (DLine l : nodeFrom.getStartLines()) {
+            drawArea.getChildren().remove(l);
+        }
+
+        for (DLine l : nodeTo.getEndLines()) {
+            drawArea.getChildren().remove(l);
+        }
+
+        nodeFrom.getStartLines().clear();
+        nodeTo.getEndLines().clear();
+
         DLine line = new DLine(nodeFrom, nodeTo);
 
         nodeFrom.getStartLines().add(line);
@@ -235,14 +276,41 @@ public class BPMNStageController {
         @Override
         public void handle(MouseEvent me)
         {
+
+            // Change tab name here
+            //
+            //
+            //
+            //
+            //
             try
             {
-                xmlWriter.saveToXML("../xml/nodeXML.xml");
-                logText.set("Saved To ../xml/nodeXML.xml");
+                //xmlWriter.saveToXML("../xml/nodeXML.xml");
+                xmlWriter.saveToXML("../xml/" + tab.getText() + ".xml");
+                logText.set("Saved to : " + tab.getText() + ".xml");
             } catch(Exception e)
             {
                 System.out.println(e);
             }
+        }
+    };
+
+    @FXML
+    public void nameChanged(KeyEvent me)
+    {
+        String name = ((JFXTextField) me.getSource()).getText();
+
+        tab.setText(name);
+        xmlWriter.setWorkflowName(name);
+    }
+
+    public EventHandler<MouseEvent> clearButtonHandler =  new EventHandler<MouseEvent>()
+    {
+        @Override
+        public void handle(MouseEvent me)
+        {
+            drawArea.getChildren().clear();
+            xmlWriter.clear();
         }
     };
 

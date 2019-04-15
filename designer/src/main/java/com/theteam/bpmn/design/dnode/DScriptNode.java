@@ -59,7 +59,7 @@ public class DScriptNode extends DNode
         {
             this.xmlWriter = xmlWriter;
         
-            xmlWriter.addTaskNode(id.toString());
+            xmlWriter.addScriptNode(id.toString());
 
             DTextProperty dInputProperty = new DTextProperty("Input", inputProperty);
             DTextProperty dOutputProperty = new DTextProperty("Output", outputProperty);

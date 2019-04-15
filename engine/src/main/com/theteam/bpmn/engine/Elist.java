@@ -15,18 +15,18 @@ import com.theteam.io.SVariablesList;
  * TO BE CHANGED
  * used to load and use the list of Nodes, Variables
  */
-public final class Elist
+public class Elist
 {
-    public static ElementsList allList;
-    public static SNodeList sNodes;
-    public static SVariablesList variables;
+    public ElementsList allList;
+    public SNodeList sNodes;
+    public SVariablesList variables;
 
-    public static List<ENode> eNodes = new LinkedList<>();
-    public static Map<String, EVariable> eVariables = new HashMap<>();
+    public List<ENode> eNodes = new LinkedList<>();
+    public Map<String, EVariable> eVariables = new HashMap<>();
 
-    public static EStart eStart = null;
+    public EStart eStart = null;
 
-    public static ENode getStartNode()
+    public ENode getStartNode()
     {
         for (ENode var : eNodes) {
             if(var.getSNode().getType().equals("START"))
@@ -38,9 +38,9 @@ public final class Elist
         return null;
     }
 
-    public static EVariable getVariable(String name) { return eVariables.get(name); }
+    public EVariable getVariable(String name) { return eVariables.get(name); }
 
-    public static void addVariable(EVariable eVar)
+    public void addVariable(EVariable eVar)
     {
         eVariables.put(eVar.getSVariable().getName(), eVar);
     }

@@ -90,6 +90,9 @@ dependencies
     compile 'javax.activation:activation:1.1'
     compile 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
 
+    //runtime "mysql:mysql-connector-java:5.1.37"
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.15'
+
 
     compile group: 'javax.xml.ws', name: 'jaxws-api', version: '2.3.1'
     

@@ -1,6 +1,7 @@
 package com.theteam.bpmn.engine.enode;
 
 import com.theteam.bpmn.engine.Elist;
+import com.theteam.bpmn.engine.Workflow;
 import com.theteam.bpmn.engine.io.EVariable;
 import com.theteam.snodes.SNode;
 import com.theteam.snodes.STestNode;
@@ -15,10 +16,12 @@ public class ETest extends ENode
 
     Boolean error = false;
 
-    public ETest(SNode sNode)
+    public ETest(SNode sNode, Elist list)
     {
         this.sNode = sNode;
         sTest = (STestNode) sNode;
+
+        this.list = list;
 
         var1 = 0;
         var2 = 0;
@@ -32,7 +35,7 @@ public class ETest extends ENode
     {
         System.out.println("Test Node Running");
 
-        EVariable e = Elist.getVariable(sTest.getInput());
+        EVariable e = list.getVariable(sTest.getInput());
 
         String s = e.getValue();
 
@@ -48,11 +51,11 @@ public class ETest extends ENode
             if(len == 2)
             {
 
-                if(Elist.getVariable(a[0]) == null)
+                if(list.getVariable(a[0]) == null)
                     var1 = Integer.valueOf(a[0]);
                 else
                 {
-                    EVariable k = Elist.getVariable(a[0]);
+                    EVariable k = list.getVariable(a[0]);
                     String d = k.getValue();
                     //System.out.println(k.getSVariable().getName());
                     //System.out.println(d);
@@ -60,7 +63,19 @@ public class ETest extends ENode
                     var1 = Integer.valueOf(d.split(",")[0]);
                 }
 
-                var2 = Integer.valueOf(a[1]);
+                if(list.getVariable(a[1]) == null)
+                    var2 = Integer.valueOf(a[1]);
+                else
+                {
+                    EVariable k = list.getVariable(a[1]);
+                    String d = k.getValue();
+                    //System.out.println(k.getSVariable().getName());
+                    //System.out.println(d);
+
+                    var2 = Integer.valueOf(d.split(",")[0]);
+                }
+
+                //var2 = Integer.valueOf(a[1]);
             }
             else
             {
@@ -79,7 +94,7 @@ public class ETest extends ENode
             
             if(sTest.getOutput() != null)
             {
-                EVariable o = Elist.getVariable(sTest.getOutput());
+                EVariable o = list.getVariable(sTest.getOutput());
                 o.setValue(String.valueOf(sum));
 
             }

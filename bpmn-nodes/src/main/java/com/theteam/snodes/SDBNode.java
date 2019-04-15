@@ -9,17 +9,23 @@ import javax.xml.bind.annotation.XmlType;
 
 
 @XmlRootElement
-@XmlType(propOrder = { "connectedNode", "previousNode", "nextNode", "input", "output"})
+@XmlType(propOrder = { "connectedEvent", "previousNode", "nextNode", "input", "output",  "connectionString", "selectStatement", "userName", "password"})
 public class SDBNode extends SNode
 {
 
-    private String connectedNode = null;
+    private String connectedEvent = null;
 
     private String previousNode = null;
     private String nextNode = null;
 
     private String input = null;
     private String output = null;
+
+    private String connectionString = null;
+    private String selectStatement = null;
+
+    private String userName = null;
+    private String password = null;
 
     public SDBNode()
     {
@@ -97,18 +103,18 @@ public class SDBNode extends SNode
         this.nextNode = nextNode;
     }
 
-    @XmlElement(name = "connectedNode")
-    public String getConnectedNode()
+    @XmlElement(name = "connectedEvent")
+    public String getConnectedEvent()
     {
 
-        if(connectedNode != null)
-            return connectedNode;
+        if(connectedEvent != null)
+            return connectedEvent;
         return null;
     }
 
-    public void setConnectedNode(String connectedNode)
+    public void setConnectedEvent(String connectedEvent)
     {
-        this.connectedNode = connectedNode;
+        this.connectedEvent = connectedEvent;
     }
 
     @XmlElement(name = "input")
@@ -139,6 +145,66 @@ public class SDBNode extends SNode
     public void setOutput(String output)
     {
         this.output = output;
+    }
+
+    @XmlElement(name = "connectionString")
+    public String getConnectionString()
+    {
+
+        if(connectionString != null)
+            return connectionString;
+        return null;
+        
+    }
+
+    public void setConnectionString(String connectionString)
+    {
+        this.connectionString = connectionString;
+    }
+
+    @XmlElement(name = "selectStatement")
+    public String getSelectStatement()
+    {
+
+        if(selectStatement != null)
+            return selectStatement;
+        return null;
+        
+    }
+
+    public void setSelectStatement(String selectStatement)
+    {
+        this.selectStatement = selectStatement;
+    }
+
+    @XmlElement(name = "userName")
+    public String getUserName()
+    {
+
+        if(userName != null)
+            return userName;
+        return null;
+        
+    }
+
+    public void setUserName(String userName)
+    {
+        this.userName = userName;
+    }
+
+    @XmlElement(name = "password")
+    public String getPassword()
+    {
+
+        if(password != null)
+            return password;
+        return null;
+        
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
     }
 
 }

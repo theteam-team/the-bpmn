@@ -15,6 +15,8 @@ import java.net.URL;
 import javax.xml.namespace.QName;  
 import javax.xml.ws.Service;
 
+import com.theteam.bpmn.engine.Elist;
+import com.theteam.bpmn.engine.Workflow;
 import com.theteam.bpmn.engine.ws.WS;  
 
 public class EServiceTask extends ENode
@@ -22,9 +24,10 @@ public class EServiceTask extends ENode
 
     private STaskNode sTask;
 
-    public EServiceTask(SNode sNode)
+    public EServiceTask(SNode sNode, Elist list)
     {
         this.sNode = sNode;
+        this.list = list;
     }
     
 

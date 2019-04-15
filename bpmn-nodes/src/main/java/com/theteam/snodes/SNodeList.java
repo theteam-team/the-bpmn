@@ -1,6 +1,7 @@
 package com.theteam.snodes;
 import java.util.*;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -34,7 +35,9 @@ public class SNodeList
     @XmlElement(name = "test")
     private List<STestNode> test;
 
-    HashMap<String, SNode> mapNodes;
+    private HashMap<String, SNode> mapNodes;
+
+    private String name; 
     
 
     public SNodeList ()
@@ -92,11 +95,12 @@ public class SNodeList
         return allNodes;
     }
 
-    /*
-    public void setCircleNodes(List<STaskNode> taskNodes) {
-        this.serviceTask = taskNodes;
-    }
-    */
+    @XmlAttribute
+    public String getName() {return this.name; }
+    public void setName(String name)
+    {
+        this.name = name;
+    };
     
     public List<STaskNode> getTaskList()
     {

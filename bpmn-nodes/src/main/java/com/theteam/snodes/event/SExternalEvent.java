@@ -12,7 +12,7 @@ import com.theteam.snodes.SNode;
 
 
 @XmlRootElement
-@XmlType(propOrder = { "previousNode", "nextNode", "connectedEvent"})
+@XmlType(propOrder = { "previousNode", "nextNode", "connectedEvent", "input", "output"})
 public class SExternalEvent extends SNode
 {
 
@@ -20,6 +20,9 @@ public class SExternalEvent extends SNode
 
     private String previousNode = null;
     private String nextNode = null;
+
+    private String input = null;
+    private String output = null;
 
 
     public SExternalEvent()
@@ -103,14 +106,34 @@ public class SExternalEvent extends SNode
         this.connectedEvent = connectedEvent;
     }
 
-    public void setOutput(String output)
+    @XmlElement(name = "input")
+    public String getInput()
     {
+
+        if(input != null)
+            return input;
+        return null;
         
     }
 
     public void setInput(String input)
     {
+        this.input = input;
+    }
+
+    @XmlElement(name = "output")
+    public String getOutput()
+    {
+
+        if(output != null)
+            return output;
+        return null;
         
+    }
+
+    public void setOutput(String output)
+    {
+        this.output = output;
     }
 
 }

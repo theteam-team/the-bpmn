@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bpm>
+    <nodes name="a">
+        <start nId="3d228c5e-1ab2-4a87-b72d-35d2bfc8fab0" type="START">
+            <NId>3d228c5e-1ab2-4a87-b72d-35d2bfc8fab0</NId>
+            <type>START</type>
+            <nextNode>ce4bbf64-db79-43b9-aa79-15dff410dea4</nextNode>
+        </start>
+        <test nId="ce4bbf64-db79-43b9-aa79-15dff410dea4" type="TEST">
+            <NId>ce4bbf64-db79-43b9-aa79-15dff410dea4</NId>
+            <type>TEST</type>
+            <previousNode>3d228c5e-1ab2-4a87-b72d-35d2bfc8fab0</previousNode>
+            <nextNode>37a87416-2946-4e29-b9aa-62ac586fd429</nextNode>
+            <input>a</input>
+        </test>
+        <end nId="37a87416-2946-4e29-b9aa-62ac586fd429" type="END">
+            <NId>37a87416-2946-4e29-b9aa-62ac586fd429</NId>
+            <type>END</type>
+            <previousNode>ce4bbf64-db79-43b9-aa79-15dff410dea4</previousNode>
+        </end>
+    </nodes>
+    <variables>
+        <variable nId="ab85e33e-b681-4283-8a04-83f61f8cda28">
+            <name>a</name>
+            <type>int</type>
+            <value>1,3</value>
+        </variable>
+    </variables>
+</bpm>

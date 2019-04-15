@@ -12,7 +12,7 @@ import com.theteam.snodes.SNode;
 
 
 @XmlRootElement
-@XmlType(propOrder = { "previousNode", "nextNode", "time"})
+@XmlType(propOrder = { "previousNode", "nextNode", "time", "input", "output"})
 public class STimerEvent extends SNode
 {
 
@@ -21,6 +21,9 @@ public class STimerEvent extends SNode
     private String nextNode = null;
 
     private String time = null;
+
+    private String input = null;
+    private String output = null;
 
 
     public STimerEvent()
@@ -105,13 +108,33 @@ public class STimerEvent extends SNode
     }
 
 
-    public void setOutput(String output)
+    @XmlElement(name = "input")
+    public String getInput()
     {
+
+        if(input != null)
+            return input;
+        return null;
         
     }
 
     public void setInput(String input)
     {
+        this.input = input;
+    }
+
+    @XmlElement(name = "output")
+    public String getOutput()
+    {
+
+        if(output != null)
+            return output;
+        return null;
         
+    }
+
+    public void setOutput(String output)
+    {
+        this.output = output;
     }
 }

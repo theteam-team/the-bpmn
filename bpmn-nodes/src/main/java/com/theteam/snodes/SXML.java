@@ -33,6 +33,11 @@ public class SXML
         nodeList.addStartNode(s);
     }
 
+    public void setWorkflowName(String name)
+    {
+        nodeList.setName(name);
+    }
+
     public void addEndNode(String id)
     {
         
@@ -98,6 +103,11 @@ public class SXML
         nodeList.removeNode(n);
     }
 
+    public void clear()
+    {
+        nodeList.removeAllNodes();
+    }
+
     public void setRestLinkProperty(String iid, String value)
     {
 
@@ -137,6 +147,95 @@ public class SXML
 
     }
 
+    public void setDBConnectionStringProperty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        SDBNode db = (SDBNode) node;
+
+        db.setConnectionString(value);
+
+    }
+    public void setDBConnectedEvent(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        SDBNode db = (SDBNode) node;
+
+        db.setConnectedEvent(value);
+
+    }
+
+    public void setDBSelectStatmentProperty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        SDBNode db = (SDBNode) node;
+
+        db.setSelectStatement(value);
+
+    }
+
+    public void setDBUserNameProperty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        SDBNode db = (SDBNode) node;
+
+        db.setUserName(value);
+
+    }
+    public void setDBPasswordProperty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        SDBNode db = (SDBNode) node;
+
+        db.setPassword(value);
+
+    }
+
+    public void setTimerProperty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        STimerEvent t = (STimerEvent) node;
+
+        t.setTime(value);
+
+    }
+
+    public void setExternalConnectedEvent(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        SExternalEvent ext = (SExternalEvent) node;
+
+        ext.setConnectedEvent(value);
+
+    }
+
     public void setInput(String iid, String value)
     {
 
@@ -173,7 +272,6 @@ public class SXML
 
     public void setVariableName(String id, String newName)
     {
-        System.out.println("Name Changed");
         SVariable var = variableList.getVariableById(id);
         var.setName(newName);
     }
@@ -195,10 +293,10 @@ public class SXML
     public void saveToXML(String path) throws Exception
     {
 
-        System.out.println("Start Making Nodes ...");
-		System.out.println("Finished Making Nodes ...");
+        //System.out.println("Start Making Nodes ...");
+		//System.out.println("Finished Making Nodes ...");
 		
-        System.out.println("Start Making XML ...");
+        //System.out.println("Start Making XML ...");
         
         elementsList.setNodeList(nodeList);
         elementsList.setVariableList(variableList);
@@ -213,7 +311,7 @@ public class SXML
         
         marshallerObj.marshal(elementsList, new FileOutputStream(path));
 
-		System.out.println("Finished Making XML ...");
-        System.out.println("Path to XML " + path);
+		//System.out.println("Finished Making XML ...");
+        //System.out.println("Path to XML " + path);
     }
 }

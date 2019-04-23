@@ -12,7 +12,7 @@ import com.theteam.snodes.SNode;
 
 
 @XmlRootElement
-@XmlType(propOrder = { "previousNode", "nextNode", "time", "input", "output"})
+@XmlType(propOrder = { "previousNode", "previousNode1", "nextNode", "nextNode1", "time", "input", "output"})
 public class STimerEvent extends SNode
 {
 
@@ -28,21 +28,13 @@ public class STimerEvent extends SNode
 
     public STimerEvent()
     {
-
-    }
-
-    public STimerEvent(String type, UUID id)
-    {
-        this.type = type;
-        this.nId = id.toString();
-        this.uuid = id;
+        
     }
 
     public STimerEvent(String type, String id)
     {
         this.type = type;
         this.nId = id;
-        uuid = UUID.fromString(id);
     }
 
     @XmlAttribute
@@ -51,11 +43,6 @@ public class STimerEvent extends SNode
     {
         this.nId = id;
     };
-
-    public UUID getUUId()
-    {
-        return uuid;  
-    }
 
     @XmlAttribute
     public String getType()
@@ -90,7 +77,18 @@ public class STimerEvent extends SNode
         return null;
     }
 
+    
     public void setPreviousNode(String previousNode) {
+        this.previousNode = previousNode;
+    }
+
+    @XmlElement(name = "previousNode1")
+    public String getPreviousNode1()
+    {
+        return null;
+    }
+
+    public void setPreviousNode1(String previousNode) {
         this.previousNode = previousNode;
     }
 
@@ -104,6 +102,17 @@ public class STimerEvent extends SNode
     }
 
     public void setNextNode(String nextNode) {
+        this.nextNode = nextNode;
+    }
+
+    @XmlElement(name = "nextNode1")
+    public String getNextNode1()
+    {
+        return null;
+    }
+
+    public void setNextNode1(String nextNode)
+    {
         this.nextNode = nextNode;
     }
 

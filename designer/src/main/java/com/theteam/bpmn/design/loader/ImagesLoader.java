@@ -63,6 +63,16 @@ public final class ImagesLoader
     private static Image triangle_chosen = 
         new Image(App.class.getResource("/images/nodes/triangle_chosen.png").toString());
 
+    private static Image parallel = 
+        new Image(App.class.getResource("/images/nodes/parallel.png").toString());
+    private static Image parallel_chosen = 
+        new Image(App.class.getResource("/images/nodes/parallel_chosen.png").toString());
+
+    private static Image condition = 
+        new Image(App.class.getResource("/images/nodes/condition.png").toString());
+    private static Image condition_chosen = 
+        new Image(App.class.getResource("/images/nodes/condition_chosen.png").toString());
+
     public static void initializeImages()
     {
         nodeImages.put("start", start);
@@ -91,5 +101,11 @@ public final class ImagesLoader
 
         nodeImages.put("triangle", triangle);
         nodeImages.put("triangle_chosen", triangle_chosen);
+
+        nodeImages.put("parallel", parallel);
+        nodeImages.put("parallel_chosen", parallel_chosen);
+
+        nodeImages.put("condition", condition);
+        nodeImages.put("condition_chosen", condition_chosen);
     }
 }

@@ -1,46 +1,58 @@
-package com.theteam.bpmn.design.dnode.event;
+package com.theteam.bpmn.design.dnode;
 
 import java.util.UUID;
 
-import com.theteam.bpmn.design.dnode.DNode;
-import com.theteam.bpmn.design.dnode.dproperty.DComboBoxProperty;
 import com.theteam.bpmn.design.dnode.dproperty.DTextProperty;
 import com.theteam.bpmn.design.loader.ImagesLoader;
 import com.theteam.snodes.SXML;
 
-import javafx.beans.property.StringProperty;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.SingleSelectionModel;
 
 
 /**
- * DServiceTaskNode ** Service Task **
+ * DEndNode ** End **
  * All nodes are ImageView Nodes from the javafx library
  * So all dnodes can be rendered using javafx application
  * All dnodes are represented by images
  */
-public class DTimerEvent extends DNode
+public class DCondition extends DNode
 {
-
-    public DTimerEvent(SXML xmlWriter, UUID id, Boolean drawNode)
+    StringProperty conditionProperty = new SimpleStringProperty();
+    
+    public DCondition(SXML xmlWriter, UUID id, Boolean drawNode)
     {
-        super(ImagesLoader.nodeImages.get("timer"), id.toString());
-        this.type = "timer";
+        super(ImagesLoader.nodeImages.get("condition"), id.toString());
+        this.type = "condition";
 
         this.drawNode = drawNode;
 
         setId(id.toString());
         idProperty().set(id.toString());
 
+        
+
         if(drawNode)
         {
             this.xmlWriter = xmlWriter;
-            xmlWriter.addEndNode(id.toString());
+            xmlWriter.addConditionNode(id.toString());
+
+            DTextProperty dConditionProperty = new DTextProperty("condition", conditionProperty);
+            allDProperties.add(dConditionProperty);
+
+
+            conditionProperty.addListener(new ChangeListener<String>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
+                {
+                    xmlWriter.setConditionProperty(id.toString(), newValue);
+                }
+            });
         }
     }
 
@@ -51,6 +63,13 @@ public class DTimerEvent extends DNode
             xmlWriter.setPrevNode(getNextDNode().getId(), null);
             //setNextDNode(null);
             getNextDNode().setPPrevDNode(null);
+        }
+
+        if(getNextDNode1() != null)
+        {
+            xmlWriter.setPrevNode(getNextDNode1().getId(), null);
+            //setNextDNode(null);
+            getNextDNode1().setPPrevDNode(null);
         }
 
         if(getPrevDNode() != null)

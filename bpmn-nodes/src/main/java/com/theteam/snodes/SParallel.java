@@ -1,5 +1,6 @@
-
 package com.theteam.snodes;
+
+
 import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -9,35 +10,33 @@ import javax.xml.bind.annotation.XmlType;
 
 
 @XmlRootElement
-@XmlType(propOrder = { "previousNode", "previousNode1", "nextNode", "nextNode1", "connectedAction"})
-public class SEndNode extends SNode
+@XmlType(propOrder = { "previousNode", "previousNode1", "nextNode", "nextNode1"})
+public class SParallel extends SNode
 {
 
-    private String connectedAction = null;
-
     private String previousNode = null;
-    private String nextNode = null;
+    private String previousNode1 = null;
 
-    public SEndNode()
+    private String nextNode = null;
+    private String nextNode1 = null;
+
+    public SParallel()
     {
-        
+       
     }
-    public SEndNode(String type, String id)
+
+    public SParallel(String type, String id)
     {
         this.type = type;
         this.nId = id;
     }
 
     @XmlAttribute
-    public String getNId()
-    {
-        return nId;  
-    }
-
+    public String getNId() { return this.nId; }
     public void setNId(String id)
     {
         this.nId = id;
-    }
+    };
 
     @XmlAttribute
     public String getType()
@@ -50,19 +49,6 @@ public class SEndNode extends SNode
         this.type = type;  
     }
 
-    @XmlElement(name = "connectedAction")
-    public String getConnectedAction()
-    {
-
-        if(connectedAction != null)
-            return connectedAction.toString();
-        return null;
-    }
-
-    public void setConnectedAction(String connectedAction) {
-        this.connectedAction = connectedAction;
-    }
-
     @XmlElement(name = "previousNode")
     public String getPreviousNode()
     {
@@ -70,7 +56,6 @@ public class SEndNode extends SNode
         if(previousNode != null)
             return previousNode;
         return null;
-        
     }
 
     public void setPreviousNode(String previousNode) {
@@ -80,11 +65,14 @@ public class SEndNode extends SNode
     @XmlElement(name = "previousNode1")
     public String getPreviousNode1()
     {
+
+        if(previousNode1 != null)
+            return previousNode1;
         return null;
     }
 
     public void setPreviousNode1(String previousNode) {
-        this.previousNode = previousNode;
+        this.previousNode1 = previousNode;
     }
 
     @XmlElement(name = "nextNode")
@@ -97,18 +85,20 @@ public class SEndNode extends SNode
     }
 
     public void setNextNode(String nextNode) {
-
+        this.nextNode = nextNode;
     }
 
     @XmlElement(name = "nextNode1")
     public String getNextNode1()
     {
+
+        if(nextNode1 != null)
+            return nextNode1;
         return null;
     }
 
-    public void setNextNode1(String nextNode)
-    {
-        this.nextNode = nextNode;
+    public void setNextNode1(String nextNode1) {
+        this.nextNode1 = nextNode1;
     }
 
     public void setOutput(String output)
@@ -120,5 +110,6 @@ public class SEndNode extends SNode
     {
         
     }
+
 
 }

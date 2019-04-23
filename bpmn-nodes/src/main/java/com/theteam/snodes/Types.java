@@ -12,6 +12,8 @@ public final class Types
         EXTERNAL_EVENT,
         TIMER_EVENT,
         SCRIPT,
+        PARALLEL,
+        CONDITION,
         TEST
     }
 
@@ -30,6 +32,8 @@ public final class Types
         "EXTERNAL_EVENT",
         "TIMER_EVENT",
         "SCRIPT",
+        "PARALLEL",
+        "CONDITION",
         "TEST"
     };
     
@@ -53,8 +57,12 @@ public final class Types
                 return Nodes[5];
             case SCRIPT:
                 return Nodes[6];
-            case TEST:
+            case PARALLEL:
                 return Nodes[7];
+            case CONDITION:
+                return Nodes[8];
+            case TEST:
+                return Nodes[9];
                 
             default:
                 return "NOT FOUND";

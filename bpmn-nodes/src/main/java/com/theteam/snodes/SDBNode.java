@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 @XmlRootElement
-@XmlType(propOrder = { "connectedEvent", "previousNode", "nextNode", "input", "output",  "connectionString", "selectStatement", "userName", "password"})
+@XmlType(propOrder = { "connectedEvent", "previousNode", "previousNode1", "nextNode", "nextNode1", "input", "output",  "connectionString", "selectStatement", "userName", "password"})
 public class SDBNode extends SNode
 {
 
@@ -29,21 +29,13 @@ public class SDBNode extends SNode
 
     public SDBNode()
     {
-
-    }
-
-    public SDBNode(String type, UUID id)
-    {
-        this.type = type;
-        this.nId = id.toString();
-        this.uuid = id;
+        
     }
 
     public SDBNode(String type, String id)
     {
         this.type = type;
         this.nId = id;
-        this.uuid = UUID.fromString(id);
     }
 
     @XmlAttribute
@@ -55,11 +47,6 @@ public class SDBNode extends SNode
     public void setNId(String id)
     {
         this.nId = id;
-    }
-
-    public UUID getUUId()
-    {
-        return uuid;  
     }
 
     @XmlAttribute
@@ -89,6 +76,16 @@ public class SDBNode extends SNode
         this.previousNode = previousNode;
     }
 
+    @XmlElement(name = "previousNode1")
+    public String getPreviousNode1()
+    {
+        return null;
+    }
+
+    public void setPreviousNode1(String previousNode) {
+        this.previousNode = previousNode;
+    }
+
     @XmlElement(name = "nextNode")
     public String getNextNode()
     {
@@ -99,6 +96,17 @@ public class SDBNode extends SNode
     }
 
     public void setNextNode(String nextNode)
+    {
+        this.nextNode = nextNode;
+    }
+
+    @XmlElement(name = "nextNode1")
+    public String getNextNode1()
+    {
+        return null;
+    }
+
+    public void setNextNode1(String nextNode)
     {
         this.nextNode = nextNode;
     }

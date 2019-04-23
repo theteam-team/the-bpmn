@@ -48,7 +48,7 @@ dependencies
     // This dependency is found on compile classpath of this component and consumers.
     implementation 'com.google.guava:guava:27.0.1-jre'
     
-    compile 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
     compile 'javax.activation:activation:1.1'
     
     compile 'org.glassfish.jaxb:jaxb-runtime:2.3.1'

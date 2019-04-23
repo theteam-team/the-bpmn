@@ -30,7 +30,10 @@ public class DNode extends ImageView
     protected String type;
 
     private DNode nextDNode;
+    private DNode nextDNode1;
+
     private DNode prevDNode;
+    private DNode prevDNode1;
 
     private DNode connectedDNode;
 
@@ -112,6 +115,19 @@ public class DNode extends ImageView
         xmlWriter.setNextNode(getId(), node.getId());
     }
 
+    public DNode getNextDNode1() { return this.nextDNode1; }
+    public void setNNextDNode1(DNode node)
+    {
+        this.nextDNode1 = node;
+        
+    }
+
+    public void setNextDNode1(DNode node)
+    {
+        this.nextDNode1 = node;
+        xmlWriter.setNextNode1(getId(), node.getId());
+    }
+
     public DNode getPrevDNode() { return this.prevDNode; }
     public void setPPrevDNode(DNode node)
     { 
@@ -122,6 +138,18 @@ public class DNode extends ImageView
     { 
         this.prevDNode = node;
         xmlWriter.setPrevNode(getId(), node.getId());
+    }
+
+    public DNode getPrevDNode1() { return this.prevDNode1; }
+    public void setPPrevDNode1(DNode node)
+    { 
+        this.prevDNode1 = node;
+    }
+
+    public void setPrevDNode1(DNode node)
+    { 
+        this.prevDNode1 = node;
+        xmlWriter.setPrevNode1(getId(), node.getId());
     }
 
     public void setExternalConnectedDNode(DNode node)

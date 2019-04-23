@@ -28,10 +28,17 @@ public final class DNodeEventHandler
         public void handle(MouseEvent me)
         {
 
+            if(!me.isStillSincePress())
+            {
+                return;
+            }
             DNode node = (DNode) me.getSource();
 
             if(me.getButton() == MouseButton.SECONDARY)
             {
+                if(node == dbpmnController.firstNode)
+                    dbpmnController.firstNode = null;
+                
                 node.removeNode();
                 for (DLine line : node.getStartLines()) {
                     dbpmnController.drawArea.getChildren().remove(line);

@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 @XmlRootElement
-@XmlType(propOrder = { "previousNode", "nextNode", "input", "output", "serviceType", "restLink", "soapFunc"})
+@XmlType(propOrder = { "previousNode", "previousNode1", "nextNode", "nextNode1", "input", "output", "serviceType", "restLink", "soapFunc"})
 public class STaskNode extends SNode
 {
 
@@ -25,21 +25,12 @@ public class STaskNode extends SNode
 
     public STaskNode()
     {
-
+        
     }
-
-    public STaskNode(String type, UUID id)
-    {
-        this.type = type;
-        this.nId = id.toString();
-        this.uuid = id;
-    }
-
     public STaskNode(String type, String id)
     {
         this.type = type;
         this.nId = id;
-        this.uuid = UUID.fromString(id);
     }
 
     @XmlAttribute
@@ -51,11 +42,6 @@ public class STaskNode extends SNode
     public void setNId(String id)
     {
         this.nId = id;
-    }
-
-    public UUID getUUId()
-    {
-        return uuid;  
     }
 
     @XmlAttribute
@@ -80,6 +66,16 @@ public class STaskNode extends SNode
         
     }
 
+    public String getPreviousNode1()
+    {
+        return null;
+    }
+
+    @XmlElement(name = "previousNode1")
+    public void setPreviousNode1(String previousNode) {
+        this.previousNode = previousNode;
+    }
+
     public void setPreviousNode(String previousNode)
     {
         this.previousNode = previousNode;
@@ -95,6 +91,17 @@ public class STaskNode extends SNode
     }
 
     public void setNextNode(String nextNode)
+    {
+        this.nextNode = nextNode;
+    }
+
+    @XmlElement(name = "nextNode1")
+    public String getNextNode1()
+    {
+        return null;
+    }
+
+    public void setNextNode1(String nextNode)
     {
         this.nextNode = nextNode;
     }

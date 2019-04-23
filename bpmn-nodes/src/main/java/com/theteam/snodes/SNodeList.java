@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 import com.theteam.snodes.event.*;
 
 
-@XmlType(propOrder = { "start", "serviceTask", "db", "script", "externalEvent", "timerEvent", "test", "end"})
+@XmlType(propOrder = { "start", "serviceTask", "parallel", "condition", "db", "script", "externalEvent", "timerEvent", "test", "end"})
 public class SNodeList
 {
     @XmlElement(name = "start")
@@ -32,6 +32,12 @@ public class SNodeList
     @XmlElement(name = "timerEvent")
     private List<STimerEvent> timerEvent;
 
+    @XmlElement(name = "condition")
+    private List<SCondition> condition;
+
+    @XmlElement(name = "parallel")
+    private List<SParallel> parallel;
+
     @XmlElement(name = "test")
     private List<STestNode> test;
 
@@ -48,6 +54,9 @@ public class SNodeList
         externalEvent = new ArrayList<SExternalEvent>();
         timerEvent = new ArrayList<STimerEvent>();
         test = new ArrayList<STestNode>();
+
+        condition = new ArrayList<SCondition>();
+        parallel = new ArrayList<SParallel>();
         
         mapNodes = new HashMap<>();
         
@@ -85,6 +94,18 @@ public class SNodeList
             
         }
         for(STestNode node : test)
+        {
+            allNodes.add(node);
+            
+        }
+
+        for(SCondition node : condition)
+        {
+            allNodes.add(node);
+            
+        }
+
+        for(SParallel node : parallel)
         {
             allNodes.add(node);
             
@@ -173,6 +194,30 @@ public class SNodeList
         mapNodes.put(node.getNId(), node);
         test.add(node);
     }
+    
+    public List<SParallel> getPrallelList()
+    {
+        return parallel;
+    }
+
+    public void addParallelNode(SParallel node)
+    {
+        
+        mapNodes.put(node.getNId(), node);
+        parallel.add(node);
+    }
+    
+    public List<SCondition> getConditionList()
+    {
+        return condition;
+    }
+    
+    public void addConditionNode(SCondition node)
+    {
+        
+        mapNodes.put(node.getNId(), node);
+        condition.add(node);
+    }
 
 
     public void addStartNode(SStartNode node)
@@ -228,6 +273,12 @@ public class SNodeList
         else if (node.getType() == Types.NodeType(Types.NodeTypes.TEST))
             test.remove(node);
 
+        else if (node.getType() == Types.NodeType(Types.NodeTypes.CONDITION))
+            condition.remove(node);
+
+        else if (node.getType() == Types.NodeType(Types.NodeTypes.PARALLEL))
+            parallel.remove(node);
+
     }
 
 
@@ -249,6 +300,9 @@ public class SNodeList
         timerEvent.clear();
         script.clear();
         test.clear();
+
+        condition.clear();
+        parallel.clear();
     }
 }
 

@@ -1,36 +1,23 @@
-package com.theteam.bpmn.design.dnode.event;
+package com.theteam.bpmn.design.dnode;
 
 import java.util.UUID;
 
-import com.theteam.bpmn.design.dnode.DNode;
-import com.theteam.bpmn.design.dnode.dproperty.DComboBoxProperty;
-import com.theteam.bpmn.design.dnode.dproperty.DTextProperty;
 import com.theteam.bpmn.design.loader.ImagesLoader;
 import com.theteam.snodes.SXML;
 
-import javafx.beans.property.StringProperty;
-import javafx.beans.Observable;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.SingleSelectionModel;
-
 
 /**
- * DServiceTaskNode ** Service Task **
+ * DEndNode ** End **
  * All nodes are ImageView Nodes from the javafx library
  * So all dnodes can be rendered using javafx application
  * All dnodes are represented by images
  */
-public class DTimerEvent extends DNode
+public class DParallelNode extends DNode
 {
-
-    public DTimerEvent(SXML xmlWriter, UUID id, Boolean drawNode)
+    public DParallelNode(SXML xmlWriter, UUID id, Boolean drawNode)
     {
-        super(ImagesLoader.nodeImages.get("timer"), id.toString());
-        this.type = "timer";
+        super(ImagesLoader.nodeImages.get("parallel"), id.toString());
+        this.type = "parallel";
 
         this.drawNode = drawNode;
 
@@ -40,7 +27,7 @@ public class DTimerEvent extends DNode
         if(drawNode)
         {
             this.xmlWriter = xmlWriter;
-            xmlWriter.addEndNode(id.toString());
+            xmlWriter.addParallelNode(id.toString());
         }
     }
 
@@ -53,11 +40,25 @@ public class DTimerEvent extends DNode
             getNextDNode().setPPrevDNode(null);
         }
 
+        if(getNextDNode1() != null)
+        {
+            xmlWriter.setPrevNode(getNextDNode1().getId(), null);
+            //setNextDNode(null);
+            getNextDNode1().setPPrevDNode1(null);
+        }
+
         if(getPrevDNode() != null)
         {
             xmlWriter.setNextNode(getPrevDNode().getId(), null);
             //setPrevDNode(null);
             getPrevDNode().setNNextDNode(null);
+        }
+
+        if(getPrevDNode1() != null)
+        {
+            xmlWriter.setNextNode(getPrevDNode1().getId(), null);
+            //setPrevDNode(null);
+            getPrevDNode1().setNNextDNode1(null);
         }
 
         xmlWriter.removeNode(getId());

@@ -109,6 +109,14 @@ public class BPMNStageController {
         test.setFitHeight(NodeConstants.nodeSize);
         test.setFitWidth(NodeConstants.nodeSize);
 
+        DCondition condition = new DCondition(xmlWriter, UUID.randomUUID(), false);
+        condition.setFitHeight(NodeConstants.nodeSize);
+        condition.setFitWidth(NodeConstants.nodeSize);
+
+        DParallelNode parallel = new DParallelNode(xmlWriter, UUID.randomUUID(), false);
+        parallel.setFitHeight(NodeConstants.nodeSize);
+        parallel.setFitWidth(NodeConstants.nodeSize);
+
         gridNodes.getChildren().add(start);
         gridNodes.getChildren().add(end);
         gridNodes.getChildren().add(serviceTask);
@@ -117,6 +125,8 @@ public class BPMNStageController {
         gridNodes.getChildren().add(timer);
         gridNodes.getChildren().add(script);
         gridNodes.getChildren().add(test);
+        gridNodes.getChildren().add(condition);
+        gridNodes.getChildren().add(parallel);
         
 
         MaterialIconView saveIcon = new MaterialIconView();
@@ -159,6 +169,11 @@ public class BPMNStageController {
         if(selectedNode == null)
         {
             logText.set("Select a Node");
+            return;
+        }
+
+        if(!me.isStillSincePress())
+        {
             return;
         }
 
@@ -211,6 +226,16 @@ public class BPMNStageController {
                     createDrawNode(new DTestNode(xmlWriter, UUID.randomUUID(), true), me);
                     logText.set("Test Node Created");
                     break;
+
+                case "condition":
+                    createDrawNode(new DCondition(xmlWriter, UUID.randomUUID(), true), me);
+                    logText.set("condition Node Created");
+                    break;
+
+                case "parallel":
+                    createDrawNode(new DParallelNode(xmlWriter, UUID.randomUUID(), true), me);
+                    logText.set("Parallel Node Created");
+                    break;
             
                 default:
                     break;
@@ -244,6 +269,13 @@ public class BPMNStageController {
             nodeFrom.getNextDNode().setPPrevDNode(null);
         }
 
+        if(nodeFrom.getNextDNode1() != null)
+        {
+            xmlWriter.setPrevNode1(nodeFrom.getNextDNode1().getId(), null);
+            //setNextDNode(null);
+            nodeFrom.getNextDNode1().setPPrevDNode1(null);
+        }
+
         if(nodeTo.getPrevDNode() != null)
         {
             xmlWriter.setNextNode(nodeTo.getPrevDNode().getId(), null);
@@ -251,16 +283,94 @@ public class BPMNStageController {
             nodeTo.getPrevDNode().setNNextDNode(null);
         }
 
-        for (DLine l : nodeFrom.getStartLines()) {
-            drawArea.getChildren().remove(l);
+        if(nodeTo.getPrevDNode1() != null)
+        {
+            xmlWriter.setNextNode1(nodeTo.getPrevDNode1().getId(), null);
+            //setPrevDNode(null);
+            nodeTo.getPrevDNode1().setNNextDNode1(null);
         }
 
-        for (DLine l : nodeTo.getEndLines()) {
-            drawArea.getChildren().remove(l);
+
+        if(nodeFrom.getDType().equals("parallel")
+        || nodeTo.getDType().equals("parallel"))
+        {
+            if(nodeFrom.getDType().equals("parallel"))
+            {
+                if(nodeFrom.getNextDNode() == null)
+                {
+                    nodeFrom.setNextDNode(nodeTo);
+                    nodeTo.setPrevDNode(nodeFrom);
+                }
+                else
+                {
+                    nodeFrom.setNextDNode1(nodeTo);
+                    nodeTo.setPrevDNode(nodeFrom);
+                }
+
+            }
+            else
+            {
+                if(nodeTo.getPrevDNode() == null)
+                {
+                    nodeFrom.setNextDNode(nodeTo);
+                    nodeTo.setPrevDNode(nodeFrom);
+                }
+                else
+                {
+                    nodeFrom.setNextDNode(nodeTo);
+                    nodeTo.setPrevDNode1(nodeFrom);
+                }
+            }
+        } 
+
+        else if(nodeFrom.getDType().equals("condition")) 
+        {
+            if(nodeFrom.getNextDNode() == null)
+            {
+                nodeFrom.setNextDNode(nodeTo);
+                nodeTo.setPrevDNode(nodeFrom);
+            }
+            else
+            {
+                nodeFrom.setNextDNode1(nodeTo);
+                nodeTo.setPrevDNode(nodeFrom);
+            }
         }
 
-        nodeFrom.getStartLines().clear();
-        nodeTo.getEndLines().clear();
+        else if(nodeFrom.getDType().equals("external")
+        && nodeTo.getDType().equals("db"))
+        {
+            for (DLine l : nodeFrom.getStartLines()) {
+                drawArea.getChildren().remove(l);
+            }
+    
+            for (DLine l : nodeTo.getEndLines()) {
+                drawArea.getChildren().remove(l);
+            }
+
+            nodeFrom.getStartLines().clear();
+            nodeTo.getEndLines().clear();
+
+            nodeFrom.setExternalConnectedDNode(nodeTo);
+            nodeTo.setDBConnectedDNode(nodeFrom);
+        }
+
+        else
+        {
+            for (DLine l : nodeFrom.getStartLines()) {
+                drawArea.getChildren().remove(l);
+            }
+    
+            for (DLine l : nodeTo.getEndLines()) {
+                drawArea.getChildren().remove(l);
+            }
+
+            nodeFrom.getStartLines().clear();
+            nodeTo.getEndLines().clear();
+
+            nodeFrom.setNextDNode(nodeTo);
+            nodeTo.setPrevDNode(nodeFrom);
+        }
 
         DLine line = new DLine(nodeFrom, nodeTo);
 

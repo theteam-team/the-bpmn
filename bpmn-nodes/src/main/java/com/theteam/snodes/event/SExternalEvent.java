@@ -12,7 +12,7 @@ import com.theteam.snodes.SNode;
 
 
 @XmlRootElement
-@XmlType(propOrder = { "previousNode", "nextNode", "connectedEvent", "input", "output"})
+@XmlType(propOrder = { "previousNode", "previousNode1", "nextNode", "nextNode1", "connectedEvent", "input", "output"})
 public class SExternalEvent extends SNode
 {
 
@@ -24,24 +24,15 @@ public class SExternalEvent extends SNode
     private String input = null;
     private String output = null;
 
-
     public SExternalEvent()
     {
-
-    }
-
-    public SExternalEvent(String type, UUID id)
-    {
-        this.type = type;
-        this.nId = id.toString();
-        this.uuid = id;
+        
     }
 
     public SExternalEvent(String type, String id)
     {
         this.type = type;
         this.nId = id;
-        uuid = UUID.fromString(id);
     }
 
     @XmlAttribute
@@ -50,11 +41,6 @@ public class SExternalEvent extends SNode
     {
         this.nId = id;
     };
-
-    public UUID getUUId()
-    {
-        return uuid;  
-    }
 
     @XmlAttribute
     public String getType()
@@ -80,6 +66,16 @@ public class SExternalEvent extends SNode
         this.previousNode = previousNode;
     }
 
+    @XmlElement(name = "previousNode1")
+    public String getPreviousNode1()
+    {
+        return null;
+    }
+
+    public void setPreviousNode1(String previousNode) {
+        this.previousNode = previousNode;
+    }
+
     @XmlElement(name = "nextNode")
     public String getNextNode()
     {
@@ -90,6 +86,17 @@ public class SExternalEvent extends SNode
     }
 
     public void setNextNode(String nextNode) {
+        this.nextNode = nextNode;
+    }
+
+    @XmlElement(name = "nextNode1")
+    public String getNextNode1()
+    {
+        return null;
+    }
+
+    public void setNextNode1(String nextNode)
+    {
         this.nextNode = nextNode;
     }
 

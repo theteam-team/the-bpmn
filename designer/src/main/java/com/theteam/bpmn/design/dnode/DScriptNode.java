@@ -26,29 +26,10 @@ import javafx.scene.control.SingleSelectionModel;
 public class DScriptNode extends DNode
 {
 
-    StringProperty inputProperty = new SimpleStringProperty();
-    StringProperty outputProperty = new SimpleStringProperty();
-
-    StringProperty restLinkProperty = new SimpleStringProperty();
-    
-
-    public SingleSelectionModel<String> serviceType;
-    public SingleSelectionModel<String> soapFunc;
-
-    public ObservableList<String> serviceTypeList = FXCollections.observableArrayList(
-        "rest",
-        "soap"
-    );
-
-    public ObservableList<String> soapFuncList = FXCollections.observableArrayList(
-        "getHello",
-        "getResponseWithName"
-    );
-
     public DScriptNode(SXML xmlWriter, UUID id, Boolean drawNode)
     {
         super(ImagesLoader.nodeImages.get("script"), id.toString());
-        this.type = "script";
+        this.type = "end";
 
         this.drawNode = drawNode;
 
@@ -58,73 +39,8 @@ public class DScriptNode extends DNode
         if(drawNode)
         {
             this.xmlWriter = xmlWriter;
-        
-            xmlWriter.addScriptNode(id.toString());
-
-            DTextProperty dInputProperty = new DTextProperty("Input", inputProperty);
-            DTextProperty dOutputProperty = new DTextProperty("Output", outputProperty);
-
-            DTextProperty dRestLinkProperty = new DTextProperty("Rest Link", restLinkProperty);
-            DComboBoxProperty dServiceTypeProperty = new DComboBoxProperty("Service Type", serviceType, serviceTypeList);
-            DComboBoxProperty dSoapFuncProperty = new DComboBoxProperty("Soap Func", soapFunc, soapFuncList);
-
-            allDProperties.add(dInputProperty);
-            allDProperties.add(dOutputProperty);
-
-            allDProperties.add(dRestLinkProperty);
-            allDProperties.add(dServiceTypeProperty);
-            allDProperties.add(dSoapFuncProperty);
-
-            String a = (String) dServiceTypeProperty.getComboSelectionModel().getSelectedItem();
-            xmlWriter.setServiceTypeProperty(id.toString(), a);
-
-            a = (String) dSoapFuncProperty.getComboSelectionModel().getSelectedItem();
-            xmlWriter.setSoapFuncProperty(id.toString(), a);
-
-            inputProperty.addListener(new ChangeListener<String>()
-            {
-                @Override
-                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
-                {
-                    xmlWriter.setInput(id.toString(), newValue);
-                }
-            });
-
-            outputProperty.addListener(new ChangeListener<String>()
-            {
-                @Override
-                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
-                {
-                    xmlWriter.setOutput(id.toString(), newValue);
-                }
-            });
-
-            restLinkProperty.addListener(new ChangeListener<String>()
-            {
-                @Override
-                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
-                {
-                    xmlWriter.setRestLinkProperty(id.toString(), newValue);
-                }
-            });
-
-            dServiceTypeProperty.getComboSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
-                String selectedItem = (String) dServiceTypeProperty.getComboSelectionModel().getSelectedItem();
-
-                xmlWriter.setServiceTypeProperty(id.toString(), selectedItem);
-                
-            });
-
-            dSoapFuncProperty.getComboSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
-                String selectedItem = (String) dSoapFuncProperty.getComboSelectionModel().getSelectedItem();
-
-                xmlWriter.setSoapFuncProperty(id.toString(), selectedItem);
-                
-            });
-
+            xmlWriter.addEndNode(id.toString());
         }
-        
-
     }
 
     public void removeNode()

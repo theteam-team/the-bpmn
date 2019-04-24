@@ -1,66 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <bpm>
     <nodes name="design">
-        <start nId="233c0dea-2bf0-428f-8a94-1889b17581b1" type="START">
-            <NId>233c0dea-2bf0-428f-8a94-1889b17581b1</NId>
+        <start nId="b38f4b03-92a7-492d-b32e-253a2a84efab" type="START">
+            <NId>b38f4b03-92a7-492d-b32e-253a2a84efab</NId>
             <type>START</type>
-            <nextNode>e54a314f-84e1-4dba-bf45-6c02c89b154d</nextNode>
+            <nextNode>a909a6f3-77ea-4700-9050-e1c20f47eecf</nextNode>
         </start>
-        <serviceTask nId="f91e4bc8-3bc9-4cc5-a40c-e308ba4a36a5" type="TASK">
-            <NId>f91e4bc8-3bc9-4cc5-a40c-e308ba4a36a5</NId>
+        <serviceTask nId="1fcf7d2d-9eae-4794-9042-b92e316b2e29" type="TASK">
+            <NId>1fcf7d2d-9eae-4794-9042-b92e316b2e29</NId>
             <type>TASK</type>
-            <nextNode>5b2db26c-178a-4e57-a6a3-d292dac89f52</nextNode>
             <ServiceType>rest</ServiceType>
-            <restLink>https://postman-echo.com/ip</restLink>
             <soapFunc>getHello</soapFunc>
         </serviceTask>
-        <serviceTask nId="0efd29a4-0544-4540-84c1-a9d3686f581d" type="TASK">
-            <NId>0efd29a4-0544-4540-84c1-a9d3686f581d</NId>
+        <serviceTask nId="d1a6ff68-54a5-4fbf-b579-60149cff0edf" type="TASK">
+            <NId>d1a6ff68-54a5-4fbf-b579-60149cff0edf</NId>
             <type>TASK</type>
-            <previousNode>621ddf47-a6c4-4deb-88b2-7a2beb2e50ed</previousNode>
-            <nextNode>3d9df583-6cfa-4474-9d82-2b55a98791fc</nextNode>
+            <previousNode>a909a6f3-77ea-4700-9050-e1c20f47eecf</previousNode>
             <ServiceType>rest</ServiceType>
-            <restLink>https://postman-echo.com/status/200</restLink>
             <soapFunc>getHello</soapFunc>
         </serviceTask>
-        <serviceTask nId="d91f5ec7-25be-4762-87d9-9bfa138bb657" type="TASK">
-            <NId>d91f5ec7-25be-4762-87d9-9bfa138bb657</NId>
-            <type>TASK</type>
-            <previousNode>e54a314f-84e1-4dba-bf45-6c02c89b154d</previousNode>
-            <nextNode>e027df2d-acd0-4aab-bf59-36498d06d1ad</nextNode>
-            <ServiceType>rest</ServiceType>
-            <restLink>https://postman-echo.com/time/now</restLink>
-            <soapFunc>getHello</soapFunc>
-        </serviceTask>
-        <parallel nId="621ddf47-a6c4-4deb-88b2-7a2beb2e50ed" type="PARALLEL">
-            <NId>621ddf47-a6c4-4deb-88b2-7a2beb2e50ed</NId>
+        <parallel nId="a909a6f3-77ea-4700-9050-e1c20f47eecf" type="PARALLEL">
+            <NId>a909a6f3-77ea-4700-9050-e1c20f47eecf</NId>
             <type>PARALLEL</type>
-            <nextNode>f91e4bc8-3bc9-4cc5-a40c-e308ba4a36a5</nextNode>
-            <nextNode1>0efd29a4-0544-4540-84c1-a9d3686f581d</nextNode1>
+            <previousNode>b38f4b03-92a7-492d-b32e-253a2a84efab</previousNode>
+            <nextNode>1fcf7d2d-9eae-4794-9042-b92e316b2e29</nextNode>
+            <nextNode1>d1a6ff68-54a5-4fbf-b579-60149cff0edf</nextNode1>
         </parallel>
-        <condition nId="e54a314f-84e1-4dba-bf45-6c02c89b154d" type="CONDITION">
-            <NId>e54a314f-84e1-4dba-bf45-6c02c89b154d</NId>
-            <type>CONDITION</type>
-            <previousNode>233c0dea-2bf0-428f-8a94-1889b17581b1</previousNode>
-            <nextNode>621ddf47-a6c4-4deb-88b2-7a2beb2e50ed</nextNode>
-            <nextNode1>d91f5ec7-25be-4762-87d9-9bfa138bb657</nextNode1>
-            <expression>false</expression>
-        </condition>
-        <end nId="5b2db26c-178a-4e57-a6a3-d292dac89f52" type="END">
-            <NId>5b2db26c-178a-4e57-a6a3-d292dac89f52</NId>
-            <type>END</type>
-            <previousNode>f91e4bc8-3bc9-4cc5-a40c-e308ba4a36a5</previousNode>
-        </end>
-        <end nId="3d9df583-6cfa-4474-9d82-2b55a98791fc" type="END">
-            <NId>3d9df583-6cfa-4474-9d82-2b55a98791fc</NId>
-            <type>END</type>
-            <previousNode>0efd29a4-0544-4540-84c1-a9d3686f581d</previousNode>
-        </end>
-        <end nId="e027df2d-acd0-4aab-bf59-36498d06d1ad" type="END">
-            <NId>e027df2d-acd0-4aab-bf59-36498d06d1ad</NId>
-            <type>END</type>
-            <previousNode>d91f5ec7-25be-4762-87d9-9bfa138bb657</previousNode>
-        </end>
     </nodes>
     <variables/>
 </bpm>

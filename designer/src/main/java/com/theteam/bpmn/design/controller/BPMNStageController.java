@@ -296,8 +296,17 @@ public class BPMNStageController {
         {
             if(nodeFrom.getDType().equals("parallel"))
             {
+
+                for (DLine l : nodeTo.getEndLines()) {
+                    drawArea.getChildren().remove(l);
+                }
+
+                nodeTo.getEndLines().clear();
+
+
                 if(nodeFrom.getNextDNode() == null)
                 {
+
                     nodeFrom.setNextDNode(nodeTo);
                     nodeTo.setPrevDNode(nodeFrom);
                 }
@@ -310,6 +319,14 @@ public class BPMNStageController {
             }
             else
             {
+
+                for (DLine l : nodeFrom.getStartLines()) {
+                    drawArea.getChildren().remove(l);
+                }
+
+                nodeFrom.getStartLines().clear();
+
+
                 if(nodeTo.getPrevDNode() == null)
                 {
                     nodeFrom.setNextDNode(nodeTo);

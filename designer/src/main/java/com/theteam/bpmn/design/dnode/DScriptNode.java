@@ -29,7 +29,7 @@ public class DScriptNode extends DNode
     public DScriptNode(SXML xmlWriter, UUID id, Boolean drawNode)
     {
         super(ImagesLoader.nodeImages.get("script"), id.toString());
-        this.type = "end";
+        this.type = "script";
 
         this.drawNode = drawNode;
 

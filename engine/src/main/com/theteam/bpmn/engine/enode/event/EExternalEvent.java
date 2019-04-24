@@ -22,14 +22,33 @@ public class EExternalEvent extends ENode
     }
 
     @Override
-    public void run()
+    public void run(Elist l)
     {
-        System.out.println("External Event Node Running");
+        System.out.println("\nExternal Event Node Running");
 
         if(sExternal.getInput() != null)
         {
             EVariable i = list.getVariable(sExternal.getInput());
             System.out.println(i.getValue());
         }
+
+        for(ENode n : l.eNodes)
+        {
+        
+            if(n.getSNode().getNId().equals(  ((SExternalEvent)getSNode()).getConnectedEvent()  ))
+            {
+                n.run(l);
+            }
+        }
+
+        for(ENode n : l.eNodes)
+        {
+            if(n.getSNode().getNId().equals(getSNode().getNextNode()))
+            {
+                n.run(l);
+                return;
+            }
+        }
+
     }
 }

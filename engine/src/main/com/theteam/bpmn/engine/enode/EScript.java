@@ -17,8 +17,17 @@ public class EScript extends ENode
     }
 
     @Override
-    public void run()
+    public void run(Elist l)
     {
-        System.out.println("Script Node Running");
+        System.out.println("\nScript Node Running");
+
+        for(ENode n : l.eNodes)
+        {
+            if(n.getSNode().getNId().equals(getSNode().getNextNode()))
+            {
+                n.run(l);
+                return;
+            }
+        }
     }
 }

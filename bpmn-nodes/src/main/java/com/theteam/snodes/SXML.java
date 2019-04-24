@@ -372,7 +372,7 @@ public class SXML
     public void addParallelNode(String id)
     {
         // System.out.println("Hello " + id);
-        SParallel p = new SParallel(Types.NodeType(Types.NodeTypes.START), id);
+        SParallel p = new SParallel(Types.NodeType(Types.NodeTypes.PARALLEL), id);
         nodeList.addParallelNode(p);
     }
 
@@ -386,7 +386,7 @@ public class SXML
     public void addConditionNode(String id)
     {
         // System.out.println("Hello " + id);
-        SCondition c = new SCondition(Types.NodeType(Types.NodeTypes.START), id);
+        SCondition c = new SCondition(Types.NodeType(Types.NodeTypes.CONDITION), id);
         nodeList.addConditionNode(c);
     }
 

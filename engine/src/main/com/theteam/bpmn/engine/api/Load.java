@@ -147,11 +147,12 @@ public class Load {
         {
             System.out.println(node.getNId() + " " + node.getType());
 
+            
             switch(node.getType())
             {
 
                 case "START":
-                    EStart eStart = new EStart((SStartNode) node);
+                    EStart eStart = new EStart((SStartNode) node, workflow);
                     workflow.eNodes.add(eStart);
                     break;
 
@@ -190,9 +191,20 @@ public class Load {
                     workflow.eNodes.add(eTest);
                     break;
 
+                case "CONDITION":
+                    ECondition eCond = new ECondition((SCondition) node, workflow);
+                    workflow.eNodes.add(eCond);
+                    break;
+
+                case "PARALLEL":
+                    EParallel eParallel = new EParallel((SParallel) node, workflow);
+                    workflow.eNodes.add(eParallel);
+                    break;
+
                 default:
                     System.out.println("Making a node went wrong");
             }
+            
         }
     }
 }

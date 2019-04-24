@@ -28,9 +28,9 @@ public class EDB extends ENode
     }
 
     @Override
-    public void run()
+    public void run(Elist l)
     {
-        System.out.println("DB Node Running");
+        System.out.println("\nDB Node Running");
 
         if(sDB.getConnectedEvent() != null)
         {
@@ -82,7 +82,7 @@ public class EDB extends ENode
                                     
                                     if(n.getSNode().getNId().equals(sDB.getConnectedEvent()))
                                     {
-                                        n.run();
+                                        n.run(l);
                                     }
 
                                 }
@@ -144,5 +144,14 @@ public class EDB extends ENode
         }
 
         
+
+        for(ENode n : l.eNodes)
+        {
+            if(n.getSNode().getNId().equals(getSNode().getNextNode()))
+            {
+                n.run(l);
+                return;
+            }
+        }
     }
 }

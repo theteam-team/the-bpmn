@@ -31,9 +31,9 @@ public class ETest extends ENode
     }
 
     @Override
-    public void run()
+    public void run(Elist l)
     {
-        System.out.println("Test Node Running");
+        System.out.println("\nTest Node Running");
 
         EVariable e = list.getVariable(sTest.getInput());
 
@@ -99,13 +99,22 @@ public class ETest extends ENode
 
             }
 
-            System.out.println("The sum: " + sum);
+            System.out.println("\nThe sum: " + sum);
 
         }
 
         else
         {
-            System.out.println("Error Happened");
+            System.out.println("\nError Happened");
+        }
+
+        for(ENode n : l.eNodes)
+        {
+            if(n.getSNode().getNId().equals(getSNode().getNextNode()))
+            {
+                n.run(l);
+                return;
+            }
         }
     }
 }

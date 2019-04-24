@@ -15,7 +15,7 @@ public class SNodeList
     private SStartNode start;
 
     @XmlElement(name = "end")
-    private SEndNode end;
+    private List<SEndNode> end;
 
     @XmlElement(name = "serviceTask")
     private List<STaskNode> serviceTask;
@@ -57,6 +57,7 @@ public class SNodeList
 
         condition = new ArrayList<SCondition>();
         parallel = new ArrayList<SParallel>();
+        end = new ArrayList<SEndNode>();
         
         mapNodes = new HashMap<>();
         
@@ -111,7 +112,12 @@ public class SNodeList
             
         }
 
-        allNodes.add(end);
+        for(SEndNode node : end)
+        {
+            allNodes.add(node);
+            
+        }
+
 
         return allNodes;
     }
@@ -234,12 +240,11 @@ public class SNodeList
     
     public void addEndNode(SEndNode node)
     {
-
         mapNodes.put(node.getNId(), node);
-        end = node;
+        end.add(node);
     }
 
-    public SNode getEndNode()
+    public List<SEndNode> getEndList()
     {
         return end;
     }
@@ -253,7 +258,7 @@ public class SNodeList
             start = null;
 
         else if (node.getType() == Types.NodeType(Types.NodeTypes.END))
-            end = null;
+            end.remove(node);
             
         else if (node.getType() == Types.NodeType(Types.NodeTypes.TASK))
             serviceTask.remove(node);
@@ -292,7 +297,7 @@ public class SNodeList
         System.out.println("remove all nodes");
 
         start = null;
-        end = null;
+        end.clear();
 
         serviceTask.clear();
         db.clear();

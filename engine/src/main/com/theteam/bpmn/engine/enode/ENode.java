@@ -17,7 +17,7 @@ public class ENode
         this.sNode = sNode;
     }
 
-    public void run()
+    public void run(Elist l)
     {
         
     }

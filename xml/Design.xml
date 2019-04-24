@@ -1,86 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <bpm>
     <nodes name="design">
-        <start nId="aa2c092e-c67e-473a-825c-14e56ee4adbd" type="START">
-            <NId>aa2c092e-c67e-473a-825c-14e56ee4adbd</NId>
+        <start nId="233c0dea-2bf0-428f-8a94-1889b17581b1" type="START">
+            <NId>233c0dea-2bf0-428f-8a94-1889b17581b1</NId>
             <type>START</type>
-            <nextNode>1fca3740-7a53-48af-9286-b90b68b0ff58</nextNode>
+            <nextNode>e54a314f-84e1-4dba-bf45-6c02c89b154d</nextNode>
         </start>
-        <serviceTask nId="f65667fa-9cb5-4ef9-80fd-1db526bf03dc" type="TASK">
-            <NId>f65667fa-9cb5-4ef9-80fd-1db526bf03dc</NId>
+        <serviceTask nId="f91e4bc8-3bc9-4cc5-a40c-e308ba4a36a5" type="TASK">
+            <NId>f91e4bc8-3bc9-4cc5-a40c-e308ba4a36a5</NId>
             <type>TASK</type>
-            <nextNode>562b8363-4ee8-4c6c-b85b-ea3a66b2ebbe</nextNode>
-            <input>b</input>
+            <nextNode>5b2db26c-178a-4e57-a6a3-d292dac89f52</nextNode>
             <ServiceType>rest</ServiceType>
-            <restLink>http link</restLink>
+            <restLink>https://postman-echo.com/ip</restLink>
             <soapFunc>getHello</soapFunc>
         </serviceTask>
-        <serviceTask nId="09028f4b-9e3b-4535-8e4f-8a222d37cc6a" type="TASK">
-            <NId>09028f4b-9e3b-4535-8e4f-8a222d37cc6a</NId>
+        <serviceTask nId="0efd29a4-0544-4540-84c1-a9d3686f581d" type="TASK">
+            <NId>0efd29a4-0544-4540-84c1-a9d3686f581d</NId>
             <type>TASK</type>
-            <previousNode>5c7c4013-dc5d-4ef0-b167-d657f6e2aeea</previousNode>
-            <nextNode>857960fa-f1b6-4bd4-ba5b-d42a459ad2ce</nextNode>
-            <input>c</input>
+            <previousNode>621ddf47-a6c4-4deb-88b2-7a2beb2e50ed</previousNode>
+            <nextNode>3d9df583-6cfa-4474-9d82-2b55a98791fc</nextNode>
             <ServiceType>rest</ServiceType>
-            <restLink>http link</restLink>
+            <restLink>https://postman-echo.com/status/200</restLink>
             <soapFunc>getHello</soapFunc>
         </serviceTask>
-        <serviceTask nId="fe84bce5-d113-4561-b565-188a3cb70b0d" type="TASK">
-            <NId>fe84bce5-d113-4561-b565-188a3cb70b0d</NId>
+        <serviceTask nId="d91f5ec7-25be-4762-87d9-9bfa138bb657" type="TASK">
+            <NId>d91f5ec7-25be-4762-87d9-9bfa138bb657</NId>
             <type>TASK</type>
-            <previousNode>1fca3740-7a53-48af-9286-b90b68b0ff58</previousNode>
-            <nextNode>573fef8c-9936-4906-ab00-5d2f22acbbf1</nextNode>
-            <input>a</input>
-            <output>outVar</output>
+            <previousNode>e54a314f-84e1-4dba-bf45-6c02c89b154d</previousNode>
+            <nextNode>e027df2d-acd0-4aab-bf59-36498d06d1ad</nextNode>
             <ServiceType>rest</ServiceType>
-            <restLink>http link</restLink>
+            <restLink>https://postman-echo.com/time/now</restLink>
             <soapFunc>getHello</soapFunc>
         </serviceTask>
-        <parallel nId="5c7c4013-dc5d-4ef0-b167-d657f6e2aeea" type="START">
-            <NId>5c7c4013-dc5d-4ef0-b167-d657f6e2aeea</NId>
-            <type>START</type>
-            <nextNode>f65667fa-9cb5-4ef9-80fd-1db526bf03dc</nextNode>
-            <nextNode1>09028f4b-9e3b-4535-8e4f-8a222d37cc6a</nextNode1>
+        <parallel nId="621ddf47-a6c4-4deb-88b2-7a2beb2e50ed" type="PARALLEL">
+            <NId>621ddf47-a6c4-4deb-88b2-7a2beb2e50ed</NId>
+            <type>PARALLEL</type>
+            <nextNode>f91e4bc8-3bc9-4cc5-a40c-e308ba4a36a5</nextNode>
+            <nextNode1>0efd29a4-0544-4540-84c1-a9d3686f581d</nextNode1>
         </parallel>
-        <condition nId="1fca3740-7a53-48af-9286-b90b68b0ff58" type="START">
-            <NId>1fca3740-7a53-48af-9286-b90b68b0ff58</NId>
-            <type>START</type>
-            <previousNode>aa2c092e-c67e-473a-825c-14e56ee4adbd</previousNode>
-            <nextNode>5c7c4013-dc5d-4ef0-b167-d657f6e2aeea</nextNode>
-            <nextNode1>fe84bce5-d113-4561-b565-188a3cb70b0d</nextNode1>
-            <expression>conditionVar</expression>
+        <condition nId="e54a314f-84e1-4dba-bf45-6c02c89b154d" type="CONDITION">
+            <NId>e54a314f-84e1-4dba-bf45-6c02c89b154d</NId>
+            <type>CONDITION</type>
+            <previousNode>233c0dea-2bf0-428f-8a94-1889b17581b1</previousNode>
+            <nextNode>621ddf47-a6c4-4deb-88b2-7a2beb2e50ed</nextNode>
+            <nextNode1>d91f5ec7-25be-4762-87d9-9bfa138bb657</nextNode1>
+            <expression>false</expression>
         </condition>
-        <end nId="573fef8c-9936-4906-ab00-5d2f22acbbf1" type="END">
-            <NId>573fef8c-9936-4906-ab00-5d2f22acbbf1</NId>
+        <end nId="5b2db26c-178a-4e57-a6a3-d292dac89f52" type="END">
+            <NId>5b2db26c-178a-4e57-a6a3-d292dac89f52</NId>
             <type>END</type>
-            <previousNode>fe84bce5-d113-4561-b565-188a3cb70b0d</previousNode>
+            <previousNode>f91e4bc8-3bc9-4cc5-a40c-e308ba4a36a5</previousNode>
+        </end>
+        <end nId="3d9df583-6cfa-4474-9d82-2b55a98791fc" type="END">
+            <NId>3d9df583-6cfa-4474-9d82-2b55a98791fc</NId>
+            <type>END</type>
+            <previousNode>0efd29a4-0544-4540-84c1-a9d3686f581d</previousNode>
+        </end>
+        <end nId="e027df2d-acd0-4aab-bf59-36498d06d1ad" type="END">
+            <NId>e027df2d-acd0-4aab-bf59-36498d06d1ad</NId>
+            <type>END</type>
+            <previousNode>d91f5ec7-25be-4762-87d9-9bfa138bb657</previousNode>
         </end>
     </nodes>
-    <variables>
-        <variable nId="9873cb51-f0b8-4577-ac5d-27d264b42930">
-            <name>conditionVar</name>
-            <type>bool</type>
-            <value>true</value>
-        </variable>
-        <variable nId="3674da51-a727-46a7-ba02-c7bc20b1465d">
-            <name>a</name>
-            <type>int</type>
-            <value>5</value>
-        </variable>
-        <variable nId="ee2ad3e4-309d-43f3-aba4-3da0e0898832">
-            <name>b</name>
-            <type>int</type>
-            <value>30</value>
-        </variable>
-        <variable nId="0ceb97fc-39a6-477f-ac82-5f507634ad71">
-            <name>c</name>
-            <type>int</type>
-            <value>100</value>
-        </variable>
-        <variable nId="d63d23e1-8f20-4294-9769-e84f6746c6c6">
-            <name>outVar</name>
-            <type>int</type>
-            <value></value>
-        </variable>
-    </variables>
+    <variables/>
 </bpm>

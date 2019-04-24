@@ -32,24 +32,24 @@ public class EServiceTask extends ENode
     
 
     @Override
-    public void run()
+    public void run(Elist l)
     {
         sTask = (STaskNode) sNode;
 
-        System.out.println("Service_task Node Running");
+        System.out.println("\nService_task Node Running");
 
         String temp = null;
 
         if(sTask.getInput() != null)
         {
-            System.out.println("This node has input");
+            System.out.println("\nThis node has input");
             System.out.println(sTask.getInput());
             
         }
         
         else
         {
-            System.out.println("This node doesn't have input has input");
+            System.out.println("\nThis node doesn't have input");
         }
 
         if(sTask.getServiceType().equals("soap"))
@@ -91,7 +91,7 @@ public class EServiceTask extends ENode
 
         else if(sTask.getServiceType().equals("rest"))
         {
-            System.out.println("Execute rest service to link " + sTask.getRestLink());
+            System.out.println("\nExecute rest service to link " + sTask.getRestLink());
             try {
 
                 // http://localhost:8080/RESTfulExample/json/product/get
@@ -131,12 +131,21 @@ public class EServiceTask extends ENode
 
         if(sTask.getOutput() != null)
         {
-            System.out.println("This node has output");
+            System.out.println("\nThis node has output\n");
         }
 
         else
         {
-            System.out.println("This node doesn't have output");
+            System.out.println("\nThis node doesn't have output\n");
+        }
+
+        for(ENode n : l.eNodes)
+        {
+            if(n.getSNode().getNId().equals(getSNode().getNextNode()))
+            {
+                n.run(l);
+                return;
+            }
         }
     }
 }

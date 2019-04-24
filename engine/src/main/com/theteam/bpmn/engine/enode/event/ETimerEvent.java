@@ -20,8 +20,17 @@ public class ETimerEvent extends ENode
     }
 
     @Override
-    public void run()
+    public void run(Elist l)
     {
-        System.out.println("Timer Event Node Running");
+        System.out.println("\nTimer Event Node Running");
+
+        for(ENode n : l.eNodes)
+        {
+            if(n.getSNode().getNId().equals(getSNode().getNextNode()))
+            {
+                n.run(l);
+                return;
+            }
+        }
     }
 }

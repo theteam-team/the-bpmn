@@ -14,13 +14,12 @@ public class EEnd extends ENode
     public EEnd(SNode sNode, Elist list)
     {
         this.sNode = sNode;
-
         this.list = list;
     }
 
     @Override
-    public void run()
+    public void run(Elist l)
     {
-        System.out.println("End Node Running");
+        System.out.println("\nEnd Node Running");
     }
 }

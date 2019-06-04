@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 @XmlRootElement
-@XmlType(propOrder = { "connectedEvent", "previousNode", "previousNode1", "nextNode", "nextNode1", "input", "output",  "connectionString", "selectStatement", "userName", "password"})
+@XmlType(propOrder = { "connectedEvent", "previousNode", "previousNode1", "nextNode", "nextNode1", "input", "output", "connectionString", "selectStatement", "userName", "password"})
 public class SDBNode extends SNode
 {
 

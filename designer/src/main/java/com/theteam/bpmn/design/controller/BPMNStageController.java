@@ -354,22 +354,19 @@ public class BPMNStageController {
             }
         }
 
-        else if(nodeFrom.getDType().equals("external")
-        && nodeTo.getDType().equals("db"))
+        else if(nodeFrom.getDType().equals("external"))
         {
-            for (DLine l : nodeFrom.getStartLines()) {
-                drawArea.getChildren().remove(l);
+            if(nodeTo.getDType().equals("db"))
+            {
+               nodeFrom.setExternalConnectedDNode(nodeTo);
+               nodeTo.setDBConnectedDNode(nodeFrom);
             }
-    
-            for (DLine l : nodeTo.getEndLines()) {
-                drawArea.getChildren().remove(l);
+            else
+            {
+                nodeFrom.setNextDNode(nodeTo);
+                nodeTo.setPrevDNode(nodeFrom);
             }
 
-            nodeFrom.getStartLines().clear();
-            nodeTo.getEndLines().clear();
-
-            nodeFrom.setExternalConnectedDNode(nodeTo);
-            nodeTo.setDBConnectedDNode(nodeFrom);
         }
 
         else

@@ -37,16 +37,21 @@ public class App extends Application
         FXMLLoader fxmlLoader = new FXMLLoader(App.class
             .getResource("/fxml/mainStage.fxml"));
         VBox rootGroup = fxmlLoader.load();
+        //VBox rootGroup = new VBox();
 
         final MainStageController mainStagecontroller = fxmlLoader.getController();
         mainStagecontroller.setStage(stage);
         mainStagecontroller.setupBinding(stageStyle);
-        
+
         Scene scene = new Scene(rootGroup, 1200, 800);
         mainStagecontroller.setScene(scene);
+        stage.setScene(scene);
         scene.setFill(Color.TRANSPARENT);
         scene.getStylesheets().addAll(App.class
             .getResource("/css/dark-theme.css").toString());
+
+        scene.setFill(Color.TRANSPARENT);
+        stage.initStyle(StageStyle.TRANSPARENT);
 
         stage.setScene(scene);
         stage.setOnCloseRequest(we -> System.out.println("Stage is closing"));

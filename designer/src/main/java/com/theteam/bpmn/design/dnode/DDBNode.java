@@ -35,6 +35,13 @@ public class DDBNode extends DNode
     StringProperty userNameProperty = new SimpleStringProperty();
     StringProperty passwordProperty = new SimpleStringProperty();
 
+    public SingleSelectionModel<String> connectionString;
+
+    public ObservableList<String>connectionStringList = FXCollections.observableArrayList(
+        "mySQL",
+        "firebase"
+    );
+
     public DDBNode(SXML xmlWriter, UUID id, Boolean drawNode)
     {
         super(ImagesLoader.nodeImages.get("db"), id.toString());
@@ -54,21 +61,25 @@ public class DDBNode extends DNode
             DTextProperty dInputProperty = new DTextProperty("Input", inputProperty);
             DTextProperty dOutputProperty = new DTextProperty("Output", outputProperty);
 
-            DTextProperty dConnectionStringProperty = new DTextProperty("Connection String", connectionStringProperty);
+            // DTextProperty dConnectionStringProperty = new DTextProperty("Connection String", connectionStringProperty);
             DTextProperty dSelectStatementProperty = new DTextProperty("Select Statment", selectStatementProperty);
 
             DTextProperty dUserNameProperty = new DTextProperty("user name", userNameProperty);
             DTextProperty dPasswordProperty = new DTextProperty("password", passwordProperty);
+
+            DComboBoxProperty dConnectionStringProperty = new DComboBoxProperty("Service Type", connectionString, connectionStringList);
             
 
             allDProperties.add(dInputProperty);
             allDProperties.add(dOutputProperty);
 
-            allDProperties.add(dConnectionStringProperty);
+            // allDProperties.add(dConnectionStringProperty);
             allDProperties.add(dSelectStatementProperty);
 
             allDProperties.add(dUserNameProperty);
             allDProperties.add(dPasswordProperty);
+
+            allDProperties.add(dConnectionStringProperty);
 
             inputProperty.addListener(new ChangeListener<String>()
             {
@@ -88,6 +99,7 @@ public class DDBNode extends DNode
                 }
             });
 
+            /*
             connectionStringProperty.addListener(new ChangeListener<String>()
             {
                 @Override
@@ -95,6 +107,14 @@ public class DDBNode extends DNode
                 {
                     xmlWriter.setDBConnectionStringProperty(id.toString(), newValue);
                 }
+            });
+            */
+
+            dConnectionStringProperty.getComboSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
+
+                String selectedItem = (String) dConnectionStringProperty.getComboSelectionModel().getSelectedItem();
+                xmlWriter.setDBConnectionStringProperty(id.toString(), selectedItem);
+                
             });
             
             selectStatementProperty.addListener(new ChangeListener<String>()

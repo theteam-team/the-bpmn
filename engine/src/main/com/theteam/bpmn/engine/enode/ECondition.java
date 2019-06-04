@@ -2,6 +2,7 @@ package com.theteam.bpmn.engine.enode;
 
 import com.theteam.bpmn.engine.Elist;
 import com.theteam.bpmn.engine.Workflow;
+import com.theteam.bpmn.engine.io.EVariable;
 import com.theteam.snodes.SCondition;
 import com.theteam.snodes.SNode;
 

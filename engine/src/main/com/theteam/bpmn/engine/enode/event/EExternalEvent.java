@@ -41,6 +41,7 @@ public class EExternalEvent extends ENode
             }
         }
 
+        /*
         for(ENode n : l.eNodes)
         {
             if(n.getSNode().getNId().equals(getSNode().getNextNode()))
@@ -49,6 +50,7 @@ public class EExternalEvent extends ENode
                 return;
             }
         }
+        */
 
     }
 }

@@ -3,18 +3,32 @@ package com.theteam.bpmn.engine.enode;
 import com.theteam.bpmn.engine.Elist;
 import com.theteam.bpmn.engine.Workflow;
 import com.theteam.bpmn.engine.io.EVariable;
+import com.theteam.snodes.SCondition;
 import com.theteam.snodes.SNode;
 import com.theteam.snodes.STestNode;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import com.microsoft.signalr.*;
 
 public class ETest extends ENode
 {
 
     private STestNode sTest;
 
+    HubConnection hubConnection;
+	Map<String, Boolean> notifications = new HashMap<String, Boolean>();
+
+    /*
+
     int var1;
     int var2;
 
     Boolean error = false;
+
+    */
 
     public ETest(SNode sNode, Elist list)
     {
@@ -23,17 +37,96 @@ public class ETest extends ENode
 
         this.list = list;
 
+        /*
+
         var1 = 0;
         var2 = 0;
+
+        */
 
         //System.out.println(sTest.getInput());
 
     }
 
+    public void sendNotification() 
+	{
+		UUID uuid = UUID.randomUUID();
+		String notificationId = uuid.toString();
+		notifications.put(notificationId, false);
+		hubConnection.send("sendNotification","Adminstrator", notificationId, "please approve this order blablabla" );
+		System.out.println("sending Notification "+ notificationId);
+	}
+	
+	public void delay(int delay) 
+	{
+		try {
+			Thread.sleep(delay);
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
+	}
+
     @Override
     public void run(Elist l)
     {
         System.out.println("\nTest Node Running");
+
+        hubConnection = HubConnectionBuilder.create("http://localhost:8888/NotificationHub").build();
+		
+		hubConnection.start();
+		
+		while(hubConnection.getConnectionState().name() != "CONNECTED") 
+		{
+			System.out.print(hubConnection.getConnectionState().name());
+			delay(50);
+		}
+		
+		hubConnection.send("AddToGroup", "Engine");
+		//send the notification
+		sendNotification();
+		
+		
+		//on receiving Response on a specific notification 
+		hubConnection.on("notificationResponse",(notificationId, response)->{
+			notifications.put(notificationId, response);
+			String str = "";
+            String res = "";
+            
+			if(response) 
+			{
+                str = "Approved";
+                res = "true";
+			}
+            else
+            {
+                str = "disapproved";
+                res = "false";
+                
+            }
+            System.out.println("response for " + notificationId + " is " + str);
+            
+            for(ENode n : l.eNodes)
+            {
+                if(n.getSNode().getNId().equals(getSNode().getNextNode()))
+                {
+                    if(n.getSNode().getType().equals("CONDITION"))
+                    {
+                        ECondition db = (ECondition) n;
+                        SCondition sdb = (SCondition) db.getSNode();
+
+                        sdb.setExpression(res);
+
+                    }
+                    n.run(l);
+                    return;
+                }
+            }
+		},String.class, Boolean.class);
+
+
+
+        /*
 
         EVariable e = list.getVariable(sTest.getInput());
 
@@ -116,5 +209,7 @@ public class ETest extends ENode
                 return;
             }
         }
+
+        */
     }
 }

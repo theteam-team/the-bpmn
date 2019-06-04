@@ -3,6 +3,12 @@ package com.theteam.bpmn.engine.enode;
 import com.theteam.snodes.SNode;
 import com.theteam.snodes.STaskNode;
 
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.io.BufferedReader;
@@ -12,11 +18,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.xml.namespace.QName;  
+import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
+import com.google.gson.JsonObject;
 import com.theteam.bpmn.engine.Elist;
 import com.theteam.bpmn.engine.Workflow;
+import com.theteam.bpmn.engine.io.EVariable;
 import com.theteam.bpmn.engine.ws.WS;  
 
 public class EServiceTask extends ENode
@@ -91,6 +99,7 @@ public class EServiceTask extends ENode
 
         else if(sTask.getServiceType().equals("rest"))
         {
+            
             System.out.println("\nExecute rest service to link " + sTask.getRestLink());
             try {
 
@@ -126,6 +135,66 @@ public class EServiceTask extends ENode
                 e.printStackTrace();
                 
             }
+
+            /*
+
+            try {
+
+                String a = "";
+    
+                CloseableHttpClient client = HttpClients.createDefault();
+                //HttpPost post = new HttpPost("https://postman-echo.com/post");
+                HttpPost post = new HttpPost("http://localhost:8888/api/crmapi/addcustomer");
+
+                EVariable e = list.getVariable(sTask.getInput());
+
+                String s = e.getValue();
+                JsonObject payload = new JsonObject();
+                
+                payload.addProperty("customer_id", UUID.randomUUID().toString());
+                payload.addProperty("name", s);
+                payload.addProperty("phone_number", 0);
+                payload.addProperty("email", "1234");
+                payload.addProperty("dateOfBirth", "1999-06-02");
+                payload.addProperty("gender", "1234");
+                payload.addProperty("loyality_points", 0);
+                payload.addProperty("type", 0);
+                payload.addProperty("company", "1234");
+                payload.addProperty("company_email", "1234");
+                payload.addProperty("is_lead", true);
+                
+                //payload.put("name", "myName");
+                //payload.put("age", "20");
+                post.setEntity(new StringEntity(payload.toString()));
+                post.setHeader("Accept", "application/json");
+                post.setHeader("Content-type", "application/json");
+    
+                CloseableHttpResponse response = client.execute(post);
+                System.out.println(response.getStatusLine().getStatusCode());
+    
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        (response.getEntity().getContent())));
+    
+                String output;
+                // System.out.println("Output from Server .... \n");
+                while ((output = br.readLine()) != null) {
+    
+                    //System.out.println(output);
+                    a += output;
+                }
+                System.out.println(a);
+    
+                
+                client.close();
+    
+                
+    
+            } catch (Exception e) {
+    
+                e.printStackTrace();
+            }
+
+            */
 
         }
 

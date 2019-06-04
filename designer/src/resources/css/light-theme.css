@@ -17,6 +17,7 @@
 .root
 {
     -fx-background-color: -fx-primary;
+    -fx-background-radius: 10;
 }
 
 .glyph-icon

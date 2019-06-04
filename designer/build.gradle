@@ -1,3 +1,4 @@
+
 plugins
 {
     // Apply the java plugin to add support for Java
@@ -7,6 +8,7 @@ plugins
     id 'application'
 
     id 'org.openjfx.javafxplugin' version '0.0.7'
+    
 }
 
 sourceSets
@@ -24,18 +26,11 @@ sourceSets
     }
 }
 
-repositories
-{
-    
-    jcenter()
-    mavenCentral()
-}
 
 javafx
 {
-    version = "11.0.1"
+    version = "12.0.1"
     modules = ['javafx.base' ,'javafx.controls', 'javafx.fxml', 'javafx.graphics']
-   
 }
 
 run
@@ -43,8 +38,17 @@ run
     standardInput = System.in
 }
 
+repositories
+{
+    jcenter()
+    mavenCentral()
+}
+
+
+
 dependencies
 {
+    
     // This dependency is found on compile classpath of this component and consumers.
     implementation 'com.google.guava:guava:27.0.1-jre'
     
@@ -61,6 +65,7 @@ dependencies
     
     // compile files('libs/bpmn-nodes.jar')
     compile fileTree(dir: 'libs', include: '*.jar')
+    
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'

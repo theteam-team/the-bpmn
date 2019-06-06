@@ -94,7 +94,7 @@ public class MainStageController {
         ImagesLoader.initializeImages();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass()
-            .getResource("/fxml/bpmnStage.fxml"));
+            .getResource("/fxml/bpmnStage.fxml"));  
         AnchorPane bpmnDrawArea = fxmlLoader.load();
 
         final BPMNStageController bpmnStagecontroller = fxmlLoader.getController();

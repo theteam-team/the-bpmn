@@ -2,6 +2,7 @@ package com.theteam.bpmn.design.dnode;
 
 import java.util.UUID;
 
+import com.theteam.bpmn.design.dnode.dproperty.DButtonProperty;
 import com.theteam.bpmn.design.dnode.dproperty.DComboBoxProperty;
 import com.theteam.bpmn.design.dnode.dproperty.DTextProperty;
 import com.theteam.bpmn.design.loader.ImagesLoader;
@@ -31,6 +32,8 @@ public class DDBNode extends DNode
 
     StringProperty connectionStringProperty = new SimpleStringProperty();
     StringProperty selectStatementProperty = new SimpleStringProperty();
+
+    StringProperty sqlStatementProperty = new SimpleStringProperty();
 
     StringProperty userNameProperty = new SimpleStringProperty();
     StringProperty passwordProperty = new SimpleStringProperty();
@@ -63,6 +66,7 @@ public class DDBNode extends DNode
 
             // DTextProperty dConnectionStringProperty = new DTextProperty("Connection String", connectionStringProperty);
             DTextProperty dSelectStatementProperty = new DTextProperty("Select Statment", selectStatementProperty);
+            DButtonProperty dSqlStatementProperty = new DButtonProperty("Statment", sqlStatementProperty, "dbStage");
 
             DTextProperty dUserNameProperty = new DTextProperty("user name", userNameProperty);
             DTextProperty dPasswordProperty = new DTextProperty("password", passwordProperty);
@@ -75,6 +79,7 @@ public class DDBNode extends DNode
 
             // allDProperties.add(dConnectionStringProperty);
             allDProperties.add(dSelectStatementProperty);
+            allDProperties.add(dSqlStatementProperty);
 
             allDProperties.add(dUserNameProperty);
             allDProperties.add(dPasswordProperty);
@@ -118,6 +123,15 @@ public class DDBNode extends DNode
             });
             
             selectStatementProperty.addListener(new ChangeListener<String>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
+                {
+                    xmlWriter.setDBSelectStatmentProperty(id.toString(), newValue);
+                }
+            });
+
+            sqlStatementProperty.addListener(new ChangeListener<String>()
             {
                 @Override
                 public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)

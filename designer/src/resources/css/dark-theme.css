@@ -18,7 +18,7 @@
     -fx-primary : #121212;
     -fx-secondary : #FFFF8D;
     -fx-drawarea : #282828;
-    -fx-primarytext : #B2B2B2;
+    -fx-primarytext : rgb(255, 255, 255);
     -fx-blue: #1976D2;
     -fx-red: #FF0000;
     -fx-color-1:#1976D2;
@@ -465,29 +465,36 @@
 
 /* Combo Box */
 
-/* Selected item text color on the control itself */
-.combo-box .list-cell 
-{
-    -fx-background: -fx-primary;
-    -fx-background-color: transparent;
-    -fx-text-fill: -fx-primarytext;
-    -fx-padding: 3 0 2 7;
+
+.jfx-combo-box{
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: white;
+    -jfx-focus-color : -fx-secondary;
+    -jfx-unfocus-color : -fx-primary;
 }
 
+.jfx-combo-box .label {
+    -fx-text-fill: white;
+}
 
-
-.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover 
+.combo-box-popup .list-view 
 {
-    
+    -fx-background-color: -fx-primary;
+}
+
+.combo-box .list-cell 
+{
     -fx-text-fill: -fx-primarytext;
+    -fx-background-color: -fx-primary;
+    -fx-padding: 3 0 2 7;
+    -fx-cell-size: 1.66667em; 
 }
 
 .combo-box-popup .list-view .list-cell:filled:hover 
 {
-    
-    -fx-text-fill: -fx-primarytext;
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: -fx-primary;
 }
-
 
 /*Checkbox*/
 

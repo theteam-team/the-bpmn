@@ -84,6 +84,13 @@ public class SQLEditor
         currentState.setState(s);
     }
 
+    public void goPrevState()
+    {
+        SQLKEYS k = visitedStates.get(visitedStates.size()-2);
+        currentState.setState(k);
+        visitedStates.remove(visitedStates.size()-1);
+    }
+
     private class State
     {
         SQLKEYS sqlState;
@@ -184,6 +191,17 @@ public class SQLEditor
 
                 case OrderBy:
                     visitedStates.add(SQLKEYS.OrderBy);
+
+                    if(!visitedStates.contains(SQLKEYS.WHERE))
+                        temp.add(SQLKEYS.WHERE);
+
+                    if(!visitedStates.contains(SQLKEYS.GroupBy))
+                        temp.add(SQLKEYS.GroupBy);
+
+                    if(!visitedStates.contains(SQLKEYS.Having) &&
+                        visitedStates.contains(SQLKEYS.GroupBy))
+                        temp.add(SQLKEYS.Having);
+                    
                     temp.add(SQLKEYS.FROM);
                     return temp;
 

@@ -1,41 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <bpm>
     <nodes name="design">
-        <start nId="595c19b6-ae3a-4ac5-b288-fc17db229bf0" type="START">
-            <NId>595c19b6-ae3a-4ac5-b288-fc17db229bf0</NId>
-            <type>START</type>
-            <nextNode>cc9a9798-8500-4188-838f-630cd9426209</nextNode>
-        </start>
-        <serviceTask nId="cc9a9798-8500-4188-838f-630cd9426209" type="TASK">
-            <NId>cc9a9798-8500-4188-838f-630cd9426209</NId>
-            <type>TASK</type>
-            <previousNode>595c19b6-ae3a-4ac5-b288-fc17db229bf0</previousNode>
-            <nextNode>d2249c03-2575-4ceb-a640-0c76fb99c9c2</nextNode>
-            <ServiceType>rest</ServiceType>
-            <soapFunc>getHello</soapFunc>
-        </serviceTask>
-        <externalEvent nId="d2249c03-2575-4ceb-a640-0c76fb99c9c2" type="EXTERNAL_EVENT">
-            <NId>d2249c03-2575-4ceb-a640-0c76fb99c9c2</NId>
-            <type>EXTERNAL_EVENT</type>
-            <previousNode>cc9a9798-8500-4188-838f-630cd9426209</previousNode>
-            <nextNode>5899eb53-bd83-4ae8-b422-6a45fdaef77c</nextNode>
-        </externalEvent>
-        <end nId="5899eb53-bd83-4ae8-b422-6a45fdaef77c" type="END">
-            <NId>5899eb53-bd83-4ae8-b422-6a45fdaef77c</NId>
-            <type>END</type>
-            <previousNode>d2249c03-2575-4ceb-a640-0c76fb99c9c2</previousNode>
-        </end>
+        <db nId="a7e245ea-5712-4b35-9431-f0643e8080bb" type="DB">
+            <NId>a7e245ea-5712-4b35-9431-f0643e8080bb</NId>
+            <type>DB</type>
+            <selectStatement>SELECT * FROM table ;</selectStatement>
+        </db>
     </nodes>
-    <variables>
-        <variable nId="c000a7df-c103-4b11-a918-9a368cd76962">
-            <name>var0</name>
-            <type>string</type>
-            <value>null</value>
-        </variable>
-        <variable nId="d87bb50f-611d-4a5a-97e2-cffd87b6ab41">
-            <name>var1</name>
-            <type>string</type>
-            <value>null</value>
-        </variable>
-    </variables>
+    <variables/>
 </bpm>

@@ -9,11 +9,14 @@ import java.util.List;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleNode;
 import com.theteam.bpmn.design.db.SQLEditor;
 
 import de.jensd.fx.glyphs.materialicons.MaterialIcon;
 import de.jensd.fx.glyphs.materialicons.MaterialIconView;
 import javafx.beans.property.SimpleStringProperty;
+
+import javafx.beans.Observable;
 
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -28,8 +31,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -50,7 +55,6 @@ public class DBStageController {
 
     private double dragAnchorX;
     private double dragAnchorY;
-
 
     SQLEditor sqlEditor;
     JFXButton dnButton;
@@ -74,7 +78,6 @@ public class DBStageController {
 
     }
 
-
     private void loadEventEditor()
     {
 
@@ -88,15 +91,22 @@ public class DBStageController {
         dbBox = new VBox(30);
         dbBox.setAlignment(Pos.CENTER);
 
-        MaterialIconView btnIcon = new MaterialIconView(MaterialIcon.NAVIGATE_NEXT);
+        MaterialIconView btnIcon = new MaterialIconView(MaterialIcon.NAVIGATE_BEFORE);
         btnIcon.setSize("30");
         btnIcon.setOnMouseClicked(btnIconHandler);
+
+        MaterialIconView btnIcon1 = new MaterialIconView(MaterialIcon.NAVIGATE_NEXT);
+        btnIcon1.setSize("30");
+        btnIcon1.setOnMouseClicked(btnIconHandler1);
+
+        HBox iconBox = new HBox(30, btnIcon, btnIcon1);
+        iconBox.setAlignment(Pos.CENTER);
         
         dnButton = new JFXButton("DONE");
         dnButton.setOnMouseClicked(dnBtnHandler);
         dnButton.setVisible(false);
 
-        VBox box = new VBox(50, btnIcon, dbBox, dnButton);
+        VBox box = new VBox(50, iconBox, dbBox, dnButton);
 
         box.setVgrow(dbBox, Priority.ALWAYS);
         box.setVgrow(dnButton, Priority.ALWAYS);
@@ -137,7 +147,10 @@ public class DBStageController {
                 s += " ";
             }
 
+            s += ";";
+
             System.out.println(s);
+            txtField.setText(s);
             stage.close();
         }
     };
@@ -147,24 +160,45 @@ public class DBStageController {
         @Override
         public void handle(MouseEvent me)
         {
+            showPrevStatment();
+        }
+
+    };
+    public EventHandler<MouseEvent> btnIconHandler1 =  new EventHandler<MouseEvent>()
+    {
+        @Override
+        public void handle(MouseEvent me)
+        {
             showNextStatment();
         }
     };
 
-    public void setStage(Stage stage)
+    public void showPrevStatment()
     {
-        this.stage = stage;
-    }
+        if(statments.size() <= 2)
+            dnButton.setVisible(false);
 
-    public void setScene(Scene scene)
-    {
-        this.scene = scene;
+        if(statments.size() <= 1)
+            return;
+
+        stage.setHeight(stage.getHeight() - 100);
+
+        sqlEditor.goPrevState();
+
+        Statment last = statments.get(statments.size()-1);
+        statments.remove(last);
+        dbBox.getChildren().remove(last);
+        
+        last = statments.get(statments.size()-1);
+        last.reverseVisibility();
     }
 
     public void showNextStatment()
     {
 
         Statment last = statments.get(statments.size()-1);
+        last.reverseVisibility();
+
         sqlEditor.setNextState(last.getState());
 
         dnButton.setVisible(true);
@@ -182,6 +216,17 @@ public class DBStageController {
         statments.add(st);
         dbBox.getChildren().add(st);
     }
+
+    public void setStage(Stage stage)
+    {
+        this.stage = stage;
+    }
+
+    public void setScene(Scene scene)
+    {
+        this.scene = scene;
+    }
+
 
     public void setTextField(JFXTextField txtField)
     {
@@ -229,25 +274,76 @@ public class DBStageController {
     public class Statment extends VBox
     {
         JFXComboBox<String> cb = new JFXComboBox<String>();
+
         JFXTextField text = new JFXTextField();
+        JFXToggleNode toggleNode = new JFXToggleNode();
 
         public Statment(ObservableList<String> list)
         {
 
             super(10);
 
-            
             cb.setItems(list);
             cb.getSelectionModel().select(0);
+            toggleNode.setTextFill(Color.YELLOWGREEN);
 
-            
+            if(cb.getSelectionModel().getSelectedItem().equals("END"))
+            {
+                getChildren().clear();
+                getChildren().addAll(cb);
+            }
+
+            cb.getSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
+
+                String selectedItem = (String) cb.getSelectionModel().getSelectedItem();
+                
+                if(selectedItem.equals("END"))
+                {
+                    getChildren().clear();
+                    getChildren().addAll(cb);
+                }
+
+                else
+                {
+                    getChildren().clear();
+                    getChildren().addAll(cb, text);
+                }
+            });
+
 
             getChildren().addAll(cb, text);
         }
 
+        public void reverseVisibility()
+        {
+            if(cb.isVisible())
+            {
+
+                cb.setVisible(false);
+
+                toggleNode.setText(cb.getSelectionModel().getSelectedItem());
+
+                getChildren().clear();
+                getChildren().addAll(toggleNode, text);
+                
+            }
+            else
+            {
+                cb.setVisible(true);
+
+                getChildren().clear();
+                getChildren().addAll(cb, text);
+            }
+        }
+
         public String getStrStatment()
         {
-            return cb.getSelectionModel().getSelectedItem() +
+            String s = cb.getSelectionModel().getSelectedItem();
+
+            if(s.equals("END"))
+                return "";
+
+            return  s +
                     " " +
                     text.getText();
         }
@@ -256,5 +352,6 @@ public class DBStageController {
         {
             return cb.getSelectionModel().getSelectedItem();
         }
+
     }
 }

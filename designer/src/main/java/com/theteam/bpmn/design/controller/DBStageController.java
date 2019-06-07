@@ -132,6 +132,19 @@ public class DBStageController {
 
         dbBox.getChildren().add(select);
 
+        select.reverseVisibility();
+        dnButton.setVisible(true);
+
+        stage.setHeight(stage.getHeight() + 100);
+
+        ObservableList<String> obsList1 = FXCollections.observableArrayList(
+            sqlEditor.getStrNextStates()
+        );
+
+        Statment st = new Statment(obsList1);
+        statments.add(st);
+        dbBox.getChildren().add(st);
+
     }
 
     public EventHandler<MouseEvent> dnBtnHandler =  new EventHandler<MouseEvent>()
@@ -175,38 +188,25 @@ public class DBStageController {
 
     public void showPrevStatment()
     {
-        if(statments.size() <= 2)
-            dnButton.setVisible(false);
+        System.out.println();
 
-        if(statments.size() <= 1)
+        System.out.println(sqlEditor.getStrState());
+
+        if(statments.size() <= 2)
             return;
 
-        stage.setHeight(stage.getHeight() - 100);
 
-        sqlEditor.goPrevState();
+        stage.setHeight(stage.getHeight() - 100);
 
         Statment last = statments.get(statments.size()-1);
         statments.remove(last);
         dbBox.getChildren().remove(last);
         
         last = statments.get(statments.size()-1);
-        last.reverseVisibility();
-    }
+        statments.remove(last);
+        dbBox.getChildren().remove(last);
 
-    public void showNextStatment()
-    {
-
-        Statment last = statments.get(statments.size()-1);
-        last.reverseVisibility();
-
-        sqlEditor.setNextState(last.getState());
-
-        dnButton.setVisible(true);
-
-        if(sqlEditor.ended())
-            return;
-
-        stage.setHeight(stage.getHeight() + 100);
+        sqlEditor.goPrevState();
 
         ObservableList<String> obsList = FXCollections.observableArrayList(
             sqlEditor.getStrNextStates()
@@ -215,6 +215,39 @@ public class DBStageController {
         Statment st = new Statment(obsList);
         statments.add(st);
         dbBox.getChildren().add(st);
+
+        System.out.println(sqlEditor.getStrState());
+        System.out.println();
+    }
+
+    public void showNextStatment()
+    {
+
+        System.out.println();
+        System.out.println(sqlEditor.getStrState());
+
+        Statment last = statments.get(statments.size()-1);
+        last.reverseVisibility();
+
+        sqlEditor.setNextState(last.getState());
+
+        ObservableList<String> obsList = FXCollections.observableArrayList(
+            sqlEditor.getStrNextStates()
+        );
+        
+        System.out.println(sqlEditor.getStrState());
+        System.out.println();
+
+        if(sqlEditor.ended())
+            return;
+
+        
+        Statment st = new Statment(obsList);
+        statments.add(st);
+
+        stage.setHeight(stage.getHeight() + 100);
+        dbBox.getChildren().add(st);
+
     }
 
     public void setStage(Stage stage)
@@ -278,6 +311,11 @@ public class DBStageController {
         JFXTextField text = new JFXTextField();
         JFXToggleNode toggleNode = new JFXToggleNode();
 
+        public Statment()
+        {
+
+        }
+
         public Statment(ObservableList<String> list)
         {
 
@@ -291,6 +329,12 @@ public class DBStageController {
             {
                 getChildren().clear();
                 getChildren().addAll(cb);
+            }
+
+            else
+            {
+                getChildren().clear();
+                getChildren().addAll(cb, text);
             }
 
             cb.getSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
@@ -310,8 +354,6 @@ public class DBStageController {
                 }
             });
 
-
-            getChildren().addAll(cb, text);
         }
 
         public void reverseVisibility()
@@ -323,16 +365,35 @@ public class DBStageController {
 
                 toggleNode.setText(cb.getSelectionModel().getSelectedItem());
 
-                getChildren().clear();
-                getChildren().addAll(toggleNode, text);
-                
+                if(cb.getSelectionModel().getSelectedItem().equals("END"))
+                {
+                    getChildren().clear();
+                    getChildren().addAll(toggleNode);
+                }
+
+                else
+                {
+                    getChildren().clear();
+                    getChildren().addAll(toggleNode, text);
+                }
+
             }
             else
             {
                 cb.setVisible(true);
 
-                getChildren().clear();
-                getChildren().addAll(cb, text);
+                if(cb.getSelectionModel().getSelectedItem().equals("END"))
+                {
+                    getChildren().clear();
+                    getChildren().addAll(cb);
+                }
+
+                else
+                {
+                    getChildren().clear();
+                    getChildren().addAll(cb, text);
+                }
+
             }
         }
 

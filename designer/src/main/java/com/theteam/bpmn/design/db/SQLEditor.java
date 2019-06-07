@@ -39,7 +39,12 @@ public class SQLEditor
     }
 
     private State currentState = new State(SQLKEYS.SELECT);
-    private List<SQLKEYS> visitedStates = new ArrayList<>();
+    private ArrayList<SQLKEYS> visitedStates = new ArrayList<>();
+
+    public SQLEditor()
+    {
+        visitedStates.add(SQLKEYS.SELECT);
+    }
 
     public SQLKEYS getState()
     {
@@ -86,9 +91,28 @@ public class SQLEditor
 
     public void goPrevState()
     {
-        SQLKEYS k = visitedStates.get(visitedStates.size()-2);
-        currentState.setState(k);
+        System.out.println();
+        System.out.println("_____VISITED_BEFORE____");
+        for (SQLKEYS var : visitedStates)
+        System.out.println(var);
+        System.out.println("_____VISITED_BEFORE____");
+        System.out.println();
+        
         visitedStates.remove(visitedStates.size()-1);
+        
+        if(ended())
+        visitedStates.remove(visitedStates.size()-1);
+        
+        SQLKEYS k = visitedStates.get(visitedStates.size()-1);
+        currentState.setSState(k);
+        
+        
+        System.out.println("_____VISITED_AFTER____");
+        for (SQLKEYS var : visitedStates)
+        System.out.println(var);
+        System.out.println("_____VISITED_AFTER____");
+        System.out.println();
+        
     }
 
     private class State
@@ -100,20 +124,34 @@ public class SQLEditor
             this.sqlState = sqlState;
         }
 
+        public void setSState(SQLKEYS s)
+        {
+            sqlState = s;
+        }
+
         public void setState(SQLKEYS s)
         {
+
+            if(currentState.getState() == SQLKEYS.END)
+                return;
+
             if(currentState.getNextStates().contains(s))
             {
+                visitedStates.add(s);
                 sqlState = s;
             }
         }
 
         public void setState(String s)
         {
+            if(currentState.getState() == SQLKEYS.END)
+                return;
+
             SQLKEYS skey = selectKeywords.get(s);
 
             if(currentState.getNextStates().contains(skey))
             {
+                visitedStates.add(skey);
                 sqlState = skey;
             }
         }
@@ -130,20 +168,24 @@ public class SQLEditor
             switch (sqlState) {
 
                 case SELECT:
-                    visitedStates.add(SQLKEYS.SELECT);
+                    //visitedStates.add(SQLKEYS.SELECT);
                     temp.add(SQLKEYS.FROM);
                     return temp;
 
                 case FROM:
-                    visitedStates.add(SQLKEYS.FROM);
+                    //visitedStates.add(SQLKEYS.FROM);
+                    temp.add(SQLKEYS.END);
+
                     temp.add(SQLKEYS.WHERE);
                     temp.add(SQLKEYS.GroupBy);
                     temp.add(SQLKEYS.OrderBy);
-                    temp.add(SQLKEYS.END);
+                    
                     return temp;
 
                 case WHERE:
-                    visitedStates.add(SQLKEYS.WHERE);
+                    //visitedStates.add(SQLKEYS.WHERE);
+
+                    temp.add(SQLKEYS.END);
 
                     temp.add(SQLKEYS.OR);
                     temp.add(SQLKEYS.AND);
@@ -158,11 +200,12 @@ public class SQLEditor
                         visitedStates.contains(SQLKEYS.GroupBy))
                         temp.add(SQLKEYS.Having);
 
-                    temp.add(SQLKEYS.END);
                     return temp;
 
                 case GroupBy:
-                    visitedStates.add(SQLKEYS.GroupBy);
+                    //visitedStates.add(SQLKEYS.GroupBy);
+
+                    temp.add(SQLKEYS.END);
 
                     if(!visitedStates.contains(SQLKEYS.WHERE))
                         temp.add(SQLKEYS.WHERE);
@@ -174,11 +217,13 @@ public class SQLEditor
                         visitedStates.contains(SQLKEYS.GroupBy))
                         temp.add(SQLKEYS.Having);
 
-                    temp.add(SQLKEYS.END);
+                    
                     return temp;
 
                 case Having:
-                    visitedStates.add(SQLKEYS.Having);
+                    //visitedStates.add(SQLKEYS.Having);
+
+                    temp.add(SQLKEYS.END);
 
                     if(!visitedStates.contains(SQLKEYS.WHERE))
                         temp.add(SQLKEYS.WHERE);
@@ -186,11 +231,12 @@ public class SQLEditor
                     if(!visitedStates.contains(SQLKEYS.OrderBy))
                         temp.add(SQLKEYS.OrderBy);
 
-                    temp.add(SQLKEYS.END);
                     return temp;
 
                 case OrderBy:
-                    visitedStates.add(SQLKEYS.OrderBy);
+                    //visitedStates.add(SQLKEYS.OrderBy);
+
+                    temp.add(SQLKEYS.END);
 
                     if(!visitedStates.contains(SQLKEYS.WHERE))
                         temp.add(SQLKEYS.WHERE);
@@ -202,11 +248,16 @@ public class SQLEditor
                         visitedStates.contains(SQLKEYS.GroupBy))
                         temp.add(SQLKEYS.Having);
                     
-                    temp.add(SQLKEYS.FROM);
+
                     return temp;
 
                 case AND:
-                    visitedStates.add(SQLKEYS.AND);
+                    //visitedStates.add(SQLKEYS.AND);
+
+                    temp.add(SQLKEYS.END);
+
+                    temp.add(SQLKEYS.AND);
+                    temp.add(SQLKEYS.OR);
 
                     if(!visitedStates.contains(SQLKEYS.GroupBy))
                         temp.add(SQLKEYS.GroupBy);
@@ -217,13 +268,16 @@ public class SQLEditor
                     if(!visitedStates.contains(SQLKEYS.Having) &&
                         visitedStates.contains(SQLKEYS.GroupBy))
                         temp.add(SQLKEYS.Having);
-
-                    temp.add(SQLKEYS.END);
 
                     return temp;
 
                 case OR:
-                    visitedStates.add(SQLKEYS.OR);
+                    //visitedStates.add(SQLKEYS.OR);
+
+                    temp.add(SQLKEYS.END);
+
+                    temp.add(SQLKEYS.AND);
+                    temp.add(SQLKEYS.OR);
                     
                     if(!visitedStates.contains(SQLKEYS.GroupBy))
                         temp.add(SQLKEYS.GroupBy);
@@ -235,12 +289,11 @@ public class SQLEditor
                         visitedStates.contains(SQLKEYS.GroupBy))
                         temp.add(SQLKEYS.Having);
 
-                    temp.add(SQLKEYS.END);
 
                     return temp;
 
                 case END:
-                    visitedStates.add(SQLKEYS.END);
+                    //visitedStates.add(SQLKEYS.END);
                     return temp;
             
                 default:

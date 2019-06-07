@@ -31,6 +31,7 @@ public class DDBNode extends DNode
     StringProperty outputProperty = new SimpleStringProperty();
 
     StringProperty connectionStringProperty = new SimpleStringProperty();
+    StringProperty connectionStringProperty1 = new SimpleStringProperty();
     StringProperty selectStatementProperty = new SimpleStringProperty();
 
     StringProperty sqlStatementProperty = new SimpleStringProperty();
@@ -41,6 +42,8 @@ public class DDBNode extends DNode
     public SingleSelectionModel<String> connectionString;
 
     public ObservableList<String>connectionStringList = FXCollections.observableArrayList(
+        "Oracle",
+        "SQLlite",
         "mySQL",
         "firebase"
     );
@@ -64,27 +67,25 @@ public class DDBNode extends DNode
             DTextProperty dInputProperty = new DTextProperty("Input", inputProperty);
             DTextProperty dOutputProperty = new DTextProperty("Output", outputProperty);
 
-            // DTextProperty dConnectionStringProperty = new DTextProperty("Connection String", connectionStringProperty);
-            DTextProperty dSelectStatementProperty = new DTextProperty("Select Statment", selectStatementProperty);
-            DButtonProperty dSqlStatementProperty = new DButtonProperty("Statment", sqlStatementProperty, "dbStage");
+            DComboBoxProperty dConnectionStringProperty = new DComboBoxProperty("Service Type", connectionString, connectionStringList);
+            DTextProperty dConnectionStringProperty1 = new DTextProperty("host", connectionStringProperty1);
+            DTextProperty dSelectStatementProperty = new DTextProperty("Statment", selectStatementProperty);
+            DButtonProperty dSqlStatementProperty = new DButtonProperty("Select Statment", sqlStatementProperty, "dbStage");
 
             DTextProperty dUserNameProperty = new DTextProperty("user name", userNameProperty);
             DTextProperty dPasswordProperty = new DTextProperty("password", passwordProperty);
 
-            DComboBoxProperty dConnectionStringProperty = new DComboBoxProperty("Service Type", connectionString, connectionStringList);
-            
-
             allDProperties.add(dInputProperty);
             allDProperties.add(dOutputProperty);
 
-            // allDProperties.add(dConnectionStringProperty);
+            allDProperties.add(dConnectionStringProperty);
+            allDProperties.add(dConnectionStringProperty1);
+
             allDProperties.add(dSelectStatementProperty);
             allDProperties.add(dSqlStatementProperty);
 
             allDProperties.add(dUserNameProperty);
             allDProperties.add(dPasswordProperty);
-
-            allDProperties.add(dConnectionStringProperty);
 
             inputProperty.addListener(new ChangeListener<String>()
             {
@@ -118,10 +119,83 @@ public class DDBNode extends DNode
             dConnectionStringProperty.getComboSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
 
                 String selectedItem = (String) dConnectionStringProperty.getComboSelectionModel().getSelectedItem();
-                xmlWriter.setDBConnectionStringProperty(id.toString(), selectedItem);
+
+                    String s = "";
+
+                    switch (selectedItem)
+                    {
+                        case "Oracle":
+                            s += "jdbc:oracle:thin:@";
+                            //  jdbc:oracle:thin:@hostname:port Number:databaseName
+                            break;
+
+                        case "SQLlite":
+                            s += "jdbc:sqlite:";
+                            // jdbc:sqlite:C:/sqlite/db/chinook.db
+                            
+                            break;
+                            
+                        case "mySQL":
+                            s += "jdbc:mysql://";
+                            // jdbc:mysql://hostname/ databaseName
+                            // jdbc:mysql://localhost:3306"
+                            break;
+
+                        case "firebase":
+                            s += "firebase://";
+                            break;
+                    
+                        default:
+                            break;
+                    }
+
+                    s += connectionStringProperty1.get();
+
+                    xmlWriter.setDBConnectionStringProperty(id.toString(), s);
                 
             });
             
+            connectionStringProperty1.addListener(new ChangeListener<String>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
+                {
+                    String selectedItem = (String) dConnectionStringProperty.getComboSelectionModel().getSelectedItem();
+
+                    String s = "";
+
+                    switch (selectedItem)
+                    {
+                        case "Oracle":
+                            s += "jdbc:oracle:thin:@";
+                            //  jdbc:oracle:thin:@hostname:port Number:databaseName
+                            break;
+
+                        case "SQLlite":
+                            s += "jdbc:sqlite:";
+                            // jdbc:sqlite:C:/sqlite/db/chinook.db
+                            
+                            break;
+                            
+                        case "mySQL":
+                            s += "jdbc:mysql://";
+                            // jdbc:mysql://hostname/ databaseName
+                            // jdbc:mysql://localhost:3306"
+                            break;
+
+                        case "firebase":
+                            s += "firebase://";
+                            break;
+                    
+                        default:
+                            break;
+                    }
+
+                    s += newValue;
+                    xmlWriter.setDBConnectionStringProperty(id.toString(), s);
+                }
+            });
+
             selectStatementProperty.addListener(new ChangeListener<String>()
             {
                 @Override

@@ -81,7 +81,7 @@ public class Load {
 
         try
         {
-            Files.walk(Paths.get("C:/work/bpm/the-bpmn/xml"))
+            Files.walk(Paths.get("C:/work/bpm/deprecated/the-bpmn/xml"))
                 .filter(Files::isRegularFile)
                 .forEach(workflowConsumer);
 

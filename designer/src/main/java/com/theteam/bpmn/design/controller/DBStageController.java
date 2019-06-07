@@ -73,7 +73,8 @@ public class DBStageController {
         }
         else
         {
-            loadEventEditor();
+            stage.close();
+            //loadEventEditor();
         }
 
     }

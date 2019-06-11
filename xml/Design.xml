@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <bpm>
     <nodes name="design">
-        <start nId="a941f129-f8c6-4bd5-b6a1-c200c4ac95f0" type="START">
-            <NId>a941f129-f8c6-4bd5-b6a1-c200c4ac95f0</NId>
+        <start nId="3b920409-08d9-4286-83d5-af024c7a495b" type="START">
+            <NId>3b920409-08d9-4286-83d5-af024c7a495b</NId>
             <type>START</type>
-            <nextNode>260afd66-1c96-4b5e-9186-1d4dfb735b8b</nextNode>
+            <nextNode>fdf9a01b-6856-4fce-a4c8-371c92097064</nextNode>
         </start>
-        <db nId="260afd66-1c96-4b5e-9186-1d4dfb735b8b" type="DB">
-            <NId>260afd66-1c96-4b5e-9186-1d4dfb735b8b</NId>
+        <db nId="926bbcf8-dac6-4dfd-b219-a8cc262187c2" type="DB">
+            <NId>926bbcf8-dac6-4dfd-b219-a8cc262187c2</NId>
             <type>DB</type>
-            <previousNode>a941f129-f8c6-4bd5-b6a1-c200c4ac95f0</previousNode>
-            <nextNode>b44bf5f9-9bb0-4ee2-b6c2-7c33e8ad0fb5</nextNode>
+            <connectedEvent>fdf9a01b-6856-4fce-a4c8-371c92097064</connectedEvent>
+            <output>a</output>
             <connectionString>jdbc:mysql://localhost:3306</connectionString>
-            <selectStatement>SELECT * FROM sys.`sys_config` ;</selectStatement>
+            <selectStatement>SELECT * FROM test.variables ;</selectStatement>
             <userName>root</userName>
             <password>mySQLpass@123</password>
         </db>
-        <end nId="b44bf5f9-9bb0-4ee2-b6c2-7c33e8ad0fb5" type="END">
-            <NId>b44bf5f9-9bb0-4ee2-b6c2-7c33e8ad0fb5</NId>
+        <externalEvent nId="fdf9a01b-6856-4fce-a4c8-371c92097064" type="EXTERNAL_EVENT">
+            <NId>fdf9a01b-6856-4fce-a4c8-371c92097064</NId>
+            <type>EXTERNAL_EVENT</type>
+            <previousNode>3b920409-08d9-4286-83d5-af024c7a495b</previousNode>
+            <nextNode>b72a6c27-1db6-4265-b710-d58dd14cfec7</nextNode>
+            <connectedEvent>926bbcf8-dac6-4dfd-b219-a8cc262187c2</connectedEvent>
+        </externalEvent>
+        <end nId="b72a6c27-1db6-4265-b710-d58dd14cfec7" type="END">
+            <NId>b72a6c27-1db6-4265-b710-d58dd14cfec7</NId>
             <type>END</type>
-            <previousNode>260afd66-1c96-4b5e-9186-1d4dfb735b8b</previousNode>
+            <previousNode>fdf9a01b-6856-4fce-a4c8-371c92097064</previousNode>
         </end>
     </nodes>
-    <variables/>
+    <variables>
+        <variable nId="d83b5292-e304-495d-bdb9-2b28476c58f7">
+            <name>a</name>
+            <type>string</type>
+            <value></value>
+        </variable>
+    </variables>
 </bpm>

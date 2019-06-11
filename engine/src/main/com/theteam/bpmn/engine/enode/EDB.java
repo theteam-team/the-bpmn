@@ -139,7 +139,7 @@ public class EDB extends ENode
             }
             */
 
-            /*
+            
             System.out.println("Listening to a database");
             ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
             exec.scheduleAtFixedRate(new Runnable()
@@ -148,12 +148,10 @@ public class EDB extends ENode
                 public void run() 
                 {
                     
-                    System.out.println("Checking the database");
+                    System.out.println("Listening the database");
                     
-
                         try
                         {  
-
                             //Class.forName("com.mysql.cj.jdbc.Driver");   
                             Class.forName("com.mysql.cj.jdbc.Driver");   
                             
@@ -167,44 +165,93 @@ public class EDB extends ENode
                             Statement stmt = con.createStatement();
                             //ResultSet rs=stmt.executeQuery("SELECT Name FROM world.city where id=1");
                             ResultSet rs = stmt.executeQuery(sDB.getSelectStatement());
+                            ResultSetMetaData rsmd = rs.getMetaData();
+
+                            JsonObject obj = new JsonObject();;
+
                             int count = 0;
                 
                             while(rs.next())
                             {
                                 count++;
+
+                                if(rs.isLast())
+                                {
+                                    int numColumns = rsmd.getColumnCount();
+
+                                    for (int i=1; i<numColumns+1; i++)
+                                    {
+                                        String column_name = rsmd.getColumnName(i);
+
+                                        if(rsmd.getColumnType(i)==java.sql.Types.BOOLEAN){
+                                            obj.addProperty(column_name, rs.getBoolean(column_name));
+                                        }
+                                        else if(rsmd.getColumnType(i)==java.sql.Types.DOUBLE){
+                                            obj.addProperty(column_name, rs.getDouble(column_name)); 
+                                        }
+                                        else if(rsmd.getColumnType(i)==java.sql.Types.FLOAT){
+                                            obj.addProperty(column_name, rs.getFloat(column_name));
+                                        }
+                                        else if(rsmd.getColumnType(i)==java.sql.Types.INTEGER){
+                                            obj.addProperty(column_name, rs.getInt(column_name));
+                                        }
+                                        else if(rsmd.getColumnType(i)==java.sql.Types.VARCHAR){
+                                            obj.addProperty(column_name, rs.getString(column_name));
+                                        }
+                                        else if(rsmd.getColumnType(i)==java.sql.Types.DATE){
+                                            obj.addProperty(column_name, rs.getDate(column_name).toString());
+                                        }
+                                        else if(rsmd.getColumnType(i)==java.sql.Types.TIMESTAMP){
+                                            obj.addProperty(column_name, rs.getTimestamp(column_name).toString());
+                                        }
+                                        else{
+                                            obj.addProperty(column_name, rs.getObject(column_name).toString());
+                                        }
+                                    }
+                                }
+
                                 if(sDB.getOutput() != null)
                                 {
                                     EVariable o = list.getVariable(sDB.getOutput());
-                                    //System.out.println(rs.getString(2) + ": " + rs.getString(3));
-                                    o.setValue(rs.getString(2)+ "  " + rs.getString(3));
+                                    o.setValue(obj.toString());
                                 }
                             }
+
                             if(count > number)
                             {
                                 number = count;
+                                System.out.println(obj);
                                 
                                 for(ENode n : list.eNodes)
                                 {
                                     
                                     if(n.getSNode().getNId().equals(sDB.getConnectedEvent()))
                                     {
-                                        n.run(l);
+                                        for(ENode in : l.eNodes)
+                                        {
+                                            if(in.getSNode().getNId().equals(n.getSNode().getNextNode()))
+                                            {
+                                                in.run(l);
+                                                return;
+                                            }
+                                        }
+
                                     }
 
                                 }
                             }
-                                
+
                             con.close();
-                
+
                         } catch(Exception e)
                         {
                             System.out.println("MySql bug with java 11 when disconnecting - Search it");
                             System.out.println(e);
                         }
                     }
-                }, 0, 5, TimeUnit.SECONDS);
+                }, 5, 5, TimeUnit.SECONDS);
 
-                */
+                
 
         }
 
@@ -224,9 +271,8 @@ public class EDB extends ENode
                 //"?useSSL=false"
     
                 Connection con = DriverManager.getConnection(  
-                sDB.getConnectionString()+"?useSSL=false", sDB.getUserName(), sDB.getPassword());  
-                  
-    
+                sDB.getConnectionString()+"?useSSL=false", sDB.getUserName(), sDB.getPassword());
+
                 Statement stmt = con.createStatement();
                 //ResultSet rs=stmt.executeQuery("SELECT Name FROM world.city where id=1");
                 ResultSet rs = stmt.executeQuery(sDB.getSelectStatement());
@@ -292,7 +338,6 @@ public class EDB extends ENode
                     json.add(obj);
                     
                 }
-                
 
                 System.out.println(json);
 
@@ -302,7 +347,7 @@ public class EDB extends ENode
                     o.setValue(json.toString());
                 }
                 con.close();
-    
+
             } catch(Exception e)
             {
                 System.out.println("MySql bug with java 11 when disconnecting - Search it");

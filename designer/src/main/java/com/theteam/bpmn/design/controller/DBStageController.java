@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleNode;
+import com.theteam.bpmn.design.db.DBData;
 import com.theteam.bpmn.design.db.SQLEditor;
 
 import de.jensd.fx.glyphs.materialicons.MaterialIcon;
@@ -69,7 +70,7 @@ public class DBStageController {
 
         if(b.getText().equals("SQL"))
         {
-            loadSQLEditor();
+            loadDBEditor();
         }
         else
         {
@@ -82,6 +83,63 @@ public class DBStageController {
     private void loadEventEditor()
     {
 
+    }
+
+    private void loadDBEditor()
+    {
+
+        dbPane.getChildren().clear();
+
+        DBData dbData = new DBData("jdbc:mysql://localhost:3306", "root", "mySQLpass@123");
+
+        JFXComboBox<String> cb1 = new JFXComboBox<String>();
+        JFXComboBox<String> cb2 = new JFXComboBox<String>();
+
+        ObservableList<String> obsList1 = FXCollections.observableArrayList(
+            dbData.getSchemas()
+        );
+
+        
+        cb1.setItems(obsList1);
+
+        cb1.getSelectionModel().select(0);
+        cb1.getSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
+
+                String selectedItem = cb1.getSelectionModel().getSelectedItem();
+
+                ObservableList<String> obsList2 = FXCollections.observableArrayList(
+                    dbData.getTables(selectedItem)
+                );
+                cb2.setItems(obsList2);
+
+        });
+
+        ObservableList<String> obsList2 = FXCollections.observableArrayList(
+            dbData.getTables(cb1.getSelectionModel().getSelectedItem())
+        );
+        cb2.setItems(obsList2);
+
+        cb2.getSelectionModel().select(0);
+
+
+        HBox iconBox = new HBox(30, cb1, cb2);
+        iconBox.setAlignment(Pos.CENTER);
+        
+        dnButton = new JFXButton("DONE");
+        dnButton.setOnMouseClicked(dnBtnHandler);
+        dnButton.setVisible(false);
+
+        VBox box = new VBox(50, iconBox, dnButton);
+
+        box.setMargin(dnButton, new Insets(10, 0, 10, 0));
+
+        box.setAlignment(Pos.TOP_CENTER);
+
+        dbPane.getChildren().add(box);
+        dbPane.setTopAnchor(box, 0.0);
+        dbPane.setLeftAnchor(box, 0.0);
+        dbPane.setRightAnchor(box, 0.0);
+        dbPane.setBottomAnchor(box, 0.0);
     }
 
     private void loadSQLEditor()

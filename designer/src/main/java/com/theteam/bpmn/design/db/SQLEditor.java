@@ -247,7 +247,6 @@ public class SQLEditor
                     if(!visitedStates.contains(SQLKEYS.Having) &&
                         visitedStates.contains(SQLKEYS.GroupBy))
                         temp.add(SQLKEYS.Having);
-                    
 
                     return temp;
 

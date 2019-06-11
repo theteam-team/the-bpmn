@@ -1,6 +1,7 @@
 package com.theteam.bpmn.design;
 
 import com.theteam.bpmn.design.controller.MainStageController;
+import com.theteam.bpmn.design.db.DBData;
 
 import java.io.IOException;
 
@@ -60,6 +61,7 @@ public class App extends Application
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
         stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
         stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 4);
+        
 
     }
 

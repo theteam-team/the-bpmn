@@ -61,6 +61,14 @@ public class DBStageController {
     JFXButton dnButton;
     VBox dbBox;
 
+    DBData dbData;
+
+    String schema;
+    String table;
+    String column;
+
+    int state = 0;
+
 
     @FXML
     private void chooseDBEvent(ActionEvent ae)
@@ -88,59 +96,175 @@ public class DBStageController {
     private void loadDBEditor()
     {
 
+        dbData = new DBData("jdbc:mysql://localhost:3306", "root", "mySQLpass@123");
+        stage.setHeight(stage.getHeight() + 100);
+        chooseSchema();
+    
+    }
+
+    private void chooseSchema()
+    {
+        
+
         dbPane.getChildren().clear();
-
-        DBData dbData = new DBData("jdbc:mysql://localhost:3306", "root", "mySQLpass@123");
-
+        state = 0;
+        
+        JFXToggleNode toggleNode = new JFXToggleNode();
+        toggleNode.setTextFill(Color.YELLOWGREEN);
+        toggleNode.setText("Choose a SCHEMA");
+    
         JFXComboBox<String> cb1 = new JFXComboBox<String>();
-        JFXComboBox<String> cb2 = new JFXComboBox<String>();
-
+    
         ObservableList<String> obsList1 = FXCollections.observableArrayList(
             dbData.getSchemas()
         );
-
-        
+    
         cb1.setItems(obsList1);
-
+    
         cb1.getSelectionModel().select(0);
+        schema = cb1.getSelectionModel().getSelectedItem();
+    
         cb1.getSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
-
+    
                 String selectedItem = cb1.getSelectionModel().getSelectedItem();
-
-                ObservableList<String> obsList2 = FXCollections.observableArrayList(
-                    dbData.getTables(selectedItem)
-                );
-                cb2.setItems(obsList2);
-
+                schema = selectedItem;
         });
-
-        ObservableList<String> obsList2 = FXCollections.observableArrayList(
-            dbData.getTables(cb1.getSelectionModel().getSelectedItem())
-        );
-        cb2.setItems(obsList2);
-
-        cb2.getSelectionModel().select(0);
-
-
-        HBox iconBox = new HBox(30, cb1, cb2);
+    
+        VBox cbox = new VBox(30, toggleNode, cb1);
+        cbox.setAlignment(Pos.CENTER);
+    
+        MaterialIconView btnIcon = new MaterialIconView(MaterialIcon.NAVIGATE_BEFORE);
+        btnIcon.setSize("30");
+        btnIcon.setOnMouseClicked(btnIconHandlert);
+    
+        MaterialIconView btnIcon1 = new MaterialIconView(MaterialIcon.NAVIGATE_NEXT);
+        btnIcon1.setSize("30");
+        btnIcon1.setOnMouseClicked(btnIconHandlert1);
+    
+        HBox iconBox = new HBox(30, btnIcon, btnIcon1);
         iconBox.setAlignment(Pos.CENTER);
-        
-        dnButton = new JFXButton("DONE");
-        dnButton.setOnMouseClicked(dnBtnHandler);
-        dnButton.setVisible(false);
-
-        VBox box = new VBox(50, iconBox, dnButton);
-
-        box.setMargin(dnButton, new Insets(10, 0, 10, 0));
-
-        box.setAlignment(Pos.TOP_CENTER);
-
-        dbPane.getChildren().add(box);
+    
+        VBox box = new VBox(50, iconBox, cbox);
+        box.setAlignment(Pos.CENTER);
+    
+        dbPane.getChildren().addAll(box);
         dbPane.setTopAnchor(box, 0.0);
         dbPane.setLeftAnchor(box, 0.0);
         dbPane.setRightAnchor(box, 0.0);
         dbPane.setBottomAnchor(box, 0.0);
     }
+
+    private void chooseTable()
+    {
+        dbPane.getChildren().clear();
+
+        state = 1;
+
+        JFXToggleNode toggleNode = new JFXToggleNode();
+        toggleNode.setTextFill(Color.YELLOWGREEN);
+        toggleNode.setText("Choose a Table");
+    
+        JFXComboBox<String> cb1 = new JFXComboBox<String>();
+    
+        ObservableList<String> obsList1 = FXCollections.observableArrayList(
+            dbData.getTables(schema)
+        );
+    
+        cb1.setItems(obsList1);
+    
+        cb1.getSelectionModel().select(0);
+        table = cb1.getSelectionModel().getSelectedItem();
+    
+        cb1.getSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
+    
+                String selectedItem = cb1.getSelectionModel().getSelectedItem();
+                table = selectedItem;
+        });
+    
+        VBox cbox = new VBox(30, toggleNode, cb1);
+        cbox.setAlignment(Pos.CENTER);
+    
+        MaterialIconView btnIcon = new MaterialIconView(MaterialIcon.NAVIGATE_BEFORE);
+        btnIcon.setSize("30");
+        btnIcon.setOnMouseClicked(btnIconHandlert);
+    
+        MaterialIconView btnIcon1 = new MaterialIconView(MaterialIcon.NAVIGATE_NEXT);
+        btnIcon1.setSize("30");
+        btnIcon1.setOnMouseClicked(btnIconHandlert1);
+    
+        HBox iconBox = new HBox(30, btnIcon, btnIcon1);
+        iconBox.setAlignment(Pos.CENTER);
+    
+        VBox box = new VBox(50, iconBox, cbox);
+        box.setAlignment(Pos.CENTER);
+    
+        dbPane.getChildren().addAll(box);
+        dbPane.setTopAnchor(box, 0.0);
+        dbPane.setLeftAnchor(box, 0.0);
+        dbPane.setRightAnchor(box, 0.0);
+        dbPane.setBottomAnchor(box, 0.0);
+    }
+
+    private void chooseCloumn()
+    {
+        
+        dbPane.getChildren().clear();
+        state = 2;
+
+        JFXToggleNode toggleNode = new JFXToggleNode();
+        toggleNode.setTextFill(Color.YELLOWGREEN);
+        toggleNode.setText("Choose a column");
+    
+        JFXComboBox<String> cb1 = new JFXComboBox<String>();
+    
+        ObservableList<String> obsList1 = FXCollections.observableArrayList(
+            dbData.getColumns(schema, table)
+        );
+    
+        cb1.setItems(obsList1);
+    
+        cb1.getSelectionModel().select(0);
+        column = cb1.getSelectionModel().getSelectedItem();
+    
+        cb1.getSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
+    
+                String selectedItem = cb1.getSelectionModel().getSelectedItem();
+                column = selectedItem;
+        });
+    
+        VBox cbox = new VBox(30, toggleNode, cb1);
+        cbox.setAlignment(Pos.CENTER);
+    
+        MaterialIconView btnIcon = new MaterialIconView(MaterialIcon.NAVIGATE_BEFORE);
+        btnIcon.setSize("30");
+        btnIcon.setOnMouseClicked(btnIconHandlert);
+    
+        MaterialIconView btnIcon1 = new MaterialIconView(MaterialIcon.NAVIGATE_NEXT);
+        btnIcon1.setSize("30");
+        btnIcon1.setOnMouseClicked(btnIconHandlert1);
+    
+        HBox iconBox = new HBox(30, btnIcon, btnIcon1);
+        iconBox.setAlignment(Pos.CENTER);
+
+        JFXButton dButton = new JFXButton("DONE");
+        dButton.setOnMouseClicked(dBtnHandler);
+    
+        VBox box = new VBox(50, iconBox, cbox, dButton);
+        box.setAlignment(Pos.CENTER);
+
+        box.setVgrow(dButton, Priority.ALWAYS);
+
+        box.setMargin(dButton, new Insets(10, 0, 10, 0));
+    
+        dbPane.getChildren().addAll(box);
+        dbPane.setTopAnchor(box, 0.0);
+        dbPane.setLeftAnchor(box, 0.0);
+        dbPane.setRightAnchor(box, 0.0);
+        dbPane.setBottomAnchor(box, 0.0);
+
+        
+    }
+    
 
     private void loadSQLEditor()
     {
@@ -206,6 +330,22 @@ public class DBStageController {
 
     }
 
+    public EventHandler<MouseEvent> dBtnHandler =  new EventHandler<MouseEvent>()
+    {
+        @Override
+        public void handle(MouseEvent me)
+        {
+            String s = "";
+
+            s += "SELECT " + column + " FROM " + schema + "." + table;
+            s += ";";
+
+            System.out.println(s);
+            txtField.setText(s);
+            stage.close();
+        }
+    };
+
     public EventHandler<MouseEvent> dnBtnHandler =  new EventHandler<MouseEvent>()
     {
         @Override
@@ -242,6 +382,72 @@ public class DBStageController {
         public void handle(MouseEvent me)
         {
             showNextStatment();
+        }
+    };
+
+    public EventHandler<MouseEvent> btnIconHandlert =  new EventHandler<MouseEvent>()
+    {
+        @Override
+        public void handle(MouseEvent me)
+        {
+            state -= 1;
+            if(state < 0)
+            {
+                state = 0;
+                return;
+            }
+            System.out.println(state);
+
+            switch(state)
+            {
+                case 0:
+                    chooseSchema();
+                    break;
+                case 1:
+                    chooseTable();
+                    break;
+                case 2:
+                    chooseCloumn();
+                    break;
+                default:
+
+                    break;
+            }
+
+            
+        }
+
+    };
+    public EventHandler<MouseEvent> btnIconHandlert1 =  new EventHandler<MouseEvent>()
+    {
+        @Override
+        public void handle(MouseEvent me)
+        {
+            state += 1;
+            if(state > 2)
+            {
+                state = 2;
+                return;
+            }
+
+            System.out.println(state);
+            
+            switch(state)
+            {
+                case 0:
+                    chooseSchema();
+                    break;
+                case 1:
+                    chooseTable();
+                    break;
+                case 2:
+                    chooseCloumn();
+                    break;
+                default:
+
+                    break;
+            }
+
         }
     };
 

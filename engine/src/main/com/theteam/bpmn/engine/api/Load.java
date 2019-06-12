@@ -20,7 +20,7 @@ import com.theteam.bpmn.engine.Workflow;
 import com.theteam.bpmn.engine.enode.*;
 import com.theteam.bpmn.engine.enode.event.*;
 import com.theteam.bpmn.engine.io.*;
-
+import com.theteam.bpmn.engine.scan.Scan;
 import com.theteam.io.SVariable;
 import com.theteam.snodes.*;
 import com.theteam.snodes.event.*;
@@ -65,6 +65,7 @@ public class Load {
 
     public void loadNodes() throws JAXBException
     {
+
         System.out.println("Loading");
 
         JAXBContext jaxbContext = JAXBContext.newInstance(ElementsList.class);
@@ -86,6 +87,7 @@ public class Load {
                 .forEach(workflowConsumer);
 
         } catch(Exception e) { System.out.println(e); }
+
 
     }
     
@@ -206,5 +208,11 @@ public class Load {
             }
             
         }
+
+        System.out.println("-----regex------");
+
+        Scan s = new Scan("This is var1: $var1 - This is var2: $var2 - This is var3: $var3", workflow);
+
+        System.out.println(s.getFinalString());
     }
 }

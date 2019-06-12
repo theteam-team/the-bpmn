@@ -1,39 +1,72 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <bpm>
     <nodes name="design">
-        <start nId="3b920409-08d9-4286-83d5-af024c7a495b" type="START">
-            <NId>3b920409-08d9-4286-83d5-af024c7a495b</NId>
+        <start nId="8cfddb30-502e-4b15-a5de-8745211cd0c5" type="START">
+            <NId>8cfddb30-502e-4b15-a5de-8745211cd0c5</NId>
             <type>START</type>
-            <nextNode>fdf9a01b-6856-4fce-a4c8-371c92097064</nextNode>
+            <nextNode>388cab06-12ce-47db-9a92-7507ef2bc0f5</nextNode>
         </start>
-        <db nId="926bbcf8-dac6-4dfd-b219-a8cc262187c2" type="DB">
-            <NId>926bbcf8-dac6-4dfd-b219-a8cc262187c2</NId>
-            <type>DB</type>
-            <connectedEvent>fdf9a01b-6856-4fce-a4c8-371c92097064</connectedEvent>
-            <output>a</output>
-            <connectionString>jdbc:mysql://localhost:3306</connectionString>
-            <selectStatement>SELECT * FROM test.variables ;</selectStatement>
-            <userName>root</userName>
-            <password>mySQLpass@123</password>
-        </db>
-        <externalEvent nId="fdf9a01b-6856-4fce-a4c8-371c92097064" type="EXTERNAL_EVENT">
-            <NId>fdf9a01b-6856-4fce-a4c8-371c92097064</NId>
-            <type>EXTERNAL_EVENT</type>
-            <previousNode>3b920409-08d9-4286-83d5-af024c7a495b</previousNode>
-            <nextNode>b72a6c27-1db6-4265-b710-d58dd14cfec7</nextNode>
-            <connectedEvent>926bbcf8-dac6-4dfd-b219-a8cc262187c2</connectedEvent>
-        </externalEvent>
-        <end nId="b72a6c27-1db6-4265-b710-d58dd14cfec7" type="END">
-            <NId>b72a6c27-1db6-4265-b710-d58dd14cfec7</NId>
+        <serviceTask nId="bc38d90f-d07f-433c-995f-58b76a17bd94" type="TASK">
+            <NId>bc38d90f-d07f-433c-995f-58b76a17bd94</NId>
+            <type>TASK</type>
+            <nextNode>9edf45f2-13ac-4605-bca0-5ccc0095b9f5</nextNode>
+            <ServiceType>rest</ServiceType>
+            <restLink>https://postman-echo.com/status/200</restLink>
+            <soapFunc>getHello</soapFunc>
+        </serviceTask>
+        <serviceTask nId="0ea611df-f950-4922-a876-1aae4037887b" type="TASK">
+            <NId>0ea611df-f950-4922-a876-1aae4037887b</NId>
+            <type>TASK</type>
+            <previousNode>388cab06-12ce-47db-9a92-7507ef2bc0f5</previousNode>
+            <nextNode>a4955a9b-a14b-4edb-b860-d3ec573f5321</nextNode>
+            <ServiceType>rest</ServiceType>
+            <restLink>https://postman-echo.com/time/now</restLink>
+            <soapFunc>getHello</soapFunc>
+        </serviceTask>
+        <condition nId="388cab06-12ce-47db-9a92-7507ef2bc0f5" type="CONDITION">
+            <NId>388cab06-12ce-47db-9a92-7507ef2bc0f5</NId>
+            <type>CONDITION</type>
+            <previousNode>8cfddb30-502e-4b15-a5de-8745211cd0c5</previousNode>
+            <nextNode>bc38d90f-d07f-433c-995f-58b76a17bd94</nextNode>
+            <nextNode1>0ea611df-f950-4922-a876-1aae4037887b</nextNode1>
+            <expression>$num1 &gt; $num2</expression>
+        </condition>
+        <end nId="9edf45f2-13ac-4605-bca0-5ccc0095b9f5" type="END">
+            <NId>9edf45f2-13ac-4605-bca0-5ccc0095b9f5</NId>
             <type>END</type>
-            <previousNode>fdf9a01b-6856-4fce-a4c8-371c92097064</previousNode>
+            <previousNode>bc38d90f-d07f-433c-995f-58b76a17bd94</previousNode>
+        </end>
+        <end nId="a4955a9b-a14b-4edb-b860-d3ec573f5321" type="END">
+            <NId>a4955a9b-a14b-4edb-b860-d3ec573f5321</NId>
+            <type>END</type>
+            <previousNode>0ea611df-f950-4922-a876-1aae4037887b</previousNode>
         </end>
     </nodes>
     <variables>
-        <variable nId="d83b5292-e304-495d-bdb9-2b28476c58f7">
-            <name>a</name>
+        <variable nId="eeb53600-1bc0-4077-888b-ba777b2f4cb1">
+            <name>var1</name>
             <type>string</type>
-            <value></value>
+            <value>$var2</value>
+        </variable>
+        <variable nId="5c44ba65-9f59-4ce4-a509-0d1facd9fcd7">
+            <name>var2</name>
+            <type>string</type>
+            <value>$var3</value>
+        </variable>
+        <variable nId="92a76681-603b-484e-a016-95b216665ffe">
+            <name>var3</name>
+            <type>string</type>
+            <value>hello</value>
+        </variable>
+        <variable nId="53fb534c-fa2e-4fc4-86e9-98fec9813169">
+            <name>num1</name>
+            <type>int</type>
+            <value>4</value>
+        </variable>
+        <variable nId="e6252bb4-b464-4170-85bc-41c027d5ecd4">
+            <name>num2</name>
+            <type>int</type>
+            <value>10</value>
         </variable>
     </variables>
 </bpm>

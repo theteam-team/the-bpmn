@@ -3,8 +3,11 @@ package com.theteam.bpmn.engine.enode;
 import com.theteam.bpmn.engine.Elist;
 import com.theteam.bpmn.engine.Workflow;
 import com.theteam.bpmn.engine.io.EVariable;
+import com.theteam.bpmn.engine.scan.Scan;
 import com.theteam.snodes.SCondition;
 import com.theteam.snodes.SNode;
+
+import javax.script.*;
 
 public class ECondition extends ENode
 {
@@ -25,7 +28,28 @@ public class ECondition extends ENode
     {
         System.out.println("\nCondition Node Running");
 
-        if(sCondition.getExpression().equals("true"))
+        Scan s = new Scan(sCondition.getExpression(), l);
+        String condition = s.getFinalString();
+
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine engine = manager.getEngineByName("javascript");
+        
+        boolean conEvaluated;
+
+        try
+        {
+            conEvaluated = (boolean) engine.eval(condition);
+
+        } catch(Exception e)
+        { 
+            System.out.println(e);
+
+            System.out.println("Condition wrong");
+            return;
+        }
+
+
+        if(conEvaluated)
         {
             for(ENode n : l.eNodes)
             {

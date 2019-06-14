@@ -13,6 +13,11 @@ public class EVariable
         this.sVariable = sVariable;
     }
 
+    public String getName()
+    {
+        return sVariable.getName();
+    }
+
     public String getValue()
     {
         return sVariable.getValue();

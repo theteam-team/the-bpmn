@@ -44,6 +44,11 @@ public class GetWorkflows
         {
             JsonObject obj = new JsonObject();
             obj.addProperty("name", name);
+            if(Workflow.runningWorkflows.get(name) == null)
+                Workflow.runningWorkflows.put(name, 0);
+            
+            obj.addProperty("runningInstances", Workflow.runningWorkflows.get(name));
+
             json.add(obj);
         }
 

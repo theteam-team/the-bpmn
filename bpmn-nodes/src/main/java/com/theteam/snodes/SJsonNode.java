@@ -13,11 +13,14 @@ import com.theteam.jsondata.SJsonDataList;
 
 
 @XmlRootElement
-@XmlType(propOrder = { "previousNode", "previousNode1", "nextNode", "nextNode1", "action", "jsonDData"})
+@XmlType(propOrder = { "previousNode", "previousNode1", "nextNode", "nextNode1", "input", "output", "action", "jsonDData"})
 public class SJsonNode extends SNode
 {
 
     private String action = null;
+
+    private String input = null;
+    private String output = null;
 
     private String previousNode = null;
     private String nextNode = null;
@@ -122,14 +125,34 @@ public class SJsonNode extends SNode
     }
 
 
-    public void setOutput(String output)
+    @XmlElement(name = "input")
+    public String getInput()
     {
+
+        if(input != null)
+            return input;
+        return null;
         
     }
 
     public void setInput(String input)
     {
+        this.input = input;
+    }
+
+    @XmlElement(name = "output")
+    public String getOutput()
+    {
+
+        if(output != null)
+            return output;
+        return null;
         
+    }
+
+    public void setOutput(String output)
+    {
+        this.output = output;
     }
 
     public void addJsonData(SJsonData j)

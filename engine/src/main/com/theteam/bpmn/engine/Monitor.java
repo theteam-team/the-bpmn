@@ -22,12 +22,12 @@ public class Monitor
 
     	public void moon(String[] args) {
     		//create the connection with token validation don't worry the token expiration date is after 100 years
-    		 hubConnection = HubConnectionBuilder.create("http://localhost:8888/DeployWorkflowHub")
-    				 .withAccessTokenProvider(Single.defer(() -> {
+    		 hubConnection = HubConnectionBuilder.create("http://156.211.237.1:5001/DeployWorkflowHub")
+    				 /*.withAccessTokenProvider(Single.defer(() -> {
     				 
     					 // TODO request Token the put it 
-    				        return Single.just(/*put your token here*/"CfDJ8ILPBX-GLhFAhs0mV7u-2ypYX2yGxTouybnBkwFd_gWViN2xmlp9kMedp_ZBCmOBJwU4JBRpD_HKQ7Yz56STlIpcSLaf5Yeq_8hohzoZV7dGJb2opQJ2UCwv40xV5Ty4RkmVy19IxAUFRfG4DKvf2ApsoWKKs1iBet9u_4klmNqHdZe58b8ii5gFbEmCVFV1yg");
-    				    })).build();
+    				        return Single.just(/*put your token here"CfDJ8ILPBX-GLhFAhs0mV7u-2ypYX2yGxTouybnBkwFd_gWViN2xmlp9kMedp_ZBCmOBJwU4JBRpD_HKQ7Yz56STlIpcSLaf5Yeq_8hohzoZV7dGJb2opQJ2UCwv40xV5Ty4RkmVy19IxAUFRfG4DKvf2ApsoWKKs1iBet9u_4klmNqHdZe58b8ii5gFbEmCVFV1yg");
+    				    })*/.build();
     		
     		hubConnection.start();
     		//wait for the connection to be established

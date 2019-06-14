@@ -28,6 +28,7 @@ public class ETimerEvent extends ENode
         JsonObject ob = new JsonObject();
 
         ob.addProperty("workflowName", l.sNodes.getName());
+        ob.addProperty("workflowID", l.getID());
         ob.addProperty("processName", sNode.getType());
         ob.addProperty("processID", sNode.getNId());
 

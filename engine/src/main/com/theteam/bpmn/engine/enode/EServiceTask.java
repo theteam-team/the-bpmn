@@ -50,6 +50,7 @@ public class EServiceTask extends ENode
         JsonObject obj = new JsonObject();
 
         obj.addProperty("workflowName", l.sNodes.getName());
+        obj.addProperty("workflowID", l.getID());
         obj.addProperty("processName", sNode.getType());
         obj.addProperty("processID", sNode.getNId());
 

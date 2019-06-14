@@ -7,20 +7,21 @@ import java.util.UUID;
 
 import com.microsoft.signalr.*;
 
-
 import io.reactivex.Single;
 
 public class Notification {
 
 	HubConnection hubConnection;
 	Map<String, Boolean> notifications = new HashMap<String, Boolean>();
-
+	
 	public void moon(String[] args) {
 		// TODO Auto-generated method stub
 			
-		hubConnection = HubConnectionBuilder.create("http://localhost:8888/NotificationHub").build();
-		
+		hubConnection = HubConnectionBuilder.create("http://localhost:8888/NotificationHub").build();		
 		hubConnection.start();
+
+
+
 		
 		while(hubConnection.getConnectionState().name() != "CONNECTED") 
 		{

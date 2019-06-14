@@ -43,7 +43,8 @@ public class StartWorkflow
 
         try {
             String json = IOUtils.toString(httpRequest.getInputStream(), StandardCharsets.UTF_8);
-            
+            //System.out.println("\n Json Start");
+            //System.out.println(json);
 
             EVariable o = Workflow.getWorkflow(name).getVariable("sVar");
             if(o != null)
@@ -72,6 +73,13 @@ public class StartWorkflow
     {
         if(Workflow.workflows.containsKey(name))
         {
+
+            if(Workflow.runningWorkflows.get(name) == null)
+                Workflow.runningWorkflows.put(name, 1);
+            else
+                Workflow.runningWorkflows.put(name, Workflow.runningWorkflows.get(name)+1);
+
+
             Elist l = Workflow.workflows.get(name);
 
             ENode node = l.getStartNode();

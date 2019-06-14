@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import com.theteam.ElementsList;
 import com.theteam.bpmn.engine.enode.*;
@@ -17,6 +18,9 @@ import com.theteam.io.SVariablesList;
  */
 public class Elist
 {
+
+    String id;
+
     public ElementsList allList;
     public SNodeList sNodes;
     public SVariablesList variables;
@@ -25,6 +29,11 @@ public class Elist
     public Map<String, EVariable> eVariables = new HashMap<>();
 
     public EStart eStart = null;
+
+    public Elist()
+    {
+        id = UUID.randomUUID().toString();
+    }
 
     public ENode getStartNode()
     {
@@ -44,4 +53,7 @@ public class Elist
     {
         eVariables.put(eVar.getSVariable().getName(), eVar);
     }
+
+    public String getID()
+    {return id;}
 }

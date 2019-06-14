@@ -26,7 +26,7 @@ import javax.ws.rs.core.Response;
 
 /**
  * API End point /workflows
- * getWorkflows
+ * Get Notification Answer from User
  */
 
 @Path("/notification")  

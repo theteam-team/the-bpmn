@@ -89,9 +89,26 @@ public class Load {
 
         try
         {
+
+            String s = getClass().getResource("/xml").getPath();
+            //System.out.println(s);
+            
+            s = s.substring(1);
+            //System.out.println(s);
+            
+            //s = getClass().getResource("/xml").toString();
+            //System.out.println(s);
+
+            
+            Files.walk(Paths.get(s))
+                .filter(Files::isRegularFile)
+                .forEach(workflowConsumer);
+            
+            /*
             Files.walk(Paths.get("C:/work/bpm/deprecated/the-bpmn/xml"))
                 .filter(Files::isRegularFile)
                 .forEach(workflowConsumer);
+            */
 
         } catch(Exception e) { System.out.println(e); }
 
@@ -106,7 +123,7 @@ public class Load {
 
         //Elist.nodes = (SNodeList) jaxbUnmarshaller.unmarshal( new File("../xml/nodeXML.xml") );
         try { workflow.allList = (ElementsList) jaxbUnmarshaller.unmarshal( path.toFile() ); }
-        catch(Exception e) {System.out.println(e);}
+    catch(Exception e) {/*System.out.println(e);*/}
 
         
         workflow.sNodes = workflow.allList.gNodeList();
@@ -223,10 +240,10 @@ public class Load {
             
         }
 
-        System.out.println("-----regex------");
+        //System.out.println("-----regex------");
 
-        Scan s = new Scan("This is var1: $var1 - This is var2: $var2 - This is var3: $var3", workflow);
+        //Scan s = new Scan("This is var1: $var1 - This is var2: $var2 - This is var3: $var3", workflow);
 
-        System.out.println(s.getFinalString());
+        //System.out.println(s.getFinalString());
     }
 }

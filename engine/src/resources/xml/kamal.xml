@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bpm>
+    <nodes name="kamal">
+        <start nId="2ad654d5-ff4d-45e0-897f-e423659101e5" type="START">
+            <NId>2ad654d5-ff4d-45e0-897f-e423659101e5</NId>
+            <type>START</type>
+            <nextNode>e2831f4b-64b5-4d2b-891d-6b34b1a732db</nextNode>
+        </start>
+        <serviceTask nId="e2831f4b-64b5-4d2b-891d-6b34b1a732db" type="TASK">
+            <NId>e2831f4b-64b5-4d2b-891d-6b34b1a732db</NId>
+            <type>TASK</type>
+            <previousNode>2ad654d5-ff4d-45e0-897f-e423659101e5</previousNode>
+            <nextNode>c1cf40fa-0227-4245-a059-dc683cba8f27</nextNode>
+            <ServiceType>rest</ServiceType>
+            <restLink>link</restLink>
+            <soapFunc>getHello</soapFunc>
+        </serviceTask>
+        <end nId="c1cf40fa-0227-4245-a059-dc683cba8f27" type="END">
+            <NId>c1cf40fa-0227-4245-a059-dc683cba8f27</NId>
+            <type>END</type>
+            <previousNode>e2831f4b-64b5-4d2b-891d-6b34b1a732db</previousNode>
+        </end>
+    </nodes>
+    <variables>
+        <variable nId="317034b0-1e2d-48de-8516-fcc54489704b">
+            <name>sVar</name>
+            <type>string</type>
+            <value></value>
+        </variable>
+        <variable nId="989e67d1-c113-4871-82c7-93f56d3b9696">
+            <name>out</name>
+            <type>string</type>
+            <value></value>
+        </variable>
+        <variable nId="c42dac5a-9c86-4db1-96b7-684bb5fbfb62">
+            <name>var</name>
+            <type>string</type>
+            <value>varValue</value>
+        </variable>
+    </variables>
+    <positions>
+        <position>
+            <nodeId>2ad654d5-ff4d-45e0-897f-e423659101e5</nodeId>
+            <x>208.0</x>
+            <y>211.0</y>
+        </position>
+        <position>
+            <nodeId>e2831f4b-64b5-4d2b-891d-6b34b1a732db</nodeId>
+            <x>422.0</x>
+            <y>225.0</y>
+        </position>
+        <position>
+            <nodeId>c1cf40fa-0227-4245-a059-dc683cba8f27</nodeId>
+            <x>645.0</x>
+            <y>218.0</y>
+        </position>
+    </positions>
+</bpm>

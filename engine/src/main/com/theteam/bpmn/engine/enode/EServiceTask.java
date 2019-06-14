@@ -8,6 +8,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.json.JSONObject;
 
 import java.util.UUID;
 import java.util.concurrent.Executor;
@@ -26,6 +27,7 @@ import com.theteam.bpmn.engine.Elist;
 import com.theteam.bpmn.engine.Workflow;
 import com.theteam.bpmn.engine.io.EVariable;
 import com.theteam.bpmn.engine.observers.WorkflowObserver;
+import com.theteam.bpmn.engine.scan.Scan;
 import com.theteam.bpmn.engine.ws.WS;  
 
 public class EServiceTask extends ENode
@@ -110,6 +112,7 @@ public class EServiceTask extends ENode
         else if(sTask.getServiceType().equals("rest"))
         {
             
+            /*
             System.out.println("\nExecute rest service to link " + sTask.getRestLink());
             try {
 
@@ -146,7 +149,9 @@ public class EServiceTask extends ENode
                 
             }
 
-            /*
+            */
+
+            
 
             try {
 
@@ -154,15 +159,23 @@ public class EServiceTask extends ENode
     
                 CloseableHttpClient client = HttpClients.createDefault();
                 //HttpPost post = new HttpPost("https://postman-echo.com/post");
-                HttpPost post = new HttpPost("http://localhost:8888/api/crmapi/addcustomer");
+                HttpPost post = new HttpPost(sTask.getRestLink());
 
                 EVariable e = list.getVariable(sTask.getInput());
+                Scan s = new Scan(e.getValue(), l);
+                String j = s.getFinalString();
 
-                String s = e.getValue();
+                System.out.println("\n JJJJSONS");
+                //System.out.println(o.getValue());
+                System.out.println(j);
+
+                JSONObject orgJson = new JSONObject(j);
+
+                String so = e.getValue();
                 JsonObject payload = new JsonObject();
                 
                 payload.addProperty("customer_id", UUID.randomUUID().toString());
-                payload.addProperty("name", s);
+                payload.addProperty("name", so);
                 payload.addProperty("phone_number", 0);
                 payload.addProperty("email", "1234");
                 payload.addProperty("dateOfBirth", "1999-06-02");
@@ -175,7 +188,7 @@ public class EServiceTask extends ENode
                 
                 //payload.put("name", "myName");
                 //payload.put("age", "20");
-                post.setEntity(new StringEntity(payload.toString()));
+                post.setEntity(new StringEntity(orgJson.toString()));
                 post.setHeader("Accept", "application/json");
                 post.setHeader("Content-type", "application/json");
     
@@ -204,7 +217,7 @@ public class EServiceTask extends ENode
                 e.printStackTrace();
             }
 
-            */
+            
 
         }
 

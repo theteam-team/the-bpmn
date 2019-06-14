@@ -76,8 +76,6 @@ dependencies
     compile 'javax.activation:activation:1.1'
     compile 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
 
-    compile 'org.slf4j:slf4j-nop:1.7.25'
-
     implementation 'com.google.firebase:firebase-admin:6.8.1'
 
     //compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.28'
@@ -96,9 +94,25 @@ dependencies
 
     //runtime "mysql:mysql-connector-java:5.1.37"
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.15'
+
+    //compile group: 'io.swagger.core.v3', name: 'swagger-jaxrs2', version: '2.0.0'
+    //compile group: 'io.swagger.core.v3', name: 'swagger-jaxrs2-servlet-initializer', version: '2.0.0'
     
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-    compile group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.25'
+    compile group: 'io.swagger', name: 'swagger-jersey2-jaxrs', version: '1.5.22'
+
+    compile group: 'org.apache.commons.io', name: 'commonsIO', version: '2.5.0'
+
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    compile group: 'org.json', name: 'json', version: '20160810'
+
+    compile group: 'javax', name: 'javaee-api', version: '7.0'
+
+
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.8.0-beta4'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.8.0-beta4'
+
+
     compile group: 'com.microsoft.signalr', name: 'signalr', version: '1.0.0'
 
 

@@ -88,6 +88,8 @@ public class DNode extends ImageView
     {
         this(id);
         setImage(im);
+
+        
     }
 
     public void removeNode()

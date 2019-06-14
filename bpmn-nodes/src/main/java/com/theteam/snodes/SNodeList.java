@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 import com.theteam.snodes.event.*;
 
 
-@XmlType(propOrder = { "start", "serviceTask", "parallel", "condition", "db", "script", "externalEvent", "timerEvent", "test", "end"})
+@XmlType(propOrder = { "start", "serviceTask", "parallel", "condition", "db", "script", "externalEvent", "timerEvent", "test", "json", "end"})
 public class SNodeList
 {
     @XmlElement(name = "start")
@@ -38,6 +38,9 @@ public class SNodeList
     @XmlElement(name = "parallel")
     private List<SParallel> parallel;
 
+    @XmlElement(name = "json")
+    private List<SJsonNode> json;
+
     @XmlElement(name = "test")
     private List<STestNode> test;
 
@@ -58,6 +61,8 @@ public class SNodeList
         condition = new ArrayList<SCondition>();
         parallel = new ArrayList<SParallel>();
         end = new ArrayList<SEndNode>();
+
+        json = new ArrayList<SJsonNode>();
         
         mapNodes = new HashMap<>();
         
@@ -107,6 +112,12 @@ public class SNodeList
         }
 
         for(SParallel node : parallel)
+        {
+            allNodes.add(node);
+            
+        }
+
+        for(SJsonNode node : json)
         {
             allNodes.add(node);
             
@@ -225,6 +236,18 @@ public class SNodeList
         condition.add(node);
     }
 
+    public List<SJsonNode> getJsonList()
+    {
+        return json;
+    }
+    
+    public void addJsonNode(SJsonNode node)
+    {
+        
+        mapNodes.put(node.getNId(), node);
+        json.add(node);
+    }
+
 
     public void addStartNode(SStartNode node)
     {
@@ -284,6 +307,9 @@ public class SNodeList
         else if (node.getType() == Types.NodeType(Types.NodeTypes.PARALLEL))
             parallel.remove(node);
 
+        else if (node.getType() == Types.NodeType(Types.NodeTypes.JSON))
+            json.remove(node);
+
     }
 
 
@@ -305,6 +331,8 @@ public class SNodeList
         timerEvent.clear();
         script.clear();
         test.clear();
+
+        json.clear();
 
         condition.clear();
         parallel.clear();

@@ -8,10 +8,7 @@ import com.microsoft.signalr.HubConnectionBuilder;
 
 import io.reactivex.Single;
 
-/**
- * Hello world!
- *
- */
+
 public class Monitor
 {
 		HubConnection hubConnection;
@@ -29,7 +26,7 @@ public class Monitor
     				 .withAccessTokenProvider(Single.defer(() -> {
     				 
     					 // TODO request Token the put it 
-    				        return Single.just(/*put your token here*/"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhYUBhYS5hYSIsImp0aSI6Ijk1ZGM2MmM2LWFhNmEtNGI0OC05MWUyLTk3MGIyNWVmNWE1YiIsInVuaXF1ZV9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbnN0cmF0b3IiLCJleHAiOjE1NTc1MTM2NjUsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODg4OCIsImF1ZCI6InVzZXJzIn0.zv6NVd9ZHPlHtTEuJp6bjfpxSYbnqUzPfmlh9oX_Jpg");
+    				        return Single.just(/*put your token here*/"CfDJ8ILPBX-GLhFAhs0mV7u-2ypYX2yGxTouybnBkwFd_gWViN2xmlp9kMedp_ZBCmOBJwU4JBRpD_HKQ7Yz56STlIpcSLaf5Yeq_8hohzoZV7dGJb2opQJ2UCwv40xV5Ty4RkmVy19IxAUFRfG4DKvf2ApsoWKKs1iBet9u_4klmNqHdZe58b8ii5gFbEmCVFV1yg");
     				    })).build();
     		
     		hubConnection.start();
@@ -61,8 +58,6 @@ public class Monitor
     		{
     			hubConnection.send("UpdateExecution", workflowID, InstanceId, instanceExecution.get(InstanceId));
     		},String.class, String.class);	
-    		
-    		
     		
     		
     	}
@@ -107,7 +102,6 @@ public class Monitor
     		}
     		
     		simulateExecution();
-    		
     	
     	}
     	public void AddInstance(String workflowId) 

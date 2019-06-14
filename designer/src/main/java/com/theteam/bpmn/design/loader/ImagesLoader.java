@@ -73,6 +73,11 @@ public final class ImagesLoader
     private static Image condition_chosen = 
         new Image(App.class.getResource("/images/nodes/condition_chosen.png").toString());
 
+    private static Image json = 
+        new Image(App.class.getResource("/images/nodes/json.png").toString());
+    private static Image json_chosen = 
+        new Image(App.class.getResource("/images/nodes/json_chosen.png").toString());
+
     public static void initializeImages()
     {
         nodeImages.put("start", start);
@@ -107,5 +112,8 @@ public final class ImagesLoader
 
         nodeImages.put("condition", condition);
         nodeImages.put("condition_chosen", condition_chosen);
+
+        nodeImages.put("json", json);
+        nodeImages.put("json_chosen", json_chosen);
     }
 }

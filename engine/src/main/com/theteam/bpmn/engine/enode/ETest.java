@@ -3,6 +3,7 @@ package com.theteam.bpmn.engine.enode;
 import com.theteam.bpmn.engine.Elist;
 import com.theteam.bpmn.engine.Workflow;
 import com.theteam.bpmn.engine.io.EVariable;
+import com.theteam.bpmn.engine.observers.WorkflowObserver;
 import com.theteam.snodes.SCondition;
 import com.theteam.snodes.SNode;
 import com.theteam.snodes.STestNode;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import com.google.gson.JsonObject;
 import com.microsoft.signalr.*;
 
 public class ETest extends ENode
@@ -71,6 +73,14 @@ public class ETest extends ENode
     public void run(Elist l)
     {
         System.out.println("\nTest Node Running");
+
+        JsonObject obj = new JsonObject();
+
+        obj.addProperty("workflowName", l.sNodes.getName());
+        obj.addProperty("processName", sNode.getType());
+        obj.addProperty("processID", sNode.getNId());
+
+        Workflow.wo.updateVal(obj.toString());
 
         hubConnection = HubConnectionBuilder.create("http://localhost:8888/NotificationHub").build();
 		

@@ -7,6 +7,10 @@ import javax.xml.bind.Marshaller;
 
 import com.theteam.ElementsList;
 import com.theteam.io.SVariablesList;
+import com.theteam.jsondata.SJsonData;
+import com.theteam.jsondata.SJsonDataList;
+import com.theteam.positions.SPosition;
+import com.theteam.positions.SPositionList;
 import com.theteam.io.SVariable;
 import com.theteam.snodes.event.*;
 
@@ -17,6 +21,7 @@ public class SXML
 
     SNodeList nodeList;
     SVariablesList variableList;
+    SPositionList poistionList;
 
     public SXML()
     {
@@ -24,6 +29,7 @@ public class SXML
 
         nodeList = new SNodeList();
         variableList = new SVariablesList();
+        poistionList = new SPositionList();
     }
 
     public void setWorkflowName(String name)
@@ -85,11 +91,13 @@ public class SXML
     {
         SNode n = nodeList.getNodeById(node);
         nodeList.removeNode(n);
+        
     }
 
     public void clear()
     {
         nodeList.removeAllNodes();
+        poistionList.clear();
     }
 
     //
@@ -123,6 +131,47 @@ public class SXML
         SVariable var = variableList.getVariableById(id);
         var.setValue(value);
 
+    }
+
+    //
+    //
+    //
+    //
+    // Positions
+
+    public void addPosition(String id, String nodeId, String x, String y)
+    {
+
+        SPosition pos = new SPosition(id, nodeId, x, y);
+        poistionList.addPosition(pos);
+    }
+
+    public void setPositionNodeID(String id, String nodeId)
+    {
+        SPosition pos = poistionList.getPositionById(id);
+        pos.setNodeId(nodeId);
+    }
+
+    public void setPositionX(String id, String x)
+    {
+        SPosition pos = poistionList.getPositionById(id);
+        pos.setX(x);
+    }
+
+    public void setPositionY(String id, String y)
+    {
+        SPosition pos = poistionList.getPositionById(id);
+        pos.setY(y);
+    }
+
+    public void removePosition(String nodeId)
+    {
+        poistionList.removePosition(nodeId);
+    }
+
+    public void updatePosition(String nodeId, String x, String y)
+    {
+        poistionList.updatePosition(nodeId, x, y);
     }
 
 
@@ -353,6 +402,64 @@ public class SXML
     //
     //
     //
+    // JSON
+
+    public void addJSONNode(String id)
+    {
+        SJsonNode t = new SJsonNode(Types.NodeType(Types.NodeTypes.JSON), id);
+
+        SJsonDataList jsonDataList = new SJsonDataList();
+        t.setJsonData(jsonDataList);
+
+        nodeList.addJsonNode(t);
+    }
+
+    public void setJsonActionProperty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        SJsonNode json = (SJsonNode) node;
+
+        json.setAction(value);
+
+    }
+
+    public void addJsonData(String nodeId, String jsonDataId, String name, String val)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(nodeId);
+
+        SJsonNode json = (SJsonNode) node;
+
+        SJsonData jsonData = new SJsonData(jsonDataId, name, val);
+
+        json.addJsonData(jsonData);
+
+    }
+
+    public void removeJsonData(String nodeId, String jsonDataId)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(nodeId);
+
+        SJsonNode json = (SJsonNode) node;
+
+        json.removeJsonData(jsonDataId);
+
+    }
+
+
+    //
+    //
+    //
+    //
     // TEST
 
     public void addTestNode(String id)
@@ -420,6 +527,7 @@ public class SXML
         
         elementsList.setNodeList(nodeList);
         elementsList.setVariableList(variableList);
+        elementsList.setPositionsList(poistionList);
         
         // path example
 		// String path = "../xml/nodeXML.xml";

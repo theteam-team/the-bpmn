@@ -1,5 +1,6 @@
 package com.theteam.bpmn.engine.enode;
 
+import com.google.gson.JsonObject;
 import com.theteam.bpmn.engine.Elist;
 import com.theteam.bpmn.engine.Workflow;
 import com.theteam.bpmn.engine.io.EVariable;
@@ -27,6 +28,14 @@ public class ECondition extends ENode
     public void run(Elist l)
     {
         System.out.println("\nCondition Node Running");
+
+        JsonObject ob = new JsonObject();
+
+        ob.addProperty("workflowName", l.sNodes.getName());
+        ob.addProperty("processName", sNode.getType());
+        ob.addProperty("processID", sNode.getNId());
+
+        Workflow.wo.updateVal(ob.toString());
 
         Scan s = new Scan(sCondition.getExpression(), l);
         String condition = s.getFinalString();

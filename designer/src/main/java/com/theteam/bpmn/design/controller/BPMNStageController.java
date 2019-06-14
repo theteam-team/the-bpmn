@@ -69,6 +69,11 @@ public class BPMNStageController {
 
     Integer i = 0;
 
+    public SXML getXmlWriter()
+    {
+        return xmlWriter;
+    }
+
     public void loadNodes()
     {
         xmlWriter = new SXML();
@@ -117,10 +122,15 @@ public class BPMNStageController {
         parallel.setFitHeight(NodeConstants.nodeSize);
         parallel.setFitWidth(NodeConstants.nodeSize);
 
+        DJsonNode json = new DJsonNode(xmlWriter, UUID.randomUUID(), false);
+        json.setFitHeight(NodeConstants.nodeSize);
+        json.setFitWidth(NodeConstants.nodeSize);
+
         gridNodes.getChildren().add(start);
         gridNodes.getChildren().add(end);
         gridNodes.getChildren().add(serviceTask);
         gridNodes.getChildren().add(db);
+        gridNodes.getChildren().add(json);
         gridNodes.getChildren().add(ext);
         gridNodes.getChildren().add(timer);
         gridNodes.getChildren().add(script);
@@ -236,6 +246,11 @@ public class BPMNStageController {
                     createDrawNode(new DParallelNode(xmlWriter, UUID.randomUUID(), true), me);
                     logText.set("Parallel Node Created");
                     break;
+
+                case "json":
+                    createDrawNode(new DJsonNode(xmlWriter, UUID.randomUUID(), true), me);
+                    logText.set("Json Node Created");
+                    break;
             
                 default:
                     break;
@@ -257,6 +272,9 @@ public class BPMNStageController {
         node.setX(me.getX()-node.getFitWidth()/2);
         node.setY(me.getY()-node.getFitHeight()/2);
 
+        xmlWriter.addPosition(UUID.randomUUID().toString(), node.getId(), String.valueOf(node.getX()), String.valueOf(node.getY()));
+
+        
     }
 
     public void createLine(DNode nodeFrom, DNode nodeTo)

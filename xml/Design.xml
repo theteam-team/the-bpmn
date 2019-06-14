@@ -1,72 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <bpm>
     <nodes name="design">
-        <start nId="8cfddb30-502e-4b15-a5de-8745211cd0c5" type="START">
-            <NId>8cfddb30-502e-4b15-a5de-8745211cd0c5</NId>
+        <start nId="b85146f2-e982-4002-973d-54bd8cee89d4" type="START">
+            <NId>b85146f2-e982-4002-973d-54bd8cee89d4</NId>
             <type>START</type>
-            <nextNode>388cab06-12ce-47db-9a92-7507ef2bc0f5</nextNode>
+            <nextNode>40dd2d7c-94d2-4db4-93d0-905f1a6299a7</nextNode>
         </start>
-        <serviceTask nId="bc38d90f-d07f-433c-995f-58b76a17bd94" type="TASK">
-            <NId>bc38d90f-d07f-433c-995f-58b76a17bd94</NId>
+        <serviceTask nId="48fe7ed2-d7d5-4d62-93cf-29a6a798ef1a" type="TASK">
+            <NId>48fe7ed2-d7d5-4d62-93cf-29a6a798ef1a</NId>
             <type>TASK</type>
-            <nextNode>9edf45f2-13ac-4605-bca0-5ccc0095b9f5</nextNode>
+            <previousNode>40dd2d7c-94d2-4db4-93d0-905f1a6299a7</previousNode>
+            <nextNode>cd58068a-cb9f-4044-a996-714fe530d02a</nextNode>
             <ServiceType>rest</ServiceType>
-            <restLink>https://postman-echo.com/status/200</restLink>
             <soapFunc>getHello</soapFunc>
         </serviceTask>
-        <serviceTask nId="0ea611df-f950-4922-a876-1aae4037887b" type="TASK">
-            <NId>0ea611df-f950-4922-a876-1aae4037887b</NId>
-            <type>TASK</type>
-            <previousNode>388cab06-12ce-47db-9a92-7507ef2bc0f5</previousNode>
-            <nextNode>a4955a9b-a14b-4edb-b860-d3ec573f5321</nextNode>
-            <ServiceType>rest</ServiceType>
-            <restLink>https://postman-echo.com/time/now</restLink>
-            <soapFunc>getHello</soapFunc>
-        </serviceTask>
-        <condition nId="388cab06-12ce-47db-9a92-7507ef2bc0f5" type="CONDITION">
-            <NId>388cab06-12ce-47db-9a92-7507ef2bc0f5</NId>
-            <type>CONDITION</type>
-            <previousNode>8cfddb30-502e-4b15-a5de-8745211cd0c5</previousNode>
-            <nextNode>bc38d90f-d07f-433c-995f-58b76a17bd94</nextNode>
-            <nextNode1>0ea611df-f950-4922-a876-1aae4037887b</nextNode1>
-            <expression>$num1 &gt; $num2</expression>
-        </condition>
-        <end nId="9edf45f2-13ac-4605-bca0-5ccc0095b9f5" type="END">
-            <NId>9edf45f2-13ac-4605-bca0-5ccc0095b9f5</NId>
+        <json nId="40dd2d7c-94d2-4db4-93d0-905f1a6299a7" type="JSON">
+            <NId>40dd2d7c-94d2-4db4-93d0-905f1a6299a7</NId>
+            <type>JSON</type>
+            <nextNode>48fe7ed2-d7d5-4d62-93cf-29a6a798ef1a</nextNode>
+            <jsonDData/>
+        </json>
+        <end nId="cd58068a-cb9f-4044-a996-714fe530d02a" type="END">
+            <NId>cd58068a-cb9f-4044-a996-714fe530d02a</NId>
             <type>END</type>
-            <previousNode>bc38d90f-d07f-433c-995f-58b76a17bd94</previousNode>
-        </end>
-        <end nId="a4955a9b-a14b-4edb-b860-d3ec573f5321" type="END">
-            <NId>a4955a9b-a14b-4edb-b860-d3ec573f5321</NId>
-            <type>END</type>
-            <previousNode>0ea611df-f950-4922-a876-1aae4037887b</previousNode>
+            <previousNode>48fe7ed2-d7d5-4d62-93cf-29a6a798ef1a</previousNode>
         </end>
     </nodes>
     <variables>
-        <variable nId="eeb53600-1bc0-4077-888b-ba777b2f4cb1">
-            <name>var1</name>
+        <variable nId="d5f818d2-d4dd-4fa3-9068-1df940bd0c16">
+            <name>sVar</name>
             <type>string</type>
-            <value>$var2</value>
-        </variable>
-        <variable nId="5c44ba65-9f59-4ce4-a509-0d1facd9fcd7">
-            <name>var2</name>
-            <type>string</type>
-            <value>$var3</value>
-        </variable>
-        <variable nId="92a76681-603b-484e-a016-95b216665ffe">
-            <name>var3</name>
-            <type>string</type>
-            <value>hello</value>
-        </variable>
-        <variable nId="53fb534c-fa2e-4fc4-86e9-98fec9813169">
-            <name>num1</name>
-            <type>int</type>
-            <value>4</value>
-        </variable>
-        <variable nId="e6252bb4-b464-4170-85bc-41c027d5ecd4">
-            <name>num2</name>
-            <type>int</type>
-            <value>10</value>
+            <value></value>
         </variable>
     </variables>
+    <positions>
+        <position>
+            <nodeId>b85146f2-e982-4002-973d-54bd8cee89d4</nodeId>
+            <x>175.0</x>
+            <y>233.0</y>
+        </position>
+        <position>
+            <nodeId>40dd2d7c-94d2-4db4-93d0-905f1a6299a7</nodeId>
+            <x>328.0</x>
+            <y>232.0</y>
+        </position>
+        <position>
+            <nodeId>48fe7ed2-d7d5-4d62-93cf-29a6a798ef1a</nodeId>
+            <x>471.0</x>
+            <y>231.0</y>
+        </position>
+        <position>
+            <nodeId>cd58068a-cb9f-4044-a996-714fe530d02a</nodeId>
+            <x>646.0</x>
+            <y>232.0</y>
+        </position>
+    </positions>
 </bpm>

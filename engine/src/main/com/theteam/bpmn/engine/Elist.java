@@ -38,7 +38,7 @@ public class Elist
         return null;
     }
 
-    public EVariable getVariable(String name) { return eVariables.get(name); }
+    public EVariable getVariable(String name){ return eVariables.get(name); }
 
     public void addVariable(EVariable eVar)
     {

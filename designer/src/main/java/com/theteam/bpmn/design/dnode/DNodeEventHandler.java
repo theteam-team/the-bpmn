@@ -1,5 +1,8 @@
 package com.theteam.bpmn.design.dnode;
 
+import javax.sql.rowset.spi.XmlWriter;
+
+import com.sun.xml.bind.marshaller.XMLWriter;
 import com.theteam.bpmn.design.controller.BPMNStageController;
 
 import javafx.event.EventHandler;
@@ -32,6 +35,7 @@ public final class DNodeEventHandler
             {
                 return;
             }
+
             DNode node = (DNode) me.getSource();
 
             if(me.getButton() == MouseButton.SECONDARY)
@@ -132,6 +136,9 @@ public final class DNodeEventHandler
             {
                 node.setX(me.getX()-node.getFitWidth()/2);
                 node.setY(me.getY()-node.getFitHeight()/2);
+
+                dbpmnController.getXmlWriter().updatePosition(node.getId(), String.valueOf(node.getX()), String.valueOf(node.getY()));
+
 
                 for (DLine line : node.getStartLines()) {
                     line.changeLineStart(node);

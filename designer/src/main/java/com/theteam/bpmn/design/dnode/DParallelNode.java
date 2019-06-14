@@ -61,6 +61,7 @@ public class DParallelNode extends DNode
             getPrevDNode1().setNNextDNode1(null);
         }
 
+        xmlWriter.removePosition(getId());
         xmlWriter.removeNode(getId());
     }
 }

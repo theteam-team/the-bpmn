@@ -14,6 +14,7 @@ public final class Types
         SCRIPT,
         PARALLEL,
         CONDITION,
+        JSON,
         TEST
     }
 
@@ -34,6 +35,7 @@ public final class Types
         "SCRIPT",
         "PARALLEL",
         "CONDITION",
+        "JSON",
         "TEST"
     };
     
@@ -61,8 +63,10 @@ public final class Types
                 return Nodes[7];
             case CONDITION:
                 return Nodes[8];
-            case TEST:
+            case JSON:
                 return Nodes[9];
+            case TEST:
+                return Nodes[10];
                 
             default:
                 return "NOT FOUND";

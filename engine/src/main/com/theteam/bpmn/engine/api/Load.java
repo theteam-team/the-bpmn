@@ -16,6 +16,7 @@ import javax.xml.bind.Unmarshaller;
 
 import com.theteam.ElementsList;
 import com.theteam.bpmn.engine.Elist;
+import com.theteam.bpmn.engine.Monitor;
 import com.theteam.bpmn.engine.Workflow;
 import com.theteam.bpmn.engine.enode.*;
 import com.theteam.bpmn.engine.enode.event.*;
@@ -30,7 +31,8 @@ import com.theteam.snodes.event.*;
  * API End point /load
  * Load xml file to engine
  */
-@javax.ws.rs.Path("/load")  
+
+@javax.ws.rs.Path("/load")
 public class Load {
 
     Unmarshaller jaxbUnmarshaller;
@@ -45,12 +47,12 @@ public class Load {
     }
 
     // This method is called if XML is requested  
-    @GET  
+    @GET
     @Produces(MediaType.TEXT_XML)
     public String sayXMLHello() throws JAXBException
     {
         loadNodes();
-        return "<?xml version=\"1.0\"?>" + "<load> loading XML Finished" + "</load>";  
+        return "<?xml version=\"1.0\"?>" + "<load> loading XML Finished" + "</load>";
     }
 
     // This method is called if HTML is requested  
@@ -66,6 +68,11 @@ public class Load {
     public void loadNodes() throws JAXBException
     {
 
+        //Monitor m = new Monitor();
+
+        //String[] a = {"a"};
+        //m.moon(a);
+        
         System.out.println("Loading");
 
         JAXBContext jaxbContext = JAXBContext.newInstance(ElementsList.class);
@@ -87,6 +94,8 @@ public class Load {
                 .forEach(workflowConsumer);
 
         } catch(Exception e) { System.out.println(e); }
+
+        
 
 
     }
@@ -201,6 +210,11 @@ public class Load {
                 case "PARALLEL":
                     EParallel eParallel = new EParallel((SParallel) node, workflow);
                     workflow.eNodes.add(eParallel);
+                    break;
+
+                case "JSON":
+                    EJson eJson = new EJson((SJsonNode) node, workflow);
+                    workflow.eNodes.add(eJson);
                     break;
 
                 default:

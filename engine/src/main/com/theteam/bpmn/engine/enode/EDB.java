@@ -3,6 +3,7 @@ package com.theteam.bpmn.engine.enode;
 import com.theteam.bpmn.engine.Elist;
 import com.theteam.bpmn.engine.Workflow;
 import com.theteam.bpmn.engine.io.EVariable;
+import com.theteam.bpmn.engine.observers.WorkflowObserver;
 import com.theteam.snodes.SDBNode;
 import com.theteam.snodes.SNode;
 
@@ -149,6 +150,14 @@ public class EDB extends ENode
                 {
                     
                     System.out.println("Listening the database");
+
+                    JsonObject ob = new JsonObject();
+
+                    ob.addProperty("workflowName", l.sNodes.getName());
+                    ob.addProperty("processName", sNode.getType());
+                    ob.addProperty("processID", sNode.getNId());
+
+                    Workflow.wo.updateVal(ob.toString());
                     
                         try
                         {  
@@ -167,7 +176,7 @@ public class EDB extends ENode
                             ResultSet rs = stmt.executeQuery(sDB.getSelectStatement());
                             ResultSetMetaData rsmd = rs.getMetaData();
 
-                            JsonObject obj = new JsonObject();;
+                            JsonObject obj = new JsonObject();
 
                             int count = 0;
                 

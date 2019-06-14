@@ -104,17 +104,16 @@ public class DBStageController {
 
     private void chooseSchema()
     {
-        
 
         dbPane.getChildren().clear();
         state = 0;
-        
+
         JFXToggleNode toggleNode = new JFXToggleNode();
         toggleNode.setTextFill(Color.YELLOWGREEN);
         toggleNode.setText("Choose a SCHEMA");
-    
+
         JFXComboBox<String> cb1 = new JFXComboBox<String>();
-    
+
         ObservableList<String> obsList1 = FXCollections.observableArrayList(
             dbData.getSchemas()
         );

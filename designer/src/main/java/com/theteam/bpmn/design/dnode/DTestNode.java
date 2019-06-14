@@ -92,6 +92,7 @@ public class DTestNode extends DNode
             getPrevDNode().setNNextDNode(null);
         }
 
+        xmlWriter.removePosition(getId());
         xmlWriter.removeNode(getId());
     }
 }

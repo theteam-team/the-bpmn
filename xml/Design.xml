@@ -1,107 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <bpm>
     <nodes name="design">
-        <start nId="4514bcae-6175-4aa1-a81e-004717f86bce" type="START">
-            <NId>4514bcae-6175-4aa1-a81e-004717f86bce</NId>
+        <start nId="4da92625-0c46-4872-9f32-ee1d7c9ba27e" type="START">
+            <NId>4da92625-0c46-4872-9f32-ee1d7c9ba27e</NId>
             <type>START</type>
-            <nextNode>d9be8df6-08a0-43d4-ad75-269f1f2eb5c9</nextNode>
+            <action>OnStarted</action>
         </start>
-        <serviceTask nId="fae93918-ec08-4966-ab39-d224ca81c089" type="TASK">
-            <NId>fae93918-ec08-4966-ab39-d224ca81c089</NId>
-            <type>TASK</type>
-            <previousNode>d9be8df6-08a0-43d4-ad75-269f1f2eb5c9</previousNode>
-            <nextNode>d263434e-508c-443f-afe6-02447a50fcc3</nextNode>
-            <input>json</input>
-            <ServiceType>rest</ServiceType>
-            <restLink>http://localhost:8888/api/CrmApi/AddCustomer</restLink>
-            <soapFunc>getHello</soapFunc>
-        </serviceTask>
-        <json nId="d9be8df6-08a0-43d4-ad75-269f1f2eb5c9" type="JSON">
-            <NId>d9be8df6-08a0-43d4-ad75-269f1f2eb5c9</NId>
-            <type>JSON</type>
-            <nextNode>fae93918-ec08-4966-ab39-d224ca81c089</nextNode>
-            <output>json</output>
-            <action>make</action>
-            <jsonDData>
-                <data nId="be46c4db-ba08-497b-af1c-0565111a3c94">
-                    <name>customer_id</name>
-                    <val>id234</val>
-                </data>
-                <data nId="999f1168-e8f0-4ca7-9e8c-318b6ea647a7">
-                    <name>name</name>
-                    <val>koko</val>
-                </data>
-                <data nId="fed9cb5d-5723-4aca-88f7-77c5e111f84e">
-                    <name>phone_number</name>
-                    <val>228940</val>
-                </data>
-                <data nId="c13085bb-b353-4729-ab0c-1dbacc809ba0">
-                    <name>dateOfBirth</name>
-                    <val>1999-2-2</val>
-                </data>
-                <data nId="317d6e48-d346-4258-a336-94ec3c1392b2">
-                    <name>gender</name>
-                    <val>male</val>
-                </data>
-                <data nId="bde6257b-28d0-48f2-9cbb-4a22b4176328">
-                    <name>loyality_points</name>
-                    <val>23</val>
-                </data>
-                <data nId="65c8fb9b-d4b4-4094-9992-4d98b3c32dec">
-                    <name>type</name>
-                    <val>4</val>
-                </data>
-                <data nId="c252ea37-c7e9-48ca-90ce-560e8a6261ba">
-                    <name>company</name>
-                    <val>company</val>
-                </data>
-                <data nId="a939e440-6ef2-4443-9717-2e18a05cf3d5">
-                    <name>company_email</name>
-                    <val>mail</val>
-                </data>
-                <data nId="b2c79f19-4e00-4557-9750-09aa4cd4e729">
-                    <name>is_lead</name>
-                    <val>true</val>
-                </data>
-                <data nId="99fab88e-05ba-418c-bcdd-dfa4933877f6">
-                    <name>email</name>
-                    <val>mymail</val>
-                </data>
-            </jsonDData>
-        </json>
-        <end nId="d263434e-508c-443f-afe6-02447a50fcc3" type="END">
-            <NId>d263434e-508c-443f-afe6-02447a50fcc3</NId>
-            <type>END</type>
-            <previousNode>fae93918-ec08-4966-ab39-d224ca81c089</previousNode>
-        </end>
     </nodes>
-    <variables>
-        <variable nId="f0c42f22-4d6b-4c1e-aa25-fe1a08aa8fe3">
-            <name>json</name>
-            <type>string</type>
-            <value>null</value>
-        </variable>
-    </variables>
+    <variables/>
     <positions>
         <position>
-            <nodeId>4514bcae-6175-4aa1-a81e-004717f86bce</nodeId>
-            <x>181.0</x>
-            <y>218.0</y>
-        </position>
-        <position>
-            <nodeId>d9be8df6-08a0-43d4-ad75-269f1f2eb5c9</nodeId>
-            <x>310.0</x>
-            <y>220.0</y>
-        </position>
-        <position>
-            <nodeId>fae93918-ec08-4966-ab39-d224ca81c089</nodeId>
-            <x>455.0</x>
-            <y>212.0</y>
-        </position>
-        <position>
-            <nodeId>d263434e-508c-443f-afe6-02447a50fcc3</nodeId>
-            <x>622.0</x>
-            <y>216.0</y>
+            <nodeId>4da92625-0c46-4872-9f32-ee1d7c9ba27e</nodeId>
+            <x>179.0</x>
+            <y>153.0</y>
         </position>
     </positions>
 </bpm>

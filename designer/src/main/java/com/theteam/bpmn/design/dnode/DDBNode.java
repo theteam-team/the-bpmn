@@ -87,6 +87,7 @@ public class DDBNode extends DNode
             allDProperties.add(dUserNameProperty);
             allDProperties.add(dPasswordProperty);
 
+
             inputProperty.addListener(new ChangeListener<String>()
             {
                 @Override

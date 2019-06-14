@@ -44,7 +44,7 @@ public class GetWorkflowBody
     public Response getMsg( @QueryParam("name") String name)
     {
 
-        String data = "Hello";
+        String data = "<?xml version=\"1.0\"?>" + "<load> Error" + "</load>";
         try{
 
 

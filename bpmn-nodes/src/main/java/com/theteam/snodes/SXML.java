@@ -188,6 +188,17 @@ public class SXML
         nodeList.addStartNode(s);
     }
 
+    public void setStartActionProprty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+        SStartNode start = (SStartNode) node;
+        start.setAction(value);
+
+    }
+
 
     //
     //

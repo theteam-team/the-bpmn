@@ -65,6 +65,10 @@ public class DJsonNode extends DNode
             allDProperties.add(dOperationProperty);
             allDProperties.add(DJsonDataProperty);
 
+            String a = (String) dOperationProperty.getComboSelectionModel().getSelectedItem();
+            xmlWriter.setJsonActionProperty(id.toString(), a);
+
+
             inputProperty.addListener(new ChangeListener<String>()
             {
                 @Override

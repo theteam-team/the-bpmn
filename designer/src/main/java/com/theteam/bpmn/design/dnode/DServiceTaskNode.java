@@ -35,10 +35,20 @@ public class DServiceTaskNode extends DNode
     public SingleSelectionModel<String> serviceType;
     public SingleSelectionModel<String> soapFunc;
 
+    /*
     public ObservableList<String> serviceTypeList = FXCollections.observableArrayList(
         "rest",
         "soap"
     );
+    */
+    
+    public ObservableList<String> serviceTypeList = FXCollections.observableArrayList(
+        "get",
+        "post",
+        "put",
+        "delete"
+    );
+    
 
     public ObservableList<String> soapFuncList = FXCollections.observableArrayList(
         "getHello",

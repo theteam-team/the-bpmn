@@ -10,11 +10,11 @@ import javax.xml.bind.annotation.XmlType;
 
 
 @XmlRootElement
-@XmlType(propOrder = { "previousNode", "previousNode1", "nextNode", "nextNode1", "connectedAction"})
+@XmlType(propOrder = { "previousNode", "previousNode1", "nextNode", "nextNode1", "action"})
 public class SStartNode extends SNode
 {
 
-    private String connectedAction = null;
+    private String action = null;
 
     private String previousNode = null;
     private String nextNode = null;
@@ -48,17 +48,17 @@ public class SStartNode extends SNode
         this.type = type;  
     }
 
-    @XmlElement(name = "connectedAction")
-    public String getConnectedAction()
+    @XmlElement(name = "action")
+    public String getAction()
     {
 
-        if(connectedAction != null)
-            return connectedAction.toString();
+        if(action != null)
+            return action.toString();
         return null;
     }
 
-    public void setConnectedAction(String connectedAction) {
-        this.connectedAction = connectedAction;
+    public void setAction(String action) {
+        this.action = action;
     }
 
     @XmlElement(name = "previousNode")

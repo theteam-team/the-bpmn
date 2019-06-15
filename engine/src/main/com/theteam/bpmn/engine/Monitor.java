@@ -5,6 +5,9 @@ import java.util.*;
 import com.microsoft.signalr.HubConnection;
 import com.microsoft.signalr.HubConnectionBuilder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.reactivex.Single;
 
 
@@ -13,6 +16,11 @@ public class Monitor
 		public HubConnection hubConnection;
 		
     	public Monitor() {
+
+			Logger logger = LoggerFactory.getLogger(Monitor.class);
+
+			logger.info("Monitor Begin");
+			
     		//create the connection with token validation don't worry the token expiration date is after 100 years
     		 hubConnection = HubConnectionBuilder.create("http://localhost:5001/DeployWorkflowHub")
     				 /*.withAccessTokenProvider(Single.defer(() -> {
@@ -20,19 +28,32 @@ public class Monitor
     					 // TODO request Token the put it 
     				        return Single.just(/*put your token here"CfDJ8ILPBX-GLhFAhs0mV7u-2ypYX2yGxTouybnBkwFd_gWViN2xmlp9kMedp_ZBCmOBJwU4JBRpD_HKQ7Yz56STlIpcSLaf5Yeq_8hohzoZV7dGJb2opQJ2UCwv40xV5Ty4RkmVy19IxAUFRfG4DKvf2ApsoWKKs1iBet9u_4klmNqHdZe58b8ii5gFbEmCVFV1yg");
     				    })*/.build();
-    		
-    		hubConnection.start();
+			
+			logger.info("Monitor Build");
+			hubConnection.start();
+			logger.info("Monitor Started");
+			
     		//wait for the connection to be established
-    		while(hubConnection.getConnectionState().name() != "CONNECTED") 
-    		{
-    			System.out.print(hubConnection.getConnectionState().name());
-    			delay(50);
-    		}
-    		hubConnection.send("AddToGroup","Engine");
+
+			logger.info("Monitor send add to group");
+			if(hubConnection.getConnectionState().name() == "CONNECTED")
+			{
+				hubConnection.send("AddToGroup","Engine");
+				logger.info("Monitor send add to group - done");
+
+			}
     		delay(50);
     		//hubConnection.send("GetCurrentDeployed");
     		///initialize the deployed list
-			hubConnection.send("InitializeDeployList"); // when the engine starts
+			logger.info("Monitor send InitializeDeployList");
+			
+			if(hubConnection.getConnectionState().name() == "CONNECTED")
+			{
+
+				hubConnection.send("InitializeDeployList"); // when the engine starts
+
+				logger.info("Monitor send InitializeDeployList  - done");
+			}
 			
 			
 			//String workFlowName = "aa";
@@ -54,13 +75,15 @@ public class Monitor
     		// this should be invoked At every update in a execution 
 			
 			
+			logger.info("Monitor wait InitializeExecution");
 			///this a listener 
 			hubConnection.on("InitializeExecution",(workflowID, Instance_Id) ->
     		{
 				ArrayList<String> nodes = Workflow.processesRun.get(Instance_Id);
     			hubConnection.send("UpdateExecution", workflowID, Instance_Id, nodes);
     		},String.class, String.class);
-
+			
+			logger.info("Monitor finished");
     	}
 
     	public void delay(int delay) 

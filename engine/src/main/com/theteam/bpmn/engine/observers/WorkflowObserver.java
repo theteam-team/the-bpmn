@@ -52,7 +52,14 @@ public class WorkflowObserver extends BasicObservable<String>
            
         }
 
-        Workflow.mon.getHubConnection().send("UpdateExecution", workflowName, instanceID, processIds);
+        
+        System.out.println("Sending new data to hub");
+        if(Workflow.mon.getHubConnection().getConnectionState().name() == "CONNECTED")
+        {
+            Workflow.mon.getHubConnection().send("UpdateExecution", workflowName, instanceID, processIds);
+            System.out.println("Sending new data to hub  - done");
+
+        }
 
         /*
         System.out.println("______TEST_____");

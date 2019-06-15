@@ -20,8 +20,8 @@ public class Workflow
 
     public static void addWorkflow(Elist l) { workflows.put(l.sNodes.getName(), l); }
 
-    public static WorkflowObserver wo = new WorkflowObserver();
+    public static WorkflowObserver wo;
 
-    public static Monitor mon = new Monitor();
+    public static Monitor mon;
 
 }

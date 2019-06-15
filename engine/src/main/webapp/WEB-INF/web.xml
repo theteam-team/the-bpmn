@@ -62,6 +62,12 @@
         <load-on-startup>2</load-on-startup>
     </servlet>
 
+    <listener>
+    <listener-class>
+        com.theteam.bpmn.engine.listener.MyServletContextListener
+    </listener-class>
+    </listener>
+
     <!-- 
     <filter>
     <filter-name>JSONFilter</filter-name>

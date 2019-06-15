@@ -1,21 +1,17 @@
 package com.theteam.bpmn.engine.enode;
 
+import java.util.ArrayList;
+
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.theteam.bpmn.engine.Elist;
 import com.theteam.bpmn.engine.Workflow;
-import com.theteam.bpmn.engine.io.EVariable;
-import com.theteam.bpmn.engine.observers.WorkflowObserver;
-import com.theteam.io.SVariable;
-import com.theteam.snodes.SEndNode;
 import com.theteam.snodes.SNode;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EEnd extends ENode
 {
 
-    private SEndNode sEnd;
+    //private SEndNode sEnd;
     private String name;
     
 
@@ -27,22 +23,52 @@ public class EEnd extends ENode
     }
 
     @Override
-    public void run(Elist l)
+    public void run(Elist l, String id)
     {
         System.out.println("\nEnd Node Running");
 
-        JsonObject obj = new JsonObject();
+        String workflowName = l.sNodes.getName();
+        String instanceID = id;
 
-        obj.addProperty("workflowName", l.sNodes.getName());
-        obj.addProperty("workflowID", l.getID());
-        obj.addProperty("processName", sNode.getType());
-        obj.addProperty("processID", sNode.getNId());
+        ArrayList<String> processes = Workflow.processesRun.get(instanceID);
 
-        Workflow.wo.updateVal(obj.toString());
+        if(processes == null)
+        {
+            ArrayList<String> tempList = new ArrayList<>();
+            tempList.add(sNode.getNId());
+            Workflow.processesRun.put(instanceID, tempList);
+        }
+        else
+        {
+            processes.add(sNode.getNId());
+        }
 
-        Workflow.runningWorkflows.put(name, Workflow.runningWorkflows.get(name)-1);
+
+        JsonObject jsonEle1 = new JsonObject();
+
+        jsonEle1.addProperty("workflowName", workflowName);
+        jsonEle1.addProperty("instanceID", instanceID);
+
+        JsonArray jArray = new JsonArray();
+
+        for (String var : Workflow.processesRun.get(instanceID)) {
+
+            JsonObject jsonEle2 = new JsonObject();
+            jsonEle2.addProperty("processID", var);
+            jArray.add(jsonEle2);
+        }
+
+        jsonEle1.add("processes", jArray);
+        Workflow.wo.updateVal(jsonEle1.toString());
+
+        ArrayList<String> workflowsinstances = Workflow.runningWorkflows.get(name);
+        if(workflowsinstances != null)
+        {
+            workflowsinstances.remove(instanceID);
+        }
 
 
+        /*
         Logger logger = LoggerFactory.getLogger(EEnd.class);
         
         for (EVariable var : l.eVariables.values()) {
@@ -51,5 +77,6 @@ public class EEnd extends ENode
 
             logger.info(s);
         }
+        */
     }
 }

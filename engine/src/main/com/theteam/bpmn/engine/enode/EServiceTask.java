@@ -10,23 +10,20 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.UUID;
-import java.util.concurrent.Executor;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.theteam.bpmn.engine.Elist;
 import com.theteam.bpmn.engine.Workflow;
 import com.theteam.bpmn.engine.io.EVariable;
-import com.theteam.bpmn.engine.observers.WorkflowObserver;
 import com.theteam.bpmn.engine.scan.Scan;
 import com.theteam.bpmn.engine.ws.WS;  
 
@@ -43,20 +40,45 @@ public class EServiceTask extends ENode
     
 
     @Override
-    public void run(Elist l)
+    public void run(Elist l, String id)
     {
         sTask = (STaskNode) sNode;
 
         System.out.println("\nService_task Node Running");
 
-        JsonObject obj = new JsonObject();
+        String workflowName = l.sNodes.getName();
+        String instanceId = id;
 
-        obj.addProperty("workflowName", l.sNodes.getName());
-        obj.addProperty("workflowID", l.getID());
-        obj.addProperty("processName", sNode.getType());
-        obj.addProperty("processID", sNode.getNId());
+        ArrayList<String> processes = Workflow.processesRun.get(instanceId);
 
-        Workflow.wo.updateVal(obj.toString());
+        if(processes == null)
+        {
+            ArrayList<String> tempList = new ArrayList<>();
+            tempList.add(sNode.getNId());
+            Workflow.processesRun.put(instanceId, tempList);
+        }
+        else
+        {
+            processes.add(sNode.getNId());
+        }
+
+
+        JsonObject jsonEle1 = new JsonObject();
+
+        jsonEle1.addProperty("workflowName", workflowName);
+        jsonEle1.addProperty("instanceID", instanceId);
+
+        JsonArray jArray = new JsonArray();
+
+        for (String var : Workflow.processesRun.get(instanceId)) {
+
+            JsonObject jsonEle2 = new JsonObject();
+            jsonEle2.addProperty("processID", var);
+            jArray.add(jsonEle2);
+        }
+
+        jsonEle1.add("processes", jArray);
+        Workflow.wo.updateVal(jsonEle1.toString());
 
         String temp = null;
 
@@ -235,7 +257,7 @@ public class EServiceTask extends ENode
         {
             if(n.getSNode().getNId().equals(getSNode().getNextNode()))
             {
-                n.run(l);
+                n.run(l, instanceId);
                 return;
             }
         }

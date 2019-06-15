@@ -1,28 +1,12 @@
 package com.theteam.bpmn.engine.api;
 
-import com.theteam.bpmn.engine.Elist;
-import com.theteam.bpmn.engine.Workflow;
-import com.theteam.bpmn.engine.enode.*;
-import com.theteam.bpmn.engine.io.EVariable;
-import com.theteam.snodes.event.SExternalEvent;
-
-import org.apache.commons.io.IOUtils;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -51,11 +35,11 @@ public class GetWorkflowBody
             System.out.println("/xml/"+name+".xml");
             String s = getClass().getResource("/xml/"+name+".xml").getFile();
             s = s.substring(1);
-            System.out.println(s);
+            //System.out.println(s);
 
             //String data = readFileAsString("C:\\Users\\pankaj\\Desktop\\test.java"); 
             data = readFileAsString(s); 
-            System.out.println(data);
+            //System.out.println(data);
 
         } catch(Exception e) { System.out.println(e); }
 

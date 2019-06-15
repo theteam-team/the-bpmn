@@ -1,5 +1,6 @@
 package com.theteam.bpmn.engine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -10,7 +11,8 @@ public class Workflow
 {
     public static Map<String, Elist> workflows = new HashMap<>();
 
-    public static Map<String, Integer> runningWorkflows = new HashMap<>();
+    public static Map<String, ArrayList<String>> runningWorkflows = new HashMap<>();
+    public static Map<String, ArrayList<String>> processesRun = new HashMap<>();
 
     public static Elist getWorkflow(String name) { return workflows.get(name); }
 
@@ -19,6 +21,5 @@ public class Workflow
     public static void addWorkflow(Elist l) { workflows.put(l.sNodes.getName(), l); }
 
     public static WorkflowObserver wo = new WorkflowObserver();
-    
 
 }

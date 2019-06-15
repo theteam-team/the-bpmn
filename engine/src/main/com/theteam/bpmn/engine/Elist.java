@@ -10,6 +10,7 @@ import com.theteam.ElementsList;
 import com.theteam.bpmn.engine.enode.*;
 import com.theteam.bpmn.engine.io.EVariable;
 import com.theteam.snodes.SNodeList;
+import com.theteam.snodes.SStartNode;
 import com.theteam.io.SVariablesList;
 
 /**
@@ -18,6 +19,7 @@ import com.theteam.io.SVariablesList;
  */
 public class Elist
 {
+
 
     String id;
 
@@ -28,19 +30,55 @@ public class Elist
     public List<ENode> eNodes = new LinkedList<>();
     public Map<String, EVariable> eVariables = new HashMap<>();
 
-    public EStart eStart = null;
+    public EStart eStartOnLoaded = null;
+    public EStart eStartOnAwaked = null;
+    public EStart eStartOnStarted = null;
 
     public Elist()
     {
-        id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
     }
 
-    public ENode getStartNode()
+    public ENode getStartNodeOnLoaded()
     {
         for (ENode var : eNodes) {
             if(var.getSNode().getType().equals("START"))
             {
-                return var;
+                EStart estart = (EStart) var;
+                SStartNode sstart = (SStartNode) estart.getSNode();
+
+                if(sstart.gOnLoadedNode() != null)
+                    return var;
+            }
+        }
+
+        return null;
+    }
+    public ENode getStartNodeOnAwaked()
+    {
+        for (ENode var : eNodes) {
+            if(var.getSNode().getType().equals("START"))
+            {
+                EStart estart = (EStart) var;
+                SStartNode sstart = (SStartNode) estart.getSNode();
+
+                if(sstart.gOnAwakedNode() != null)
+                    return var;
+            }
+        }
+
+        return null;
+    }
+    public ENode getStartNodeOnStarted()
+    {
+        for (ENode var : eNodes) {
+            if(var.getSNode().getType().equals("START"))
+            {
+                EStart estart = (EStart) var;
+                SStartNode sstart = (SStartNode) estart.getSNode();
+
+                if(sstart.gOnStartedNode() != null)
+                    return var;
             }
         }
 
@@ -55,5 +93,8 @@ public class Elist
     }
 
     public String getID()
-    {return id;}
+    {
+        return id;
+    }
+
 }

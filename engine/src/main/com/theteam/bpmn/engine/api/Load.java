@@ -83,7 +83,13 @@ public class Load {
             public void accept(Path name)
             {
                 try { makeWorkflow(name); }
-                catch(Exception e) {}
+            catch(Exception e) { /*e.printStackTrace();*/ }
+
+            //
+            //
+            //
+            //
+            // CHECK
             };
         };
 
@@ -99,7 +105,6 @@ public class Load {
             //s = getClass().getResource("/xml").toString();
             //System.out.println(s);
 
-            
             Files.walk(Paths.get(s))
                 .filter(Files::isRegularFile)
                 .forEach(workflowConsumer);
@@ -130,7 +135,9 @@ public class Load {
         
         workflow.variables = workflow.allList.gVariableList();
         
-        workflow.eStart = (EStart) workflow.getStartNode();
+        workflow.eStartOnLoaded = (EStart) workflow.getStartNodeOnLoaded();
+        workflow.eStartOnAwaked = (EStart) workflow.getStartNodeOnAwaked();
+        workflow.eStartOnStarted = (EStart) workflow.getStartNodeOnStarted();
         
         Workflow.workflows.put(workflow.sNodes.getName(), workflow);
 
@@ -140,7 +147,7 @@ public class Load {
 
         for(SVariable variable : workflow.variables.getVariablesList())
         {
-            System.out.println(variable.getNId() + " " + variable.getName() + " " + variable.getValue());
+            System.out.println(variable.getName() + " " + variable.getValue());
 
             switch(variable.getType())
             {
@@ -238,6 +245,14 @@ public class Load {
                     System.out.println("Making a node went wrong");
             }
             
+        }
+
+        ENode node = workflow.getStartNodeOnLoaded();
+        if(node != null)
+        {
+            System.out.println("\n -----Workflow Loading Executing ------");
+            node.run(workflow, workflow.getID());
+            System.out.println("\n -----Workflow Loading Ended ------");
         }
 
         //System.out.println("-----regex------");

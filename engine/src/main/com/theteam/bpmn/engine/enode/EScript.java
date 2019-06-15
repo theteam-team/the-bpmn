@@ -1,16 +1,17 @@
 package com.theteam.bpmn.engine.enode;
 
+import java.util.ArrayList;
+
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.theteam.bpmn.engine.Elist;
 import com.theteam.bpmn.engine.Workflow;
-import com.theteam.bpmn.engine.observers.WorkflowObserver;
 import com.theteam.snodes.SNode;
-import com.theteam.snodes.SScriptNode;
 
 public class EScript extends ENode
 {
 
-    private SScriptNode sDB;
+    //private SScriptNode sDB;
 
     public EScript(SNode sNode, Elist list)
     {
@@ -19,24 +20,49 @@ public class EScript extends ENode
     }
 
     @Override
-    public void run(Elist l)
+    public void run(Elist l, String id)
     {
         System.out.println("\nScript Node Running");
 
-        JsonObject obj = new JsonObject();
+        String workflowName = l.sNodes.getName();
+        String instanceId = id;
 
-        obj.addProperty("workflowName", l.sNodes.getName());
-        obj.addProperty("workflowID", l.getID());
-        obj.addProperty("processName", sNode.getType());
-        obj.addProperty("processID", sNode.getNId());
+        ArrayList<String> processes = Workflow.processesRun.get(instanceId);
 
-        Workflow.wo.updateVal(obj.toString());
+        if(processes == null)
+        {
+            ArrayList<String> tempList = new ArrayList<>();
+            tempList.add(sNode.getNId());
+            Workflow.processesRun.put(instanceId, tempList);
+        }
+        else
+        {
+            processes.add(instanceId);
+        }
+
+
+        JsonObject jsonEle1 = new JsonObject();
+
+        jsonEle1.addProperty("workflowName", workflowName);
+        jsonEle1.addProperty("instanceID", instanceId);
+
+        JsonArray jArray = new JsonArray();
+
+        for (String var : Workflow.processesRun.get(instanceId)) {
+
+            JsonObject jsonEle2 = new JsonObject();
+            jsonEle2.addProperty("processID", var);
+            jArray.add(jsonEle2);
+        }
+
+        jsonEle1.add("processes", jArray);
+        Workflow.wo.updateVal(jsonEle1.toString());
 
         for(ENode n : l.eNodes)
         {
             if(n.getSNode().getNId().equals(getSNode().getNextNode()))
             {
-                n.run(l);
+                n.run(l, instanceId);
                 return;
             }
         }

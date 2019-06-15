@@ -1,30 +1,17 @@
 package com.theteam.bpmn.engine.enode;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.Writer;
-import java.nio.charset.Charset;
+import java.util.ArrayList;
 
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.JsonGenerator;
-import com.google.api.client.json.JsonParser;
-import com.google.api.client.json.webtoken.JsonWebSignature.Parser;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.theteam.bpmn.engine.Elist;
 import com.theteam.bpmn.engine.Workflow;
 import com.theteam.bpmn.engine.io.EVariable;
-import com.theteam.bpmn.engine.observers.WorkflowObserver;
 import com.theteam.bpmn.engine.scan.Scan;
 import com.theteam.jsondata.SJsonData;
 import com.theteam.snodes.SJsonNode;
 import com.theteam.snodes.SNode;
-import com.theteam.snodes.SStartNode;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class EJson extends ENode
@@ -41,18 +28,43 @@ public class EJson extends ENode
     }
 
     @Override
-    public void run(Elist l)
+    public void run(Elist l, String id)
     {
         System.out.println("\nJson Node Running");
 
-        JsonObject obj = new JsonObject();
+        String workflowName = l.sNodes.getName();
+        String instanceID = id;
 
-        obj.addProperty("workflowName", l.sNodes.getName());
-        obj.addProperty("workflowID", l.getID());
-        obj.addProperty("processName", sNode.getType());
-        obj.addProperty("processID", sNode.getNId());
+        ArrayList<String> processes = Workflow.processesRun.get(instanceID);
 
-        Workflow.wo.updateVal(obj.toString());
+        if(processes == null)
+        {
+            ArrayList<String> tempList = new ArrayList<>();
+            tempList.add(sNode.getNId());
+            Workflow.processesRun.put(instanceID, tempList);
+        }
+        else
+        {
+            processes.add(sNode.getNId());
+        }
+
+
+        JsonObject jsonEle1 = new JsonObject();
+
+        jsonEle1.addProperty("workflowName", workflowName);
+        jsonEle1.addProperty("instanceID", instanceID);
+
+        JsonArray jArray = new JsonArray();
+
+        for (String var : Workflow.processesRun.get(instanceID)) {
+
+            JsonObject jsonEle2 = new JsonObject();
+            jsonEle2.addProperty("processID", var);
+            jArray.add(jsonEle2);
+        }
+
+        jsonEle1.add("processes", jArray);
+        Workflow.wo.updateVal(jsonEle1.toString());
 
         if(sJson.getAction().equals("make"))
         {
@@ -106,7 +118,7 @@ public class EJson extends ENode
         {
             if(n.getSNode().getNId().equals(getSNode().getNextNode()))
             {
-                n.run(l);
+                n.run(l, instanceID);
                 return;
             }
         }

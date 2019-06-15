@@ -1,107 +1,85 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <bpm>
     <nodes name="design">
-        <start nId="4514bcae-6175-4aa1-a81e-004717f86bce" type="START">
-            <NId>4514bcae-6175-4aa1-a81e-004717f86bce</NId>
+        <start nId="e347ab9b-d99a-4b70-8252-bf28dbd13a78" type="START">
+            <NId>e347ab9b-d99a-4b70-8252-bf28dbd13a78</NId>
             <type>START</type>
-            <nextNode>d9be8df6-08a0-43d4-ad75-269f1f2eb5c9</nextNode>
+            <nextNode>ed2b359f-776f-4eab-a89d-917d97fa7fa4</nextNode>
+            <action>OnLoaded</action>
         </start>
-        <serviceTask nId="fae93918-ec08-4966-ab39-d224ca81c089" type="TASK">
-            <NId>fae93918-ec08-4966-ab39-d224ca81c089</NId>
-            <type>TASK</type>
-            <previousNode>d9be8df6-08a0-43d4-ad75-269f1f2eb5c9</previousNode>
-            <nextNode>d263434e-508c-443f-afe6-02447a50fcc3</nextNode>
-            <input>json</input>
-            <ServiceType>rest</ServiceType>
-            <restLink>http://localhost:8888/api/CrmApi/AddCustomer</restLink>
-            <soapFunc>getHello</soapFunc>
-        </serviceTask>
-        <json nId="d9be8df6-08a0-43d4-ad75-269f1f2eb5c9" type="JSON">
-            <NId>d9be8df6-08a0-43d4-ad75-269f1f2eb5c9</NId>
-            <type>JSON</type>
-            <nextNode>fae93918-ec08-4966-ab39-d224ca81c089</nextNode>
-            <output>json</output>
-            <action>make</action>
-            <jsonDData>
-                <data nId="be46c4db-ba08-497b-af1c-0565111a3c94">
-                    <name>customer_id</name>
-                    <val>id234</val>
-                </data>
-                <data nId="999f1168-e8f0-4ca7-9e8c-318b6ea647a7">
-                    <name>name</name>
-                    <val>koko</val>
-                </data>
-                <data nId="fed9cb5d-5723-4aca-88f7-77c5e111f84e">
-                    <name>phone_number</name>
-                    <val>228940</val>
-                </data>
-                <data nId="c13085bb-b353-4729-ab0c-1dbacc809ba0">
-                    <name>dateOfBirth</name>
-                    <val>1999-2-2</val>
-                </data>
-                <data nId="317d6e48-d346-4258-a336-94ec3c1392b2">
-                    <name>gender</name>
-                    <val>male</val>
-                </data>
-                <data nId="bde6257b-28d0-48f2-9cbb-4a22b4176328">
-                    <name>loyality_points</name>
-                    <val>23</val>
-                </data>
-                <data nId="65c8fb9b-d4b4-4094-9992-4d98b3c32dec">
-                    <name>type</name>
-                    <val>4</val>
-                </data>
-                <data nId="c252ea37-c7e9-48ca-90ce-560e8a6261ba">
-                    <name>company</name>
-                    <val>company</val>
-                </data>
-                <data nId="a939e440-6ef2-4443-9717-2e18a05cf3d5">
-                    <name>company_email</name>
-                    <val>mail</val>
-                </data>
-                <data nId="b2c79f19-4e00-4557-9750-09aa4cd4e729">
-                    <name>is_lead</name>
-                    <val>true</val>
-                </data>
-                <data nId="99fab88e-05ba-418c-bcdd-dfa4933877f6">
-                    <name>email</name>
-                    <val>mymail</val>
-                </data>
-            </jsonDData>
-        </json>
-        <end nId="d263434e-508c-443f-afe6-02447a50fcc3" type="END">
-            <NId>d263434e-508c-443f-afe6-02447a50fcc3</NId>
+        <start nId="ea61ad04-6caa-4e99-b86e-d81a565d6508" type="START">
+            <NId>ea61ad04-6caa-4e99-b86e-d81a565d6508</NId>
+            <type>START</type>
+            <nextNode>7a376090-3079-4f2d-bb65-2d1f78d9ea42</nextNode>
+            <action>OnStarted</action>
+        </start>
+        <test nId="ed2b359f-776f-4eab-a89d-917d97fa7fa4" type="TEST">
+            <NId>ed2b359f-776f-4eab-a89d-917d97fa7fa4</NId>
+            <type>TEST</type>
+            <previousNode>e347ab9b-d99a-4b70-8252-bf28dbd13a78</previousNode>
+            <nextNode>a23c475f-a39c-4382-a026-23cc56ef561a</nextNode>
+            <input>var1</input>
+        </test>
+        <test nId="7a376090-3079-4f2d-bb65-2d1f78d9ea42" type="TEST">
+            <NId>7a376090-3079-4f2d-bb65-2d1f78d9ea42</NId>
+            <type>TEST</type>
+            <previousNode>ea61ad04-6caa-4e99-b86e-d81a565d6508</previousNode>
+            <nextNode>65771e12-27e4-4cf4-9d75-a7bf8e66cae9</nextNode>
+            <input>var2</input>
+        </test>
+        <end nId="a23c475f-a39c-4382-a026-23cc56ef561a" type="END">
+            <NId>a23c475f-a39c-4382-a026-23cc56ef561a</NId>
             <type>END</type>
-            <previousNode>fae93918-ec08-4966-ab39-d224ca81c089</previousNode>
+            <previousNode>ed2b359f-776f-4eab-a89d-917d97fa7fa4</previousNode>
+        </end>
+        <end nId="65771e12-27e4-4cf4-9d75-a7bf8e66cae9" type="END">
+            <NId>65771e12-27e4-4cf4-9d75-a7bf8e66cae9</NId>
+            <type>END</type>
+            <previousNode>7a376090-3079-4f2d-bb65-2d1f78d9ea42</previousNode>
         </end>
     </nodes>
     <variables>
-        <variable nId="f0c42f22-4d6b-4c1e-aa25-fe1a08aa8fe3">
-            <name>json</name>
+        <variable nId="7191df7c-2a6f-41db-8a6b-a0a8e24a6218">
+            <name>var1</name>
             <type>string</type>
-            <value>null</value>
+            <value>This is in design - onloaded</value>
+        </variable>
+        <variable nId="09ac5b21-6f72-4f04-8146-e88a8b670ab3">
+            <name>var2</name>
+            <type>string</type>
+            <value>this is in design - onstarted</value>
         </variable>
     </variables>
     <positions>
         <position>
-            <nodeId>4514bcae-6175-4aa1-a81e-004717f86bce</nodeId>
-            <x>181.0</x>
-            <y>218.0</y>
+            <nodeId>e347ab9b-d99a-4b70-8252-bf28dbd13a78</nodeId>
+            <x>176.0</x>
+            <y>283.0</y>
         </position>
         <position>
-            <nodeId>d9be8df6-08a0-43d4-ad75-269f1f2eb5c9</nodeId>
-            <x>310.0</x>
-            <y>220.0</y>
+            <nodeId>ed2b359f-776f-4eab-a89d-917d97fa7fa4</nodeId>
+            <x>331.0</x>
+            <y>284.0</y>
         </position>
         <position>
-            <nodeId>fae93918-ec08-4966-ab39-d224ca81c089</nodeId>
-            <x>455.0</x>
-            <y>212.0</y>
+            <nodeId>a23c475f-a39c-4382-a026-23cc56ef561a</nodeId>
+            <x>496.0</x>
+            <y>283.0</y>
         </position>
         <position>
-            <nodeId>d263434e-508c-443f-afe6-02447a50fcc3</nodeId>
-            <x>622.0</x>
-            <y>216.0</y>
+            <nodeId>ea61ad04-6caa-4e99-b86e-d81a565d6508</nodeId>
+            <x>194.0</x>
+            <y>118.0</y>
+        </position>
+        <position>
+            <nodeId>7a376090-3079-4f2d-bb65-2d1f78d9ea42</nodeId>
+            <x>321.0</x>
+            <y>120.0</y>
+        </position>
+        <position>
+            <nodeId>65771e12-27e4-4cf4-9d75-a7bf8e66cae9</nodeId>
+            <x>494.0</x>
+            <y>114.0</y>
         </position>
     </positions>
 </bpm>

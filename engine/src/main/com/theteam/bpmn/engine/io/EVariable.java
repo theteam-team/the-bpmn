@@ -1,7 +1,6 @@
 package com.theteam.bpmn.engine.io;
 
 import com.theteam.io.SVariable;
-import com.theteam.snodes.SNode;
 
 public class EVariable
 {

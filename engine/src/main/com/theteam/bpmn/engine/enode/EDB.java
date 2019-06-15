@@ -1,27 +1,22 @@
 package com.theteam.bpmn.engine.enode;
 
-import com.theteam.bpmn.engine.Elist;
-import com.theteam.bpmn.engine.Workflow;
-import com.theteam.bpmn.engine.io.EVariable;
-import com.theteam.bpmn.engine.observers.WorkflowObserver;
-import com.theteam.snodes.SDBNode;
-import com.theteam.snodes.SNode;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import java.io.FileInputStream;
-
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.*;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.theteam.bpmn.engine.Elist;
+import com.theteam.bpmn.engine.Workflow;
+import com.theteam.bpmn.engine.io.EVariable;
+import com.theteam.snodes.SDBNode;
+import com.theteam.snodes.SNode;
 
 
 
@@ -42,9 +37,43 @@ public class EDB extends ENode
     }
 
     @Override
-    public void run(Elist l)
+    public void run(Elist l, String id)
     {
         System.out.println("\nDB Node Running");
+
+        String workflowName = l.sNodes.getName();
+        String instanceID = id;
+
+        ArrayList<String> processes = Workflow.processesRun.get(instanceID);
+
+        if(processes == null)
+        {
+            ArrayList<String> tempList = new ArrayList<>();
+            tempList.add(sNode.getNId());
+            Workflow.processesRun.put(instanceID, tempList);
+        }
+        else
+        {
+            processes.add(sNode.getNId());
+        }
+
+
+        JsonObject jsonEle1 = new JsonObject();
+
+        jsonEle1.addProperty("workflowName", workflowName);
+        jsonEle1.addProperty("instanceID", instanceID);
+
+        JsonArray jArray = new JsonArray();
+
+        for (String var : Workflow.processesRun.get(instanceID)) {
+
+            JsonObject jsonEle2 = new JsonObject();
+            jsonEle2.addProperty("processID", var);
+            jArray.add(jsonEle2);
+        }
+
+        jsonEle1.add("processes", jArray);
+        Workflow.wo.updateVal(jsonEle1.toString());
 
         if(sDB.getConnectedEvent() != null)
         {
@@ -151,15 +180,6 @@ public class EDB extends ENode
                     
                     System.out.println("Listening the database");
 
-                    JsonObject ob = new JsonObject();
-
-                    ob.addProperty("workflowName", l.sNodes.getName());
-                    ob.addProperty("workflowID", l.getID());
-                    ob.addProperty("processName", sNode.getType());
-                    ob.addProperty("processID", sNode.getNId());
-
-                    Workflow.wo.updateVal(ob.toString());
-                    
                         try
                         {  
                             //Class.forName("com.mysql.cj.jdbc.Driver");   
@@ -241,7 +261,7 @@ public class EDB extends ENode
                                         {
                                             if(in.getSNode().getNId().equals(n.getSNode().getNextNode()))
                                             {
-                                                in.run(l);
+                                                in.run(l, instanceID);
                                                 return;
                                             }
                                         }
@@ -372,7 +392,7 @@ public class EDB extends ENode
         {
             if(n.getSNode().getNId().equals(getSNode().getNextNode()))
             {
-                n.run(l);
+                n.run(l, instanceID);
                 return;
             }
         }

@@ -1,27 +1,23 @@
 package com.theteam.bpmn.engine.api;
 
-import com.theteam.bpmn.engine.Elist;
-import com.theteam.bpmn.engine.Workflow;
-import com.theteam.bpmn.engine.enode.*;
-import com.theteam.bpmn.engine.io.EVariable;
-import com.theteam.snodes.event.SExternalEvent;
-
-import org.apache.commons.io.IOUtils;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.theteam.bpmn.engine.Elist;
+import com.theteam.bpmn.engine.Workflow;
+import com.theteam.bpmn.engine.enode.ENode;
+import com.theteam.bpmn.engine.io.EVariable;
+
+import org.apache.commons.io.IOUtils;
 
 
 
@@ -74,17 +70,30 @@ public class StartWorkflow
         if(Workflow.workflows.containsKey(name))
         {
 
-            if(Workflow.runningWorkflows.get(name) == null)
-                Workflow.runningWorkflows.put(name, 1);
+            String instanceId = UUID.randomUUID().toString();
+
+            ArrayList<String> workflowINstances = Workflow.runningWorkflows.get(name);
+
+            if( workflowINstances == null)
+            {
+                ArrayList<String> tempList = new ArrayList<>();
+                tempList.add(instanceId);
+                Workflow.runningWorkflows.put(name, tempList);
+
+            }
             else
-                Workflow.runningWorkflows.put(name, Workflow.runningWorkflows.get(name)+1);
+            {
+                workflowINstances.add(instanceId);
+            }
 
 
             Elist l = Workflow.workflows.get(name);
 
-            ENode node = l.getStartNode();
+            ENode node = l.getStartNodeOnLoaded();
 
-            node.run(l);
+            System.out.println("\n------------ Workflow OnStarted Executing-------------");
+            node.run(l, instanceId);
+            System.out.println("\n------------ Workflow OnStarted Ended--------------");
 
             /*
             while(node != null)

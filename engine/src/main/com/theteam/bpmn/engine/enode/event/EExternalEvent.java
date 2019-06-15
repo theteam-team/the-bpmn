@@ -1,5 +1,8 @@
 package com.theteam.bpmn.engine.enode.event;
 
+import java.util.ArrayList;
+
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.theteam.bpmn.engine.Elist;
 import com.theteam.bpmn.engine.Workflow;
@@ -23,18 +26,43 @@ public class EExternalEvent extends ENode
     }
 
     @Override
-    public void run(Elist l)
+    public void run(Elist l, String id)
     {
         System.out.println("\nExternal Event Node Running");
 
-        JsonObject ob = new JsonObject();
+        String workflowName = l.sNodes.getName();
+        String instanceID = id;
 
-        ob.addProperty("workflowName", l.sNodes.getName());
-        ob.addProperty("workflowID", l.getID());
-        ob.addProperty("processName", sNode.getType());
-        ob.addProperty("processID", sNode.getNId());
+        ArrayList<String> processes = Workflow.processesRun.get(instanceID);
 
-        Workflow.wo.updateVal(ob.toString());
+        if(processes == null)
+        {
+            ArrayList<String> tempList = new ArrayList<>();
+            tempList.add(sNode.getNId());
+            Workflow.processesRun.put(instanceID, tempList);
+        }
+        else
+        {
+            processes.add(sNode.getNId());
+        }
+
+
+        JsonObject jsonEle1 = new JsonObject();
+
+        jsonEle1.addProperty("workflowName", workflowName);
+        jsonEle1.addProperty("instanceID", instanceID);
+
+        JsonArray jArray = new JsonArray();
+
+        for (String var : Workflow.processesRun.get(instanceID)) {
+
+            JsonObject jsonEle2 = new JsonObject();
+            jsonEle2.addProperty("processID", var);
+            jArray.add(jsonEle2);
+        }
+
+        jsonEle1.add("processes", jArray);
+        Workflow.wo.updateVal(jsonEle1.toString());
 
         if(sExternal.getInput() != null)
         {
@@ -47,7 +75,7 @@ public class EExternalEvent extends ENode
         
             if(n.getSNode().getNId().equals(  ((SExternalEvent)getSNode()).getConnectedEvent()  ))
             {
-                n.run(l);
+                n.run(l, instanceID);
             }
         }
 

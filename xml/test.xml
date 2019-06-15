@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <bpm>
-    <nodes name="design">
+    <nodes name="test">
         <start nId="e347ab9b-d99a-4b70-8252-bf28dbd13a78" type="START">
             <NId>e347ab9b-d99a-4b70-8252-bf28dbd13a78</NId>
             <type>START</type>
@@ -42,12 +42,12 @@
         <variable nId="7191df7c-2a6f-41db-8a6b-a0a8e24a6218">
             <name>var1</name>
             <type>string</type>
-            <value>This is in design - onloaded</value>
+            <value>This is in test - onloaded</value>
         </variable>
         <variable nId="09ac5b21-6f72-4f04-8146-e88a8b670ab3">
             <name>var2</name>
             <type>string</type>
-            <value>this is in design - onstarted</value>
+            <value>this is in test - onstarted</value>
         </variable>
     </variables>
     <positions>

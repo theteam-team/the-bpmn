@@ -1,8 +1,6 @@
 package com.theteam.snodes;
 
 
-import java.util.UUID;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -118,6 +116,36 @@ public class SStartNode extends SNode
     public void setInput(String input)
     {
         
+    }
+
+    public SNode gOnLoadedNode()
+    {
+        if(getAction().equals("OnLoaded"))
+        {
+            return this;
+        }
+
+        return null;
+    }
+    
+    public SNode gOnAwakedNode()
+    {
+        if(getAction().equals("OnAwaked"))
+        {
+            return this;
+        }
+
+        return null;
+    }
+
+    public SNode gOnStartedNode()
+    {
+        if(getAction().equals("OnStarted"))
+        {
+            return this;
+        }
+
+        return null;
     }
 
 

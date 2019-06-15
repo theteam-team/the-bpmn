@@ -1,7 +1,6 @@
 package com.theteam.bpmn.engine.enode;
 
 import com.theteam.bpmn.engine.Elist;
-import com.theteam.bpmn.engine.Workflow;
 import com.theteam.snodes.SNode;
 
 public class ENode
@@ -17,7 +16,7 @@ public class ENode
         this.sNode = sNode;
     }
 
-    public void run(Elist l)
+    public void run(Elist l, String id)
     {
         
     }

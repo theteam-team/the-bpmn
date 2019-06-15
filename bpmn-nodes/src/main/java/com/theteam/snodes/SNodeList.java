@@ -12,7 +12,7 @@ import com.theteam.snodes.event.*;
 public class SNodeList
 {
     @XmlElement(name = "start")
-    private SStartNode start;
+    private List<SStartNode> start;
 
     @XmlElement(name = "end")
     private List<SEndNode> end;
@@ -60,6 +60,8 @@ public class SNodeList
 
         condition = new ArrayList<SCondition>();
         parallel = new ArrayList<SParallel>();
+
+        start = new ArrayList<SStartNode>();
         end = new ArrayList<SEndNode>();
 
         json = new ArrayList<SJsonNode>();
@@ -72,7 +74,10 @@ public class SNodeList
     {
         List<SNode> allNodes = new ArrayList<SNode>();
 
-        allNodes.add(start);
+        for(SStartNode node : start)
+        {
+            allNodes.add(node);
+        }
         
         for(STaskNode node : serviceTask)
         {
@@ -253,12 +258,42 @@ public class SNodeList
     {
 
         mapNodes.put(node.getNId(), node);
-        start = node;
+        start.add(node);
     }
 
-    public SNode getStartNode()
+    public List<SStartNode> getStartNodes()
     {
         return start;
+    }
+
+    public SNode getStartOnLoaded()
+    {
+
+        for (SStartNode var : start) {
+            
+            if(var.gOnLoadedNode() != null)
+                return var;
+        }
+        return null;
+        
+    }
+    public SNode getStartOnAwaked()
+    {
+        for (SStartNode var : start) {
+            
+            if(var.gOnAwakedNode() != null)
+                return var;
+        }
+        return null;
+    }
+    public SNode getStartOnStarted()
+    {
+        for (SStartNode var : start) {
+            
+            if(var.gOnStartedNode() != null)
+                return var;
+        }
+        return null;
     }
     
     public void addEndNode(SEndNode node)

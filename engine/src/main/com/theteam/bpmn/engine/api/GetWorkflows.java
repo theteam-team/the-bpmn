@@ -9,6 +9,7 @@ import com.theteam.bpmn.engine.enode.*;
 import com.theteam.bpmn.engine.io.EVariable;
 import com.theteam.snodes.event.SExternalEvent;
 
+import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
@@ -20,8 +21,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-
 
 
 /**
@@ -44,10 +43,28 @@ public class GetWorkflows
         {
             JsonObject obj = new JsonObject();
             obj.addProperty("name", name);
-            if(Workflow.runningWorkflows.get(name) == null)
-                Workflow.runningWorkflows.put(name, 0);
             
-            obj.addProperty("runningInstances", Workflow.runningWorkflows.get(name));
+            ArrayList<String> workflowINstances = Workflow.runningWorkflows.get(name);
+
+            if( workflowINstances == null)
+            {
+                ArrayList<String> tempList = new ArrayList<>();
+                Workflow.runningWorkflows.put(name, tempList);
+            }
+            
+            obj.addProperty("runningInstances", Workflow.runningWorkflows.get(name).size());
+
+            JsonArray jArray = new JsonArray();
+
+            for (String var : Workflow.runningWorkflows.get(name)) {
+    
+                JsonObject jsonEle2 = new JsonObject();
+                jsonEle2.addProperty("instanceID", var);
+                jArray.add(jsonEle2);
+            }
+    
+            obj.add("instances", jArray);
+            
 
             json.add(obj);
         }

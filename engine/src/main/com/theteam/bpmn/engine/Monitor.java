@@ -2,7 +2,6 @@ package com.theteam.bpmn.engine;
 
 import java.util.*;
 
-
 import com.microsoft.signalr.HubConnection;
 import com.microsoft.signalr.HubConnectionBuilder;
 
@@ -11,18 +10,11 @@ import io.reactivex.Single;
 
 public class Monitor
 {
-		HubConnection hubConnection;
-		List<String> workflows = new ArrayList<String>(); 
-		Map<String, ArrayList<String>> workdfowInstances = new HashMap<String, ArrayList<String>>();
-		Map<String, ArrayList<String>> instanceExecution = new HashMap<String, ArrayList<String>>();
-		String[] nodes = {"aa2c092e-c67e-473a-825c-14e56ee4adbd","1fca3740-7a53-48af-9286-b90b68b0ff58",
-				"5c7c4013-dc5d-4ef0-b167-d657f6e2aeea","f65667fa-9cb5-4ef9-80fd-1db526bf03dc",
-				"08ec8b9d-fc04-4dbf-9e90-5e5d9c2987b1","09028f4b-9e3b-4535-8e4f-8a222d37cc6a",
-				"9f0e5850-b69b-4e01-a3d9-ff7ca4944ff0","fe84bce5-d113-4561-b565-188a3cb70b0d","573fef8c-9936-4906-ab00-5d2f22acbbf1"};
-
-    	public void moon(String[] args) {
+		public HubConnection hubConnection;
+		
+    	public Monitor() {
     		//create the connection with token validation don't worry the token expiration date is after 100 years
-    		 hubConnection = HubConnectionBuilder.create("http://156.211.237.1:5001/DeployWorkflowHub")
+    		 hubConnection = HubConnectionBuilder.create("http://localhost:5001/DeployWorkflowHub")
     				 /*.withAccessTokenProvider(Single.defer(() -> {
     				 
     					 // TODO request Token the put it 
@@ -38,113 +30,37 @@ public class Monitor
     		}
     		hubConnection.send("AddToGroup","Engine");
     		delay(50);
+    		//hubConnection.send("GetCurrentDeployed");
     		///initialize the deployed list
-    		hubConnection.send("GetCurrentDeployed");
-    		hubConnection.on("InitializeDeployList", (deployList)->{InitializeDeployList(deployList);}, ArrayList.class);
-    		hubConnection.on("updateDeployList", (id, name, workFlowStr) -> {			
-    			updateDeployList( id,  name,  workFlowStr); 
-    		}, String.class, String.class, String.class);
-    		
-    		
-    		//initialize Workflow instances in the client 
-    		hubConnection.on("GetRunningWorkFlowInstances", (workFlowID, ConnectionId)->
-    		{
-    			System.out.print(workdfowInstances.get(workFlowID));
-    			hubConnection.send("InitializeRuningInstances",workFlowID, workdfowInstances.get(workFlowID), ConnectionId);
-    		}, String.class, String.class);
-    		
-    		//initialize the execution state for the given instance in the given workflow
-    		hubConnection.on("InitializeExecution",(workflowID, InstanceId) ->
-    		{
-    			hubConnection.send("UpdateExecution", workflowID, InstanceId, instanceExecution.get(InstanceId));
-    		},String.class, String.class);	
-    		
-    		
-    	}
-    	
-    	//simulate a workflow execution  
-    	public void simulateExecution() 
-    	{
-    		for(int i = 1; i < nodes.length; ++i) 
-    		{
-    			
-    			for(int j = 0; j< workflows.size(); ++j) 
-    			{
-    				
-    				for(int k = 0; k <  workdfowInstances.get(workflows.get(j)).size(); ++k) 
-    				{
-    					for(String ins : workdfowInstances.get(workflows.get(j)))
-    					{
-    						instanceExecution.get(ins).add(nodes[i]);
-    						
-    						hubConnection.send("UpdateExecution", workflows.get(j), ins, instanceExecution.get(ins));
-    					}
-    					delay(50);
-    				}
-    			}
-    		}
-    	}
-    	public void updateDeployList(String id, String name, String workFlowStr) 
-    	{
-    		
-    		InitializeInstances(id);
-    		
-    		
-    	}
-    	public void InitializeDeployList(ArrayList<Map<String, String>>  list) 
-    	{
-    
-    		for(int i = 0; i < list.size(); ++i) 
-    		{
-    			String workflowId = list.get(i).get("id");  
-    			InitializeInstances(workflowId);
-    			
-    		}
-    		
-    		simulateExecution();
-    	
-    	}
-    	public void AddInstance(String workflowId) 
-    	{
-    		UUID uuid = UUID.randomUUID();
-    		String InstanceId = uuid.toString();
-    		ArrayList<String> arrStr = new ArrayList<String>();
-			arrStr.add(InstanceId);
-			workdfowInstances.put(workflowId, arrStr);
-			instanceExecution.get(InstanceId).add(nodes[0]);
+			hubConnection.send("InitializeDeployList"); // when the engine starts
 			
 			
-    	}
-    	
-    	public void InitializeInstances(String workflowId) 
-    	{
-    		workflows.add(workflowId);
-    		for(int i = 0; i<=2; ++i) 
-    		{
-	    		UUID uuid = UUID.randomUUID();
-	    		String InstanceId = uuid.toString();
-	    		ArrayList<String> arrNod = new ArrayList<String>();
-	    		arrNod.add(nodes[0]);
-	    		if(workdfowInstances.containsKey(workflowId))
-	    		{
+			//String workFlowName = "aa";
+			//String InstanceId = "aa";
 
-	    			workdfowInstances.get(workflowId).add(uuid.toString());
-	    			instanceExecution.put(InstanceId, arrNod);
-	    		}
-	    		else 
-	    		{
-	    			System.out.print("here");
-	    			ArrayList<String> arrIns = new ArrayList<String>();
-	    			
-	    			arrIns.add(InstanceId);
-	    			
-	    			workdfowInstances.put(workflowId, arrIns);
-	    			instanceExecution.put(InstanceId, arrNod);
-	    			
-	    		}
-	    		hubConnection.send("AddRunningInstance", workflowId, InstanceId, instanceExecution.get(InstanceId));
-    		}
-    		//System.out.print(list);
+			//int runningInstances = 5;
+		
+			// LA LA LA
+    		//hubConnection.send("updateDeployList" , workFlowName, runningInstances); //when a new workFlow Deployed
+		
+			/* this should be invoked when the engine starts and you should make an api to 
+			get Running instance for a specific workflow and return {"instance1","instance2",,,}*/
+			//hubConnection.send("InitializeRuningInstances");
+    		
+    		//Add running instance in the client this should be invoked when the A new Instance Created
+			// hubConnection.send("AddRunningInstance", workFlowName, InstanceId);
+			
+			// ArrayList<String> nodes = new ArrayList<String>(); //the executed nodes for the instance in the workflow
+    		// this should be invoked At every update in a execution 
+			
+			
+			///this a listener 
+			hubConnection.on("InitializeExecution",(workflowID, Instance_Id) ->
+    		{
+				ArrayList<String> nodes = Workflow.processesRun.get(Instance_Id);
+    			hubConnection.send("UpdateExecution", workflowID, Instance_Id, nodes);
+    		},String.class, String.class);
+
     	}
 
     	public void delay(int delay) 
@@ -155,6 +71,11 @@ public class Monitor
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
-    	}
+		}
+		
+		public HubConnection getHubConnection()
+		{
+			return hubConnection;
+		}
     
 }

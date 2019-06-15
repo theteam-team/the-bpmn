@@ -1,14 +1,5 @@
 package com.theteam.bpmn.engine.enode;
 
-import com.theteam.bpmn.engine.Elist;
-import com.theteam.bpmn.engine.Workflow;
-import com.theteam.bpmn.engine.io.EVariable;
-import com.theteam.bpmn.engine.observers.WorkflowObserver;
-import com.theteam.bpmn.engine.scan.Scan;
-import com.theteam.snodes.SCondition;
-import com.theteam.snodes.SNode;
-import com.theteam.snodes.STestNode;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +7,13 @@ import java.util.UUID;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.microsoft.signalr.*;
+import com.microsoft.signalr.HubConnection;
+import com.theteam.bpmn.engine.Elist;
+import com.theteam.bpmn.engine.Workflow;
+import com.theteam.bpmn.engine.io.EVariable;
+import com.theteam.bpmn.engine.scan.Scan;
+import com.theteam.snodes.SNode;
+import com.theteam.snodes.STestNode;
 
 public class ETest extends ENode
 {

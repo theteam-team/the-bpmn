@@ -89,7 +89,7 @@ public class StartWorkflow
 
             Elist l = Workflow.workflows.get(name);
 
-            ENode node = l.getStartNodeOnLoaded();
+            ENode node = l.getStartNodeOnStarted();
 
             System.out.println("\n------------ Workflow OnStarted Executing-------------");
             node.run(l, instanceId);

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -18,23 +19,19 @@ import com.theteam.bpmn.engine.Workflow;
  * getWorkflows
  */
 
-@Path("/workflows")  
-public class GetWorkflows
+@Path("/workflowinstance")
+public class GetWorkflowInstances
 {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMsg()
+    public Response getMsg(@QueryParam("name") String name)
     {
 
-        JsonArray json = new JsonArray();
+        JsonObject obj = new JsonObject();
+        obj.addProperty("name", name);
 
-        for (String name : Workflow.getWorkflowsNames())
-        {
-            JsonObject obj = new JsonObject();
-            obj.addProperty("name", name);
-            
-            ArrayList<String> workflowINstances = Workflow.runningWorkflows.get(name);
+        ArrayList<String> workflowINstances = Workflow.runningWorkflows.get(name);
 
             if( workflowINstances == null)
             {
@@ -54,12 +51,9 @@ public class GetWorkflows
             }
     
             obj.add("instances", jArray);
-            
 
-            json.add(obj);
-        }
 
-        return Response.status(200).entity(json.toString()).build();
+        return Response.status(200).entity(obj.toString()).build();
     }
 
 

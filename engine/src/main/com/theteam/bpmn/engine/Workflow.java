@@ -22,4 +22,6 @@ public class Workflow
 
     public static WorkflowObserver wo = new WorkflowObserver();
 
+    public static Monitor mon = new Monitor();
+
 }

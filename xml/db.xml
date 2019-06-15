@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bpm>
+    <nodes name="db">
+        <start nId="14df8470-ab11-46e2-87c3-0f236f433758" type="START">
+            <NId>14df8470-ab11-46e2-87c3-0f236f433758</NId>
+            <type>START</type>
+            <nextNode>4e61799b-6601-42f3-af57-de9c3540bfc8</nextNode>
+            <action>OnStarted</action>
+        </start>
+        <db nId="1295708a-0a58-4bc1-968b-350d71a9608b" type="DB">
+            <NId>1295708a-0a58-4bc1-968b-350d71a9608b</NId>
+            <type>DB</type>
+            <connectedEvent>4e61799b-6601-42f3-af57-de9c3540bfc8</connectedEvent>
+            <output>var</output>
+            <connectionString>jdbc:mysql://localhost:3306</connectionString>
+            <selectStatement>SELECT name FROM test.variables;</selectStatement>
+            <userName>root</userName>
+            <password>mySQLpass@123</password>
+        </db>
+        <externalEvent nId="4e61799b-6601-42f3-af57-de9c3540bfc8" type="EXTERNAL_EVENT">
+            <NId>4e61799b-6601-42f3-af57-de9c3540bfc8</NId>
+            <type>EXTERNAL_EVENT</type>
+            <previousNode>14df8470-ab11-46e2-87c3-0f236f433758</previousNode>
+            <nextNode>641b4068-bc0e-4d27-bf28-e2d851dfccb4</nextNode>
+            <connectedEvent>1295708a-0a58-4bc1-968b-350d71a9608b</connectedEvent>
+        </externalEvent>
+        <test nId="641b4068-bc0e-4d27-bf28-e2d851dfccb4" type="TEST">
+            <NId>641b4068-bc0e-4d27-bf28-e2d851dfccb4</NId>
+            <type>TEST</type>
+            <previousNode>4e61799b-6601-42f3-af57-de9c3540bfc8</previousNode>
+        </test>
+    </nodes>
+    <variables>
+        <variable nId="89cd8636-9a0b-4dc1-8532-22274cd68987">
+            <name>var</name>
+            <type>string</type>
+            <value></value>
+        </variable>
+    </variables>
+    <positions>
+        <position>
+            <nodeId>14df8470-ab11-46e2-87c3-0f236f433758</nodeId>
+            <x>182.0</x>
+            <y>209.0</y>
+        </position>
+        <position>
+            <nodeId>4e61799b-6601-42f3-af57-de9c3540bfc8</nodeId>
+            <x>337.0</x>
+            <y>202.0</y>
+        </position>
+        <position>
+            <nodeId>1295708a-0a58-4bc1-968b-350d71a9608b</nodeId>
+            <x>333.0</x>
+            <y>317.0</y>
+        </position>
+        <position>
+            <nodeId>641b4068-bc0e-4d27-bf28-e2d851dfccb4</nodeId>
+            <x>492.0</x>
+            <y>198.0</y>
+        </position>
+    </positions>
+</bpm>

@@ -1,0 +1,15 @@
+{
+    "workflowName": "test",
+    "instanceID": "24cd9bed-b4d6-4e67-a3d1-f21f2621bfd9",
+    "processes": [
+        {
+            "processID": "e347ab9b-d99a-4b70-8252-bf28dbd13a78"
+        },
+        {
+            "processID": "ed2b359f-776f-4eab-a89d-917d97fa7fa4"
+        },
+        {
+            "processID": "a23c475f-a39c-4382-a026-23cc56ef561a"
+        }
+    ]
+}

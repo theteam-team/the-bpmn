@@ -52,7 +52,6 @@ public class WorkflowObserver extends BasicObservable<String>
            
         }
 
-        
         System.out.println("Sending new data to hub");
         if(Workflow.mon.getHubConnection().getConnectionState().name() == "CONNECTED")
         {

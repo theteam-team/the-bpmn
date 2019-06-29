@@ -165,5 +165,10 @@ public class SJsonNode extends SNode
         
     }
 
+    public void resetJsonData()
+    {
+        jsonDData.reset();
+    }
+
 
 }

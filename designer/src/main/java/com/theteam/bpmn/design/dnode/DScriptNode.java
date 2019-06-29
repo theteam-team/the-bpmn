@@ -26,6 +26,8 @@ import javafx.scene.control.SingleSelectionModel;
 public class DScriptNode extends DNode
 {
 
+    StringProperty scriptProperty = new SimpleStringProperty();
+
     public DScriptNode(SXML xmlWriter, UUID id, Boolean drawNode)
     {
         super(ImagesLoader.nodeImages.get("script"), id.toString());
@@ -40,6 +42,19 @@ public class DScriptNode extends DNode
         {
             this.xmlWriter = xmlWriter;
             xmlWriter.addEndNode(id.toString());
+
+            DTextProperty dScriptProperty = new DTextProperty("script file", scriptProperty);
+            allDProperties.add(dScriptProperty);
+
+
+            scriptProperty.addListener(new ChangeListener<String>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
+                {
+                    xmlWriter.setScriptFileProperty(id.toString(), newValue);
+                }
+            });
         }
     }
 

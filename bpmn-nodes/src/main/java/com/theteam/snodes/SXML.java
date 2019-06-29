@@ -13,6 +13,8 @@ import com.theteam.positions.SPosition;
 import com.theteam.positions.SPositionList;
 import com.theteam.io.SVariable;
 import com.theteam.snodes.event.*;
+import com.theteam.taskdata.STaskData;
+import com.theteam.taskdata.STaskDataList;
 
 public class SXML
 {
@@ -199,6 +201,17 @@ public class SXML
 
     }
 
+    public void setStartMessageProprty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+        SStartNode start = (SStartNode) node;
+        start.setMessage(value);
+
+    }
+
 
     //
     //
@@ -224,6 +237,11 @@ public class SXML
     {
         
         STaskNode t = new STaskNode(Types.NodeType(Types.NodeTypes.TASK), id);
+
+        STaskDataList taskDataList = new STaskDataList();
+
+        t.setTaskData(taskDataList);
+
         nodeList.addTaskNode(t);
     }
 
@@ -263,6 +281,93 @@ public class SXML
         STaskNode taskNode = (STaskNode) node;
 
         taskNode.setSoapFunc(value);
+
+    }
+
+    public void setTaskMessageInProprty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+        STaskNode task = (STaskNode) node;
+        task.setMessageIn(value);
+
+    }
+
+    public void setTaskMessageOutProprty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+        STaskNode task = (STaskNode) node;
+        task.setMessageOut(value);
+
+    }
+
+    public void setTaskTypeProperty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        STaskNode taskNode = (STaskNode) node;
+
+        taskNode.setTaskType(value);
+
+    }
+
+    public void setTaskNameProperty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        STaskNode taskNode = (STaskNode) node;
+
+        taskNode.setTaskName(value);
+
+    }
+
+    public void addTaskData(String nodeId, String taskDataId, String name, String val)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(nodeId);
+
+        STaskNode task = (STaskNode) node;
+
+        STaskData taskData = new STaskData(taskDataId, name, val);
+
+        task.addTaskData(taskData);
+
+    }
+
+    public void removeTaskData(String nodeId, String taskDataId)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(nodeId);
+
+        STaskNode task = (STaskNode) node;
+
+        task.removeTaskData(taskDataId);
+
+    }
+
+    public void resetTaskData(String nodeId)
+    {
+
+        SNode node = nodeList.getNodeById(nodeId);
+
+        STaskNode task = (STaskNode) node;
+
+        task.resetTaskData();
 
     }
 
@@ -408,6 +513,19 @@ public class SXML
         nodeList.addScriptNode(t);
     }
 
+    public void setScriptFileProperty(String iid, String value)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(iid);
+
+        SScriptNode script = (SScriptNode) node;
+
+        script.setFile(value);
+
+    }
+
 
     //
     //
@@ -465,6 +583,21 @@ public class SXML
         json.removeJsonData(jsonDataId);
 
     }
+
+    public void resetJsonData(String nodeId)
+    {
+
+        // System.out.println(iid);
+
+        SNode node = nodeList.getNodeById(nodeId);
+
+        SJsonNode json = (SJsonNode) node;
+
+        json.resetJsonData();
+
+    }
+
+    
 
 
     //

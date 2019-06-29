@@ -62,7 +62,7 @@ public class EExternalEvent extends ENode
         }
 
         jsonEle1.add("processes", jArray);
-        Workflow.wo.updateVal(jsonEle1.toString());
+        Workflow.workflowObserver.updateVal(jsonEle1.toString());
 
         if(sExternal.getInput() != null)
         {

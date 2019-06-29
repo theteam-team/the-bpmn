@@ -97,6 +97,7 @@ public class DBStageController {
     {
 
         dbData = new DBData("jdbc:mysql://localhost:3306", "root", "mySQLpass@123");
+        //dbData = new DBData("jdbc:mysql://mysqldbaws.cwhgjrqrh1zu.us-east-2.rds.amazonaws.com:3306", "mySQLadmin", "mySQLpass123");
         stage.setHeight(stage.getHeight() + 100);
         chooseSchema();
     

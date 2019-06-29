@@ -1,5 +1,6 @@
 package com.theteam.bpmn.engine.enode;
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -10,11 +11,22 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.theteam.bpmn.engine.Elist;
 import com.theteam.bpmn.engine.Workflow;
 import com.theteam.bpmn.engine.io.EVariable;
+import com.theteam.bpmn.engine.scan.Scan;
 import com.theteam.snodes.SDBNode;
 import com.theteam.snodes.SNode;
 
@@ -73,7 +85,7 @@ public class EDB extends ENode
         }
 
         jsonEle1.add("processes", jArray);
-        Workflow.wo.updateVal(jsonEle1.toString());
+        Workflow.workflowObserver.updateVal(jsonEle1.toString());
 
         if(sDB.getConnectedEvent() != null)
         {
@@ -281,120 +293,255 @@ public class EDB extends ENode
                     }
                 }, 5, 5, TimeUnit.SECONDS);
 
-                
-
         }
+
 
         else
         {
 
-            try{  
+            if(sDB.getConnectionString().contains("firebase"))
+            {
 
-                //Class.forName("com.mysql.cj.jdbc.Driver");
-                //Class.forName("com.mysql.cj.jdbc.Driver");
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                //Class.forName("oracle.jdbc.driver.OracleDriver");
-                
-                //Connection con = DriverManager.getConnection(
-                //"jdbc:mysql://localhost:3306","root","mySQLpass@123");
-
-                //"?useSSL=false"
-    
-                Connection con = DriverManager.getConnection(  
-                sDB.getConnectionString()+"?useSSL=false", sDB.getUserName(), sDB.getPassword());
-
-                Statement stmt = con.createStatement();
-                //ResultSet rs=stmt.executeQuery("SELECT Name FROM world.city where id=1");
-                ResultSet rs = stmt.executeQuery(sDB.getSelectStatement());
-
-                /*
-                if(rs.next())
+                try
                 {
+
+                    String SERVER_UPLOAD_LOCATION_FOLDER = getClass().getResource("/files").getPath().substring(1);
+
+
+                    //System.out.println("Hello");
+                    FileInputStream serviceAccount =
+                    new FileInputStream(SERVER_UPLOAD_LOCATION_FOLDER + sDB.getInput());
+                    
+                    //System.out.println("Hello1");
+                    FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setDatabaseUrl(sDB.getConnectionString().substring(11))
+                    .build();
+
+                    //"https://realtime-23d22.firebaseio.com"
+                    //System.out.println("Hello2");
+
+                    
+                    if (FirebaseApp.getApps().isEmpty()) {
+                        FirebaseApp.initializeApp(options);
+                    }
+
+                    
+                    
+                    //System.out.println("Hello3");
+
+                    Scan s = new Scan(sDB.getSelectStatement(), l);
+                    String st = s.getFinalString();
+
+                    String key_orders = st;
+                    int number = 1;
+
+                    if(st.contains(":"))
+                    {
+                        key_orders = st.substring(0, st.indexOf(":"));
+    
+                        number = Integer.valueOf(st.substring(st.indexOf(":")+1)) ;
+
+                    }
+
+                    int key_number = number;
+
+                    FirebaseDatabase db = FirebaseDatabase.getInstance();
+
+                    System.out.println(key_orders);
+                    System.out.println(key_number);
+
+                    DatabaseReference ref = db
+                    .getReference(key_orders);
+                   
+                    
+
+                    ref.addValueEventListener(new ValueEventListener()
+                    {
+                        
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            //System.out.println("Data");
+                            
+                            //JsonArray jArr = new JsonArray();
+                            
+                            JsonObject objm = new JsonObject();
+                            
+                            JsonObject obj = new JsonObject();
+                            
+                            int i = 0;
+                            //System.out.println("Data1");
+                            
+                            for(DataSnapshot d : dataSnapshot.getChildren())
+                            {
+                                
+                                //System.out.println("Data2");
+                                i++;
+
+                                if(i == key_number)
+                                {
+                                    for(DataSnapshot dd : d.getChildren())
+                                    {
+                                        obj.addProperty(dd.getKey().toString(), dd.getValue().toString());
+                                    }
+
+                                }
+                                
+
+                                //jArr.add(obj);
+                            }
+
+                            //System.out.println("Data3");
+
+                            objm.addProperty("size", String.valueOf(i));
+                            objm.addProperty("data", obj.toString());
+
+                            System.out.println(objm.toString());
+
+                            if(sDB.getOutput() != null)
+                            {
+                                EVariable o = list.getVariable(sDB.getOutput());
+                                
+                                o.setValue(objm.toString());
+
+                            }
+
+                            for(ENode n : l.eNodes)
+                            {
+                                if(n.getSNode().getNId().equals(getSNode().getNextNode()))
+                                {
+                                    n.run(l, instanceID);
+                                    return;
+                                }
+                            }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                    }
+                });
+                    
+
+                } catch(Exception e)
+                {
+                    System.out.println(e);
+                }
+
+            }
+
+            else
+            {
+
+                try{  
+    
+                    //Class.forName("com.mysql.cj.jdbc.Driver");
+                    //Class.forName("com.mysql.cj.jdbc.Driver");
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    //Class.forName("oracle.jdbc.driver.OracleDriver");
+                    
+                    //Connection con = DriverManager.getConnection(
+                    //"jdbc:mysql://localhost:3306","root","mySQLpass@123");
+    
+                    //"?useSSL=false"
+        
+                    Connection con = DriverManager.getConnection(  
+                    sDB.getConnectionString()+"?useSSL=false", sDB.getUserName(), sDB.getPassword());
+    
+                    Statement stmt = con.createStatement();
+                    //ResultSet rs=stmt.executeQuery("SELECT Name FROM world.city where id=1");
+                    ResultSet rs = stmt.executeQuery(sDB.getSelectStatement());
+    
+                    /*
+                    if(rs.next())
+                    {
+                        if(sDB.getOutput() != null)
+                        {
+                            EVariable o = list.getVariable(sDB.getOutput());
+                            System.out.println(rs.getString(2) + ": " + rs.getString(3));
+                            
+                            o.setValue(rs.getString(3));
+                        }
+        
+                    }
+                    
+        
+                    while(rs.next())  
+                        System.out.println(rs.getString(3));
+    
+                    */
+    
+                    JsonArray json = new JsonArray();
+                    ResultSetMetaData rsmd = rs.getMetaData();
+    
+                    while(rs.next())
+                    {
+                        int numColumns = rsmd.getColumnCount();
+                        JsonObject obj = new JsonObject();
+    
+                        for (int i=1; i<numColumns+1; i++)
+                        {
+                            String column_name = rsmd.getColumnName(i);
+    
+                            if(rsmd.getColumnType(i)==java.sql.Types.BOOLEAN){
+                                obj.addProperty(column_name, rs.getBoolean(column_name));
+                            }
+                            else if(rsmd.getColumnType(i)==java.sql.Types.DOUBLE){
+                                obj.addProperty(column_name, rs.getDouble(column_name)); 
+                            }
+                            else if(rsmd.getColumnType(i)==java.sql.Types.FLOAT){
+                                obj.addProperty(column_name, rs.getFloat(column_name));
+                            }
+                            else if(rsmd.getColumnType(i)==java.sql.Types.INTEGER){
+                                obj.addProperty(column_name, rs.getInt(column_name));
+                            }
+                            else if(rsmd.getColumnType(i)==java.sql.Types.VARCHAR){
+                                obj.addProperty(column_name, rs.getString(column_name));
+                            }
+                            else if(rsmd.getColumnType(i)==java.sql.Types.DATE){
+                                obj.addProperty(column_name, rs.getDate(column_name).toString());
+                            }
+                            else if(rsmd.getColumnType(i)==java.sql.Types.TIMESTAMP){
+                                obj.addProperty(column_name, rs.getTimestamp(column_name).toString());
+                            }
+                            else{
+                                obj.addProperty(column_name, rs.getObject(column_name).toString());
+                            }
+                        }
+    
+                        //System.out.println(obj);
+                        json.add(obj);
+                        
+                    }
+    
+                    System.out.println(json);
+    
                     if(sDB.getOutput() != null)
                     {
                         EVariable o = list.getVariable(sDB.getOutput());
-                        System.out.println(rs.getString(2) + ": " + rs.getString(3));
-                        
-                        o.setValue(rs.getString(3));
+                        o.setValue(json.toString());
                     }
-    
-                }
-                
-    
-                while(rs.next())  
-                    System.out.println(rs.getString(3));
+                    con.close();
 
-                */
-
-                JsonArray json = new JsonArray();
-                ResultSetMetaData rsmd = rs.getMetaData();
-
-                while(rs.next())
-                {
-                    int numColumns = rsmd.getColumnCount();
-                    JsonObject obj = new JsonObject();
-
-                    for (int i=1; i<numColumns+1; i++)
+                    for(ENode n : l.eNodes)
                     {
-                        String column_name = rsmd.getColumnName(i);
-
-                        if(rsmd.getColumnType(i)==java.sql.Types.BOOLEAN){
-                            obj.addProperty(column_name, rs.getBoolean(column_name));
-                        }
-                        else if(rsmd.getColumnType(i)==java.sql.Types.DOUBLE){
-                            obj.addProperty(column_name, rs.getDouble(column_name)); 
-                        }
-                        else if(rsmd.getColumnType(i)==java.sql.Types.FLOAT){
-                            obj.addProperty(column_name, rs.getFloat(column_name));
-                        }
-                        else if(rsmd.getColumnType(i)==java.sql.Types.INTEGER){
-                            obj.addProperty(column_name, rs.getInt(column_name));
-                        }
-                        else if(rsmd.getColumnType(i)==java.sql.Types.VARCHAR){
-                            obj.addProperty(column_name, rs.getString(column_name));
-                        }
-                        else if(rsmd.getColumnType(i)==java.sql.Types.DATE){
-                            obj.addProperty(column_name, rs.getDate(column_name).toString());
-                        }
-                        else if(rsmd.getColumnType(i)==java.sql.Types.TIMESTAMP){
-                            obj.addProperty(column_name, rs.getTimestamp(column_name).toString());
-                        }
-                        else{
-                            obj.addProperty(column_name, rs.getObject(column_name).toString());
+                        if(n.getSNode().getNId().equals(getSNode().getNextNode()))
+                        {
+                            n.run(l, instanceID);
+                            return;
                         }
                     }
-
-                    //System.out.println(obj);
-                    json.add(obj);
-                    
-                }
-
-                System.out.println(json);
-
-                if(sDB.getOutput() != null)
+    
+                } catch(Exception e)
                 {
-                    EVariable o = list.getVariable(sDB.getOutput());
-                    o.setValue(json.toString());
+                    //System.out.println("MySql bug with java 11 when disconnecting - Search it");
+                    //System.out.println(e);
                 }
-                con.close();
-
-            } catch(Exception e)
-            {
-                System.out.println("MySql bug with java 11 when disconnecting - Search it");
-                System.out.println(e);
             }
+
     
         }
 
-        
 
-        for(ENode n : l.eNodes)
-        {
-            if(n.getSNode().getNId().equals(getSNode().getNextNode()))
-            {
-                n.run(l, instanceID);
-                return;
-            }
-        }
     }
 }

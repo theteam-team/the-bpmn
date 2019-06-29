@@ -1,4 +1,4 @@
-package com.theteam.jsondata;
+package com.theteam.taskdata;
 
 import java.util.*;
 
@@ -6,25 +6,25 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType(propOrder = { "data" })
-public class SJsonDataList
+public class STaskDataList
 {
     @XmlElement(name = "data")
-    private List<SJsonData> data;
+    private List<STaskData> data;
 
-    HashMap<String, SJsonData> mapNodes;
+    HashMap<String, STaskData> mapNodes;
 
-    public SJsonDataList()
+    public STaskDataList()
     {
-        data = new ArrayList<SJsonData>();
+        data = new ArrayList<STaskData>();
         mapNodes = new HashMap<>();
     }
 
-    public List<SJsonData> getData()
+    public List<STaskData> getData()
     {
         return data;
     }
     
-    public void addJsonData(SJsonData var)
+    public void addJsonData(STaskData var)
     {
         mapNodes.put(var.getNId(), var);
         data.add(var);
@@ -32,11 +32,11 @@ public class SJsonDataList
 
     public void removeJsonData(String jsonDataId)
     {
-        SJsonData jsonData = mapNodes.get(jsonDataId);
+        STaskData jsonData = mapNodes.get(jsonDataId);
         data.remove(jsonData);
     }
 
-    public SJsonData getJsonDataById(String id)
+    public STaskData getJsonDataById(String id)
     {
         return mapNodes.get(id);
     }

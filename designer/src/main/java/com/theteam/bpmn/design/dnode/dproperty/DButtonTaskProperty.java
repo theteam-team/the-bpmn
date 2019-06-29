@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXToggleNode;
 import com.theteam.bpmn.design.App;
 import com.theteam.bpmn.design.controller.DBStageController;
 import com.theteam.bpmn.design.controller.JsonStageController;
+import com.theteam.bpmn.design.controller.TaskStageController;
 import com.theteam.snodes.SXML;
 
 import de.jensd.fx.glyphs.materialicons.MaterialIcon;
@@ -36,7 +37,7 @@ import javafx.stage.StageStyle;
  * DTextProperty property presents property that have a text
  * Node properties are used by design ndoes (dnodes) to present properties to users
  */
-public class DButtonJsonProperty extends DProperty
+public class DButtonTaskProperty extends DProperty
 {
     JFXToggleNode toggleNode = null;
     JFXTextField textField = null;
@@ -45,12 +46,15 @@ public class DButtonJsonProperty extends DProperty
     String nodeId;
     SXML xmlWriter;
 
-    public DButtonJsonProperty(String labelText, StringProperty sp, String stageName, String id, SXML xmlWriter)
+    DComboBoxProperty dTaskTypeProperty;
+
+    public DButtonTaskProperty(String labelText, StringProperty sp, String stageName, String id, SXML xmlWriter, DComboBoxProperty dTaskTypeProperty)
     {
 
         this.stageName = stageName;
         this.nodeId = id;
         this.xmlWriter =xmlWriter;
+        this.dTaskTypeProperty = dTaskTypeProperty;
 
         toggleNode = new JFXToggleNode();
         toggleNode.setTextFill(Color.YELLOWGREEN);
@@ -83,37 +87,38 @@ public class DButtonJsonProperty extends DProperty
     {
         final StageStyle stageStyle = StageStyle.UNDECORATED;
 
-            Stage jsonStage = new Stage(StageStyle.UNDECORATED);
+            Stage taskStage = new Stage(StageStyle.UNDECORATED);
 
             FXMLLoader fxmlLoader = new FXMLLoader(App.class
             .getResource("/fxml/" + stageName + ".fxml"));
 
             VBox rootGroup = fxmlLoader.load();
 
-            final JsonStageController jsonStageController = fxmlLoader.getController();
+            final TaskStageController taskStageController = fxmlLoader.getController();
 
-            jsonStageController.setStage(jsonStage);
+            taskStageController.setStage(taskStage);
             
-            jsonStageController.setupBinding(stageStyle);
-            jsonStageController.setTextField(textField);
-            jsonStageController.setNodeId(nodeId);
-            jsonStageController.setXMLWriter(xmlWriter);
+            taskStageController.setupBinding(stageStyle);
+            taskStageController.setTextField(textField);
+            taskStageController.setNodeId(nodeId);
+            taskStageController.setXMLWriter(xmlWriter);
+            taskStageController.setTaskTypeProperty(dTaskTypeProperty);
 
             Scene scene = new Scene(rootGroup, 450, 250);
-            jsonStage.setScene(scene);
+            taskStage.setScene(scene);
             scene.setFill(Color.TRANSPARENT);
             scene.getStylesheets().addAll(App.class
                 .getResource("/css/dark-theme.css").toString());
 
 
             //scene.setFill(Color.TRANSPARENT);
-            jsonStage.initStyle(StageStyle.TRANSPARENT);
+            taskStage.initStyle(StageStyle.TRANSPARENT);
 
-            jsonStage.setOnCloseRequest(we -> System.out.println("Json Stage is closing"));
-            jsonStage.show();
+            taskStage.setOnCloseRequest(we -> System.out.println("Task Stage is closing"));
+            taskStage.show();
 
             Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-            jsonStage.setX((primScreenBounds.getWidth() - jsonStage.getWidth()) / 2);
-            jsonStage.setY((primScreenBounds.getHeight() - jsonStage.getHeight()) / 3 + 100);
+            taskStage.setX((primScreenBounds.getWidth() - taskStage.getWidth()) / 2);
+            taskStage.setY((primScreenBounds.getHeight() - taskStage.getHeight()) / 3 + 100);
     }
 }

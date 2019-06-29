@@ -59,7 +59,7 @@ public class EEnd extends ENode
         }
 
         jsonEle1.add("processes", jArray);
-        Workflow.wo.updateVal(jsonEle1.toString());
+        Workflow.workflowObserver.updateVal(jsonEle1.toString());
 
         ArrayList<String> workflowsinstances = Workflow.runningWorkflows.get(name);
         if(workflowsinstances != null)

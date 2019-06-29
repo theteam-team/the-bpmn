@@ -8,11 +8,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 @XmlRootElement
-@XmlType(propOrder = { "previousNode", "previousNode1", "nextNode", "nextNode1", "action"})
+@XmlType(propOrder = { "previousNode", "previousNode1", "nextNode", "nextNode1", "action", "message"})
 public class SStartNode extends SNode
 {
 
     private String action = null;
+    private String message = null;
 
     private String previousNode = null;
     private String nextNode = null;
@@ -57,6 +58,19 @@ public class SStartNode extends SNode
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    @XmlElement(name = "message")
+    public String getMessage()
+    {
+
+        if(message != null)
+            return message;
+        return null;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @XmlElement(name = "previousNode")

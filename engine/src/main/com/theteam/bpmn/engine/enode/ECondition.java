@@ -63,13 +63,15 @@ public class ECondition extends ENode
         }
 
         jsonEle1.add("processes", jArray);
-        Workflow.wo.updateVal(jsonEle1.toString());
+        Workflow.workflowObserver.updateVal(jsonEle1.toString());
 
         Scan s = new Scan(sCondition.getExpression(), l);
         String condition = s.getFinalString();
 
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine engine = manager.getEngineByName("javascript");
+
+        
         
         boolean conEvaluated;
 
@@ -84,6 +86,9 @@ public class ECondition extends ENode
             System.out.println("Condition wrong");
             return;
         }
+
+        System.out.println(condition);
+        System.out.println(conEvaluated);
 
 
         if(conEvaluated)

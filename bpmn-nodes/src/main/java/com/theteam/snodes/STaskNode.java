@@ -1,27 +1,41 @@
 package com.theteam.snodes;
 
-import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.theteam.taskdata.STaskData;
+import com.theteam.taskdata.STaskDataList;
+
 
 @XmlRootElement
-@XmlType(propOrder = { "previousNode", "previousNode1", "nextNode", "nextNode1", "input", "output", "serviceType", "restLink", "soapFunc"})
+@XmlType(propOrder = { "previousNode", "previousNode1", "nextNode", "nextNode1", "input", "output", "serviceType", "restLink", "soapFunc", "messageOut", "messageIn","taskType", "taskName", "taskDData"})
 public class STaskNode extends SNode
 {
 
     private String previousNode = null;
     private String nextNode = null;
 
+    private String messageOut = null;
+    private String messageIn = null;
+
     private String serviceType = null;
     private String restLink = null;
     private String soapFunc = null;
 
+    private String taskType = null;
+    private String taskName = null;
+
     private String input = null;
     private String output = null;
+
+    @XmlElement(name = "taskDData")
+    private STaskDataList taskDData;
+
+
+    
 
     public STaskNode()
     {
@@ -42,6 +56,53 @@ public class STaskNode extends SNode
     public void setNId(String id)
     {
         this.nId = id;
+    }
+
+    public STaskDataList getTaskDData() { return taskDData; }
+    public void setTaskData(STaskDataList taskDData)
+    {
+        this.taskDData = taskDData;
+    }
+
+    public void addTaskData(STaskData j)
+    {
+        taskDData.addJsonData(j);
+    }
+
+    public void removeTaskData(String taskDataId)
+    {
+        
+    }
+
+    public void resetTaskData()
+    {
+        taskDData.reset();
+    }
+
+    @XmlElement(name = "messageIn")
+    public String getMessageIn()
+    {
+
+        if(messageIn != null)
+            return messageIn;
+        return null;
+    }
+
+    public void setMessageIn(String messageIn) {
+        this.messageIn = messageIn;
+    }
+
+    @XmlElement(name = "messageOut")
+    public String getMessageOut()
+    {
+
+        if(messageOut != null)
+            return messageOut;
+        return null;
+    }
+
+    public void setMessageOut(String messageOut) {
+        this.messageOut = messageOut;
     }
 
     @XmlAttribute
@@ -152,6 +213,36 @@ public class STaskNode extends SNode
     public void setSoapFunc(String soapFunc)
     {
         this.soapFunc = soapFunc;
+    }
+
+    @XmlElement(name = "taskType")
+    public String getTaskType()
+    {
+
+        if(taskType != null)
+            return taskType;
+        return null;
+        
+    }
+
+    public void setTaskType(String taskType)
+    {
+        this.taskType = taskType;
+    }
+
+    @XmlElement(name = "taskName")
+    public String getTaskName()
+    {
+
+        if(taskName != null)
+            return taskName;
+        return null;
+        
+    }
+
+    public void setTaskName(String taskName)
+    {
+        this.taskName = taskName;
     }
 
     @XmlElement(name = "input")

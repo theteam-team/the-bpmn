@@ -82,6 +82,11 @@ dependencies
 
     compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.28'
     compile 'org.glassfish.jersey.inject:jersey-hk2:2.28'
+
+    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-multipart', version: '2.28'
+    compile group: 'org.glassfish.jersey.bundles', name: 'jaxrs-ri', version: '2.28'
+
+    //compile group: 'org.glassfish.jersey.core', name: 'jersey-common', version: '2.28'
     
     compile group: 'org.glassfish.main.javaee-api', name: 'javax.jws', version: '3.1.2.2'
 
@@ -113,6 +118,10 @@ dependencies
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.8.0-beta4'
 
 
+
+    
+
+
     compile group: 'com.microsoft.signalr', name: 'signalr', version: '1.0.0'
 
 
@@ -120,7 +129,7 @@ dependencies
     
 
     compile files('libs/bpmn-nodes.jar')
-
+    
     
 }
 

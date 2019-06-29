@@ -23,7 +23,7 @@ public class WorkflowObserver extends BasicObservable<String>
         //Logger logger = LoggerFactory.getLogger(WorkflowObserver.class);
         //onChanged(e -> logger.info(e.getValue()));
 
-        onChanged(e -> sendToServer(e));
+        //onChanged(e -> sendToServer(e));
     }
 
     public void updateVal(String s)

@@ -64,8 +64,17 @@ public class EJson extends ENode
         }
 
         jsonEle1.add("processes", jArray);
-        Workflow.wo.updateVal(jsonEle1.toString());
+        Workflow.workflowObserver.updateVal(jsonEle1.toString());
 
+
+
+        //
+        //
+        //
+        //
+        // Start
+
+        //System.out.println("\naa");
         if(sJson.getAction().equals("make"))
         {
             JsonObject ob = new JsonObject();
@@ -84,40 +93,57 @@ public class EJson extends ENode
         else
         {
 
+            //System.out.println("\naa0023");
             if(sJson.getInput() != null)
             {
+
+                //System.out.println("\naa23");
                 EVariable o = list.getVariable(sJson.getInput());
 
+                //System.out.println("\naa34");
+                
                 Scan s = new Scan(o.getValue(), l);
                 String j = s.getFinalString();
-
+                
+                //System.out.println("\naa45");
                 //System.out.println("\n JJJJSONS");
                 //System.out.println(o.getValue());
                 //System.out.println(j);
-
+                
+                //System.out.println("\naa4563");
                 JSONObject orgJson = new JSONObject(j);
-
+                
+                //System.out.println("\naa4563aa");
                 for (SJsonData var : sJson.getJsonDData().getData())
                 {
-
+                    
+                    //System.out.println("\naa4563bb");
                     String os = orgJson.getString(var.getName());
-                    //System.out.println("os");
-                    //System.out.println(os);
 
+                    System.out.println(os);
+                    //System.out.println(os);
+                    
                     EVariable eo = list.getVariable(var.getVal());
                     if(eo != null)
-                        eo.setValue(os);
-
+                    eo.setValue(os);
                     
+                    
+                    //System.out.println("\naa289");
                 }
+                //System.out.println("\naa147");
             }
 
+            //System.out.println("\n1230asd23");
+
         }
+
+        //System.out.println("\naa2");
 
         for(ENode n : l.eNodes)
         {
             if(n.getSNode().getNId().equals(getSNode().getNextNode()))
             {
+                //System.out.println("\naa3");
                 n.run(l, instanceID);
                 return;
             }

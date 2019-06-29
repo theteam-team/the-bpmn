@@ -93,7 +93,7 @@ public class StartWorkflow
 
             System.out.println("\n------------ Workflow OnStarted Executing-------------");
             node.run(l, instanceId);
-            System.out.println("\n------------ Workflow OnStarted Ended--------------");
+            
 
             /*
             while(node != null)

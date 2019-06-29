@@ -2,6 +2,7 @@ package com.theteam.bpmn.design.dnode;
 
 import java.util.UUID;
 
+import com.theteam.bpmn.design.dnode.dproperty.DButtonTaskProperty;
 import com.theteam.bpmn.design.dnode.dproperty.DComboBoxProperty;
 import com.theteam.bpmn.design.dnode.dproperty.DTextProperty;
 import com.theteam.bpmn.design.loader.ImagesLoader;
@@ -30,11 +31,18 @@ public class DServiceTaskNode extends DNode
     StringProperty outputProperty = new SimpleStringProperty();
 
     StringProperty restLinkProperty = new SimpleStringProperty();
+
+    StringProperty messageInProperty = new SimpleStringProperty();
+    StringProperty messageOutProperty = new SimpleStringProperty();
+
+    StringProperty taskNameProperty = new SimpleStringProperty();
     
+    StringProperty taskDataProperty = new SimpleStringProperty();
 
     public SingleSelectionModel<String> serviceType;
     public SingleSelectionModel<String> soapFunc;
-
+    
+    public SingleSelectionModel<String> taskType;
     /*
     public ObservableList<String> serviceTypeList = FXCollections.observableArrayList(
         "rest",
@@ -49,6 +57,13 @@ public class DServiceTaskNode extends DNode
         "delete"
     );
     
+
+    public ObservableList<String> taskTypeList = FXCollections.observableArrayList(
+        "externalTask",
+        "userTask",
+        "APITask",
+        "message"
+    );
 
     public ObservableList<String> soapFuncList = FXCollections.observableArrayList(
         "getHello",
@@ -74,22 +89,42 @@ public class DServiceTaskNode extends DNode
             DTextProperty dInputProperty = new DTextProperty("Input", inputProperty);
             DTextProperty dOutputProperty = new DTextProperty("Output", outputProperty);
 
-            DTextProperty dRestLinkProperty = new DTextProperty("Rest Link", restLinkProperty);
-            DComboBoxProperty dServiceTypeProperty = new DComboBoxProperty("Service Type", serviceType, serviceTypeList);
+            DTextProperty dMessageInProperty = new DTextProperty("message", messageInProperty);
+            DTextProperty dMessageOutProperty = new DTextProperty("message", messageOutProperty);
+
+            DTextProperty dRestLinkProperty = new DTextProperty("API Link", restLinkProperty);
+            DTextProperty dTaskNameProperty = new DTextProperty("Task Name", taskNameProperty);
+            
+            DComboBoxProperty dServiceTypeProperty = new DComboBoxProperty("HTTP Method", serviceType, serviceTypeList);
+            DComboBoxProperty dTaskTypeProperty = new DComboBoxProperty("Task Type", taskType, taskTypeList);
+
+            DButtonTaskProperty DTaskDataProperty = new DButtonTaskProperty("Task Data", taskDataProperty, "taskStage", id.toString(), xmlWriter, dTaskTypeProperty);
+
             DComboBoxProperty dSoapFuncProperty = new DComboBoxProperty("Soap Func", soapFunc, soapFuncList);
 
             allDProperties.add(dInputProperty);
             allDProperties.add(dOutputProperty);
 
+            allDProperties.add(dMessageInProperty);
+            allDProperties.add(dMessageOutProperty);
+
+            allDProperties.add(dTaskTypeProperty);
+            allDProperties.add(dTaskNameProperty);
+            
+            allDProperties.add(DTaskDataProperty);
+
             allDProperties.add(dRestLinkProperty);
             allDProperties.add(dServiceTypeProperty);
-            allDProperties.add(dSoapFuncProperty);
+            //allDProperties.add(dSoapFuncProperty);
 
             String a = (String) dServiceTypeProperty.getComboSelectionModel().getSelectedItem();
             xmlWriter.setServiceTypeProperty(id.toString(), a);
 
             a = (String) dSoapFuncProperty.getComboSelectionModel().getSelectedItem();
             xmlWriter.setSoapFuncProperty(id.toString(), a);
+
+            a = (String) dTaskTypeProperty.getComboSelectionModel().getSelectedItem();
+            xmlWriter.setTaskTypeProperty(id.toString(), a);
 
             inputProperty.addListener(new ChangeListener<String>()
             {
@@ -118,10 +153,44 @@ public class DServiceTaskNode extends DNode
                 }
             });
 
+            messageInProperty.addListener(new ChangeListener<String>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
+                {
+                    xmlWriter.setTaskMessageInProprty(id.toString(), newValue);
+                }
+            });
+
+            messageOutProperty.addListener(new ChangeListener<String>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
+                {
+                    xmlWriter.setTaskMessageOutProprty(id.toString(), newValue);
+                }
+            });
+
+            taskNameProperty.addListener(new ChangeListener<String>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
+                {
+                    xmlWriter.setTaskNameProperty(id.toString(), newValue);
+                }
+            });
+
             dServiceTypeProperty.getComboSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
                 String selectedItem = (String) dServiceTypeProperty.getComboSelectionModel().getSelectedItem();
 
                 xmlWriter.setServiceTypeProperty(id.toString(), selectedItem);
+                
+            });
+
+            dTaskTypeProperty.getComboSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
+                String selectedItem = (String) dTaskTypeProperty.getComboSelectionModel().getSelectedItem();
+
+                xmlWriter.setTaskTypeProperty(id.toString(), selectedItem);
                 
             });
 

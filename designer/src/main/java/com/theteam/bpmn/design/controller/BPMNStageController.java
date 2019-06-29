@@ -74,6 +74,8 @@ public class BPMNStageController {
         return xmlWriter;
     }
 
+    
+
     public void loadNodes()
     {
         xmlWriter = new SXML();
@@ -296,9 +298,9 @@ public class BPMNStageController {
 
         if(nodeTo.getPrevDNode() != null)
         {
-            xmlWriter.setNextNode(nodeTo.getPrevDNode().getId(), null);
+            //xmlWriter.setNextNode(nodeTo.getPrevDNode().getId(), null);
             //setPrevDNode(null);
-            nodeTo.getPrevDNode().setNNextDNode(null);
+            //nodeTo.getPrevDNode().setNNextDNode(null);
         }
 
         if(nodeTo.getPrevDNode1() != null)
@@ -315,11 +317,14 @@ public class BPMNStageController {
             if(nodeFrom.getDType().equals("parallel"))
             {
 
+                /*
                 for (DLine l : nodeTo.getEndLines()) {
                     drawArea.getChildren().remove(l);
                 }
+                
 
                 nodeTo.getEndLines().clear();
+                */
 
 
                 if(nodeFrom.getNextDNode() == null)
@@ -393,12 +398,14 @@ public class BPMNStageController {
                 drawArea.getChildren().remove(l);
             }
     
+            /*
             for (DLine l : nodeTo.getEndLines()) {
                 drawArea.getChildren().remove(l);
             }
+            */
 
             nodeFrom.getStartLines().clear();
-            nodeTo.getEndLines().clear();
+            //nodeTo.getEndLines().clear();
 
             nodeFrom.setNextDNode(nodeTo);
             nodeTo.setPrevDNode(nodeFrom);

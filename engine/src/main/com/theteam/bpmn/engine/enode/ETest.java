@@ -108,9 +108,10 @@ public class ETest extends ENode
         }
 
         jsonEle1.add("processes", jArray);
-        Workflow.wo.updateVal(jsonEle1.toString());
+        Workflow.workflowObserver.updateVal(jsonEle1.toString());
 
 
+        /*
         EVariable eo = list.getVariable(sTest.getInput());
         Scan s = new Scan(eo.getValue(), l);
         String message = s.getFinalString();
@@ -118,6 +119,18 @@ public class ETest extends ENode
         System.out.println("------message-------");
         System.out.println(message);
         System.out.println("------message-------");
+        */
+
+        if(sTest.getInput() != null)
+        {
+            EVariable o = list.getVariable(sTest.getInput());
+
+            int x = Integer.valueOf(o.getValue());
+            x++;
+            System.out.println(x);
+            
+            o.setValue(String.valueOf(x));
+        }
 
         for(ENode n : l.eNodes)
         {

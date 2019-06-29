@@ -63,7 +63,7 @@ public class DLine extends Path
         // Stop[] stops = new Stop[] { new Stop(0, Color.VIOLET), new Stop(1, Color.DARKCYAN)};
         // LinearGradient lg = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
-        setStroke(Color.GOLD);
+        setStroke(Color.BLACK);
         setStrokeWidth(2);
         setFill(null);
 

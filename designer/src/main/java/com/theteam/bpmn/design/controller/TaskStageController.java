@@ -13,6 +13,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleNode;
 import com.theteam.bpmn.design.db.DBData;
 import com.theteam.bpmn.design.db.SQLEditor;
+import com.theteam.bpmn.design.dnode.dproperty.DComboBoxProperty;
 import com.theteam.snodes.SXML;
 
 import de.jensd.fx.glyphs.materialicons.MaterialIcon;
@@ -44,7 +45,7 @@ import javafx.stage.StageStyle;
 /**
  * Control BPMN Stage Window (Nodes, Tools, properties, ...)
  */
-public class JsonStageController {
+public class TaskStageController {
 
     @FXML
     public AnchorPane dbPane;
@@ -61,27 +62,45 @@ public class JsonStageController {
 
     String nodeId;
     SXML xmlWriter;
+    DComboBoxProperty dTaskTypeProperty;
 
     private ArrayList<Row> rows = new ArrayList<>();
     VBox jbox;
-
+    
+    private ArrayList<userRow> userrows = new ArrayList<>();
+    VBox userjbox;
 
     @FXML
     private void chooseDBEvent(ActionEvent ae)
     {
 
-        xmlWriter.resetJsonData(nodeId);
-
         Button b = (Button) ae.getSource();
 
         if(b.getText().equals("MAKE"))
         {
-            loadJsonEditor();
+
+            xmlWriter.resetTaskData(nodeId);
+
+            String s = dTaskTypeProperty.getComboSelectionModel().getSelectedItem();
+
+            if(s.equals("externalTask"))
+            {
+                loadExternalTaskEditor();
+            }
+            else if(s.equals("userTask"))
+            {
+                loadUserTaskEditor();
+            }
+            else
+            {
+                stage.close();
+            }
+            
         }
 
     }
 
-    private void loadJsonEditor()
+    private void loadExternalTaskEditor()
     {
         dbPane.getChildren().clear();
 
@@ -152,7 +171,7 @@ public class JsonStageController {
         {
             for (Row var : rows) {
                 String[] data = var.getRowData();
-                xmlWriter.addJsonData(nodeId,
+                xmlWriter.addTaskData(nodeId,
                                     UUID.randomUUID().toString(),
                                     data[0], data[1]);
             }
@@ -185,6 +204,122 @@ public class JsonStageController {
         }
     }
 
+
+
+    
+    private void loadUserTaskEditor()
+    {
+        dbPane.getChildren().clear();
+
+        stage.setHeight(stage.getHeight() + 100);
+
+        MaterialIconView btnIcon = new MaterialIconView(MaterialIcon.NAVIGATE_BEFORE);
+        btnIcon.setSize("30");
+        btnIcon.setOnMouseClicked(userbtnIconHandler);
+    
+        MaterialIconView btnIcon1 = new MaterialIconView(MaterialIcon.NAVIGATE_NEXT);
+        btnIcon1.setSize("30");
+        btnIcon1.setOnMouseClicked(userbtnIconHandler1);
+    
+        HBox iconBox = new HBox(30, btnIcon, btnIcon1);
+        iconBox.setAlignment(Pos.CENTER);
+
+
+        userRow userrow = new userRow();
+        userrows.add(userrow);
+
+        userjbox = new VBox(30, userrow);
+        userjbox.setAlignment(Pos.CENTER);
+
+        JFXButton dnButton = new JFXButton("DONE");
+        dnButton.setOnMouseClicked(userdnBtnHandler);
+
+        VBox box = new VBox(50, iconBox, userjbox, dnButton);
+        box.setAlignment(Pos.CENTER);
+    
+        dbPane.getChildren().addAll(box);
+        dbPane.setTopAnchor(box, 0.0);
+        dbPane.setLeftAnchor(box, 0.0);
+        dbPane.setRightAnchor(box, 0.0);
+        dbPane.setBottomAnchor(box, 0.0);
+    }
+
+    public EventHandler<MouseEvent> userbtnIconHandler1 =  new EventHandler<MouseEvent>()
+    {
+        @Override
+        public void handle(MouseEvent me)
+        {
+            stage.setHeight(stage.getHeight() + 100);
+            userRow userrow = new userRow();
+            userrows.add(userrow);
+
+            userjbox.getChildren().add(userrow);
+        }
+    };
+
+    public EventHandler<MouseEvent> userbtnIconHandler =  new EventHandler<MouseEvent>()
+    {
+        @Override
+        public void handle(MouseEvent me)
+        {
+            if(userrows.size() <= 1)
+                return;
+
+            jbox.getChildren().remove(userrows.get(userrows.size()-1));
+            userrows.remove(userrows.size()-1);
+            stage.setHeight(stage.getHeight() - 100);
+        }
+    };
+
+    public EventHandler<MouseEvent> userdnBtnHandler =  new EventHandler<MouseEvent>()
+    {
+        @Override
+        public void handle(MouseEvent me)
+        {
+            for (userRow var : userrows) {
+                String[] data = var.getRowData();
+                xmlWriter.addTaskData(nodeId,
+                                    UUID.randomUUID().toString(),
+                                    data[0], data[1]);
+            }
+
+            stage.close();
+        }
+    };
+
+
+    public class userRow extends HBox
+    {
+        JFXTextField text1 = new JFXTextField();
+        JFXComboBox<String> cb = new JFXComboBox<>();
+
+        public userRow()
+        {
+            super(10);
+
+            ObservableList<String> obsList = FXCollections.observableArrayList(
+                "textField",
+                "textArea",
+                "button"
+            );
+
+            text1.setText("Name");
+
+            cb.setItems(obsList);
+            cb.getSelectionModel().select(0);
+
+            getChildren().addAll(text1, cb);
+
+        }
+
+        public String[] getRowData()
+        {
+            String a[]= {text1.getText(), cb.getSelectionModel().getSelectedItem()};
+            return a;
+        }
+    }
+    
+
     public void setStage(Stage stage)
     {
         this.stage = stage;
@@ -204,6 +339,11 @@ public class JsonStageController {
     public void setXMLWriter(SXML xmlWriter)
     {
         this.xmlWriter = xmlWriter;
+    }
+
+    public void setTaskTypeProperty(DComboBoxProperty dTaskTypeProperty)
+    {
+        this.dTaskTypeProperty = dTaskTypeProperty;
     }
 
     public void setupBinding(StageStyle stageStyle)

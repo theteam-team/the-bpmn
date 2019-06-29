@@ -18,7 +18,7 @@ public class MyServletContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent arg0) {
 
       System.out.println("System Initialized");
-      Workflow.mon = new Monitor();
+      //Workflow.mon = new Monitor();
       // do all the tasks that you need to perform just after the server starts
   
       //Notification that the web application initialization process is starting

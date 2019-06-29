@@ -1,0 +1,63 @@
+[
+{
+    "type": "userTask",
+
+    "workflowName": "test",
+    "instanceID": "24cd9bed-b4d6-4e67-a3d1-f21f2621bfd9",
+    "taskID": "adcd3456-b4d6-4e67-a3d1-f54t2621ber4",
+
+    "taskName": "Fill this form",
+
+    "taskParam":
+                [
+                    {
+                      "name": "name",
+                      "type": "textField"
+                    },
+
+                    {
+                      "name": "password",
+                      "type": "textField"
+                    },
+
+                    {
+                      "name": "message",
+                      "type": "textArea"
+                    },
+
+                    {
+                      "name": "send",
+                      "type": "button"
+                    }
+
+                ]
+},
+
+{
+  "type": "externalTask",
+
+  "workflowName": "test",
+  "instanceID": "24cd9bed-b4d6-4e67-a3d1-f21f2621bfd9",
+  "taskID": "adcd3456-b4d6-4e67-a3d1-f54t2621ber4",
+
+  "taskName": "AddCustomer",
+
+  "taskParam":
+              [
+                {
+                  "customer_id": "string",
+                  "name": "string",
+                  "phone_number": 0,
+                  "email": "string",
+                  "dateOfBirth": "string",
+                  "gender": "string",
+                  "loyality_points": 0,
+                  "type": 0,
+                  "company": "string",
+                  "company_email": "string",
+                  "is_lead": true
+                }
+              ]
+}
+
+]

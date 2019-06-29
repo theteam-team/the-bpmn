@@ -3,6 +3,7 @@ package com.theteam.bpmn.design.dnode;
 import java.util.UUID;
 
 import com.theteam.bpmn.design.dnode.dproperty.DComboBoxProperty;
+import com.theteam.bpmn.design.dnode.dproperty.DTextProperty;
 import com.theteam.bpmn.design.loader.ImagesLoader;
 import com.theteam.snodes.SXML;
 
@@ -12,6 +13,9 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.SingleSelectionModel;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 
 /**
@@ -25,12 +29,15 @@ public class DStartNode extends DNode
 
     StringProperty actionStringProperty1 = new SimpleStringProperty();
 
+    StringProperty messageProperty = new SimpleStringProperty();
+
     public SingleSelectionModel<String> actionString;
 
     public ObservableList<String> actionStringList = FXCollections.observableArrayList(
         "OnStarted",
         "OnAwaked",
-        "OnLoaded"
+        "OnLoaded",
+        "message"
     );
 
     public DStartNode(SXML xmlWriter, UUID id, Boolean drawNode)
@@ -45,6 +52,10 @@ public class DStartNode extends DNode
             this.xmlWriter = xmlWriter;
             xmlWriter.addStartNode(id.toString());
 
+            DTextProperty dMessageProperty = new DTextProperty("message", messageProperty);
+
+            allDProperties.add(dMessageProperty);
+
             DComboBoxProperty dActionStringProperty = new DComboBoxProperty("Action Type", actionString, actionStringList);
 
             allDProperties.add(dActionStringProperty);
@@ -58,6 +69,15 @@ public class DStartNode extends DNode
 
                 xmlWriter.setStartActionProprty(id.toString(), selectedItem);
                 
+            });
+
+            messageProperty.addListener(new ChangeListener<String>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
+                {
+                    xmlWriter.setStartMessageProprty(id.toString(), newValue);
+                }
             });
         }
 

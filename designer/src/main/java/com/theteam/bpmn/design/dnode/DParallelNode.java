@@ -42,7 +42,7 @@ public class DParallelNode extends DNode
 
         if(getNextDNode1() != null)
         {
-            xmlWriter.setPrevNode(getNextDNode1().getId(), null);
+            xmlWriter.setPrevNode1(getNextDNode1().getId(), null);
             //setNextDNode(null);
             getNextDNode1().setPPrevDNode1(null);
         }
@@ -56,7 +56,7 @@ public class DParallelNode extends DNode
 
         if(getPrevDNode1() != null)
         {
-            xmlWriter.setNextNode(getPrevDNode1().getId(), null);
+            xmlWriter.setNextNode1(getPrevDNode1().getId(), null);
             //setPrevDNode(null);
             getPrevDNode1().setNNextDNode1(null);
         }

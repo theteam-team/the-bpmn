@@ -21,7 +21,7 @@
    <children>
       <HBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="839.0">
          <children>
-            <MenuBar fx:id="mainMenuBar" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" prefHeight="26.0" prefWidth="580.0" HBox.hgrow="ALWAYS">
+            <MenuBar fx:id="mainMenuBar" onMouseDragged="#windowDragged" onMousePressed="#windowPressed" prefHeight="26.0" prefWidth="580.0" style="-fx-background-radius: 10;" HBox.hgrow="ALWAYS">
                <menus>
                   <Menu mnemonicParsing="false" text="File">
                      <items>
@@ -73,6 +73,9 @@
                </children>
             </HBox>
          </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
       </HBox>
       <ToolBar fx:id="toolBar" focusTraversable="false" prefHeight="50.0" prefWidth="839.0">
          <items>

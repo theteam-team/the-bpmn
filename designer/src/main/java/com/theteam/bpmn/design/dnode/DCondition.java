@@ -67,7 +67,7 @@ public class DCondition extends DNode
 
         if(getNextDNode1() != null)
         {
-            xmlWriter.setPrevNode(getNextDNode1().getId(), null);
+            xmlWriter.setPrevNode1(getNextDNode1().getId(), null);
             //setNextDNode(null);
             getNextDNode1().setPPrevDNode(null);
         }
